@@ -23,7 +23,7 @@ public class GoapAgent : MonoBehaviour {
     Rigidbody rb;
     
     [Header("Stats")] 
-    public float health = 100;
+    public float hunger = 100;
     public float stamina = 100;
     
     CountdownTimer statsTimer;
@@ -49,7 +49,7 @@ public class GoapAgent : MonoBehaviour {
         rb = GetComponent<Rigidbody>();
         rb.freezeRotation = true;
         
-        gPlanner = gFactory.CreatePlanner();
+        gPlanner = new GoapPlanner();
     }
 
     void Start() {
@@ -67,10 +67,10 @@ public class GoapAgent : MonoBehaviour {
         
         factory.AddBelief("AgentIdle", () => !navMeshAgent.hasPath);
         factory.AddBelief("AgentMoving", () => navMeshAgent.hasPath);
-        factory.AddBelief("AgentHealthLow", () => health < 30);
-        factory.AddBelief("AgentIsHealthy", () => health >= 50);
+        factory.AddBelief("AgentHungerLow", () => hunger < 30);
+        factory.AddBelief("AgentIsFed", () => hunger >= 50);
         factory.AddBelief("AgentStaminaLow", () => stamina < 10);
-        factory.AddBelief("AgentIsRested", () => stamina >= 50);
+        factory.AddBelief("AgentIsRested", () => stamina >= 80);
         
         factory.AddLocationBelief("AgentAtDoorOne", 3f, doorOnePosition);
         factory.AddLocationBelief("AgentAtDoorTwo", 3f, doorTwoPosition);
@@ -96,35 +96,35 @@ public class GoapAgent : MonoBehaviour {
             .Build());
 
         actions.Add(new AgentAction.Builder("MoveToEatingPosition")
-            .WithStrategy(new MoveStrategy(navMeshAgent, () => foodShack.position))
+            .WithStrategy(new MoveStrategy(navMeshAgent, () => foodShack.position, 2.3f))
             .AddEffect(beliefs["AgentAtFoodShack"])
             .Build());
         
         actions.Add(new AgentAction.Builder("Eat")
-            .WithStrategy(new IdleStrategy(5))  // Later replace with a Command
+            .WithStrategy(new EatAndWaitStrategy(animations))  // Ersetzt IdleStrategy mit unserer neuen EatAndWaitStrategy
             .AddPrecondition(beliefs["AgentAtFoodShack"])
-            .AddEffect(beliefs["AgentIsHealthy"])
+            .AddEffect(beliefs["AgentIsFed"])
             .Build());
 
         actions.Add(new AgentAction.Builder("MoveToDoorOne")
-            .WithStrategy(new MoveStrategy(navMeshAgent, () => doorOnePosition.position))
+            .WithStrategy(new MoveStrategy(navMeshAgent, () => doorOnePosition.position, 1.0f))
             .AddEffect(beliefs["AgentAtDoorOne"])
             .Build());
 
         actions.Add(new AgentAction.Builder("MoveToDoorTwo")
-            .WithStrategy(new MoveStrategy(navMeshAgent, () => doorTwoPosition.position))
+            .WithStrategy(new MoveStrategy(navMeshAgent, () => doorTwoPosition.position, 1.0f))
             .AddEffect(beliefs["AgentAtDoorTwo"])
             .Build());
 
         actions.Add(new AgentAction.Builder("MoveFromDoorOneToRestArea")
             .WithCost(2)
-            .WithStrategy(new MoveStrategy(navMeshAgent, () => restingPosition.position))
+            .WithStrategy(new MoveStrategy(navMeshAgent, () => restingPosition.position, 2.0f))
             .AddPrecondition(beliefs["AgentAtDoorOne"])
             .AddEffect(beliefs["AgentAtRestingPosition"])
             .Build());
 
         actions.Add(new AgentAction.Builder("MoveFromDoorTwoRestArea")
-            .WithStrategy(new MoveStrategy(navMeshAgent, () => restingPosition.position))
+            .WithStrategy(new MoveStrategy(navMeshAgent, () => restingPosition.position, 2.0f))
             .AddPrecondition(beliefs["AgentAtDoorTwo"])
             .AddEffect(beliefs["AgentAtRestingPosition"])
             .Build());
@@ -136,7 +136,7 @@ public class GoapAgent : MonoBehaviour {
             .Build());
 
         actions.Add(new AgentAction.Builder("ChasePlayer")
-            .WithStrategy(new MoveStrategy(navMeshAgent, () => beliefs["PlayerInChaseRange"].Location))
+            .WithStrategy(new MoveStrategy(navMeshAgent, () => beliefs["PlayerInChaseRange"].Location, 1.5f))
             .AddPrecondition(beliefs["PlayerInChaseRange"])
             .AddEffect(beliefs["PlayerInAttackRange"])
             .Build());
@@ -161,9 +161,9 @@ public class GoapAgent : MonoBehaviour {
             .WithDesiredEffect(beliefs["AgentMoving"])
             .Build());
         
-        goals.Add(new AgentGoal.Builder("KeepHealthUp")
+                    goals.Add(new AgentGoal.Builder("KeepHungerUp")
             .WithPriority(2)
-            .WithDesiredEffect(beliefs["AgentIsHealthy"])
+            .WithDesiredEffect(beliefs["AgentIsFed"])
             .Build());
 
         goals.Add(new AgentGoal.Builder("KeepStaminaUp")
@@ -189,9 +189,9 @@ public class GoapAgent : MonoBehaviour {
     // TODO move to stats system
     void UpdateStats() {
         stamina += InRangeOf(restingPosition.position, 3f) ? 20 : -10;
-        health += InRangeOf(foodShack.position, 3f) ? 20 : -5;
+        hunger += InRangeOf(foodShack.position, 3f) ? 20 : -5;
         stamina = Mathf.Clamp(stamina, 0, 100);
-        health = Mathf.Clamp(health, 0, 100);
+        hunger = Mathf.Clamp(hunger, 0, 100);
     }
     
     bool InRangeOf(Vector3 pos, float range) => Vector3.Distance(transform.position, pos) < range;

@@ -21,6 +21,33 @@ public interface IActionStrategy {
     }
 }
 
+public class EatStrategy : IActionStrategy {
+    public bool CanPerform => true; // Agent can always attack
+    public bool Complete   { get; private set; }
+    
+    readonly CountdownTimer timer;
+    readonly NavMeshAgent agent;
+    readonly AnimationController animations;
+    readonly Func<Vector3> destination;
+
+    public EatStrategy(NavMeshAgent agent, AnimationController animations, Func<Vector3> destination) {
+        this.agent = agent;
+        this.animations = animations;
+        this.destination = destination;
+        if(Vector3.Distance(agent.transform.position, destination()) <= 2f && !agent.pathPending)
+        timer = new CountdownTimer(animations.GetAnimationLength(animations.eatClip));
+        timer.OnTimerStart += () => Complete = false;
+        timer.OnTimerStop += () => Complete = true;
+    }
+    
+    public void Start() {
+        timer.Start();
+        animations.Eat();
+    }
+    
+    public void Update(float deltaTime) => timer.Tick(deltaTime);
+}
+
 public class AttackStrategy : IActionStrategy {
     public bool CanPerform => true; // Agent can always attack
     public bool Complete { get; private set; }
@@ -46,16 +73,22 @@ public class AttackStrategy : IActionStrategy {
 public class MoveStrategy : IActionStrategy {
     readonly NavMeshAgent agent;
     readonly Func<Vector3> destination;
-    
+    readonly float stoppingDistance;
+
     public bool CanPerform => !Complete;
-    public bool Complete => agent.remainingDistance <= 2f && !agent.pathPending;
-    
-    public MoveStrategy(NavMeshAgent agent, Func<Vector3> destination) {
+    public bool Complete => agent.remainingDistance <= agent.stoppingDistance && !agent.pathPending;
+
+    public MoveStrategy(NavMeshAgent agent, Func<Vector3> destination, float stoppingDistance = 2f) {
         this.agent = agent;
         this.destination = destination;
+        this.stoppingDistance = stoppingDistance;
     }
-    
-    public void Start() => agent.SetDestination(destination());
+
+    public void Start() {
+        agent.stoppingDistance = stoppingDistance;
+        agent.SetDestination(destination());
+    }
+
     public void Stop() => agent.ResetPath();
 }
 
@@ -64,7 +97,7 @@ public class WanderStrategy : IActionStrategy {
     readonly float wanderRadius;
     
     public bool CanPerform => !Complete;
-    public bool Complete => agent.remainingDistance <= 2f && !agent.pathPending;
+    public bool Complete => agent.remainingDistance <= agent.stoppingDistance && !agent.pathPending;
     
     public WanderStrategy(NavMeshAgent agent, float wanderRadius) {
         this.agent = agent;

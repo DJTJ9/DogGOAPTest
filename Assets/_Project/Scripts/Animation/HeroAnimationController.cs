@@ -12,4 +12,8 @@ public class HeroAnimationController : AnimationController {
     protected override void SetSpeedHash() {
         speedHash = Animator.StringToHash("Speed");
     }
+    
+    protected override void SetEatClip() {
+        eatClip = Animator.StringToHash("Eat");   
+    }
 }

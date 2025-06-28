@@ -12,16 +12,22 @@ public abstract class AnimationController : MonoBehaviour {
     [HideInInspector] public int locomotionClip = Animator.StringToHash("Locomotion");
     [HideInInspector] public int speedHash = Animator.StringToHash("Speed");
     [HideInInspector] public int attackClip = Animator.StringToHash("Attack");
+    [HideInInspector] public int eatClip = Animator.StringToHash("Eat");
+    [HideInInspector] public int eatTrigger = Animator.StringToHash("IsEating_tr");
+    [HideInInspector] public int locomotionTrigger = Animator.StringToHash("Locomotion_tr");
     
     void Awake() {
         animator = GetComponentInChildren<Animator>();
         SetLocomotionClip();
         SetAttackClip();
         SetSpeedHash();
+        SetEatClip();
     }
 
     public void SetSpeed(float speed) => animator.SetFloat(speedHash, speed);
-    public void Attack()              => PlayAnimationUsingTimer(attackClip);
+    public void Attack() => PlayAnimationUsingTimer(attackClip);
+    public void Eat() => animator.SetTrigger(eatTrigger); // PlayAnimationUsingTimer(eatClip);
+    public void Locomotion() => animator.SetTrigger(locomotionTrigger);
     
     void Update() => timer?.Tick(Time.deltaTime);
 
@@ -48,4 +54,5 @@ public abstract class AnimationController : MonoBehaviour {
     protected abstract void SetLocomotionClip();
     protected abstract void SetAttackClip();
     protected abstract void SetSpeedHash();
+    protected abstract void SetEatClip();
 }

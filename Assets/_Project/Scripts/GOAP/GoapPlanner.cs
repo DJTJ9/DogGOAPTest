@@ -9,7 +9,7 @@ public interface IGoapPlanner {
 public class GoapPlanner : IGoapPlanner {
     public ActionPlan Plan(GoapAgent agent, HashSet<AgentGoal> goals, AgentGoal mostRecentGoal = null) {
         // Order goals by priority, descending
-        List<AgentGoal> orderedGoals = goals
+        var orderedGoals = goals
             .Where(g => g.DesiredEffects.Any(b => !b.Evaluate()))
             .OrderByDescending(g => g == mostRecentGoal ? g.Priority - 0.01 : g.Priority)
             .ToList();
@@ -59,7 +59,7 @@ public class GoapPlanner : IGoapPlanner {
                 newRequiredEffects.ExceptWith(action.Effects);
                 newRequiredEffects.UnionWith(action.Preconditions);
                 
-                var newAvailableActions = new HashSet<AgentAction>(actions);
+                var newAvailableActions = new HashSet<AgentAction>(actions);  // Die beiden Zeilen weglassen, wenn eine Action mehr als einmal in einem Plan benutzt werden können soll
                 newAvailableActions.Remove(action);
                 
                 var newNode = new Node(parent, action, newRequiredEffects, parent.Cost + action.Cost);

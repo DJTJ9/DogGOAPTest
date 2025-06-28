@@ -6,10 +6,14 @@ public class CactusAnimationController : AnimationController {
     }
     
     protected override void SetAttackClip() {
-        attackClip = Animator.StringToHash("Cactus_Attack01");
+        attackClip = Animator.StringToHash("Attack");
     }
     
     protected override void SetSpeedHash() {
         speedHash = Animator.StringToHash("Speed");
+    }
+
+    protected override void SetEatClip() {
+        eatClip = Animator.StringToHash("Eat");   
     }
 }
