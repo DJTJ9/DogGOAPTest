@@ -2622,7 +2622,7 @@ GameObject:
   - component: {fileID: 1833712233885600150}
   - component: {fileID: 1740293195698403335}
   - component: {fileID: 7666100198560794592}
-  - component: {fileID: 2690875126951398854}
+  - component: {fileID: 805335021527523224}
   m_Layer: 0
   m_Name: Husky
   m_TagString: Untagged
@@ -2686,6 +2686,11 @@ MonoBehaviour:
   locomotionClip: -2089788878
   speedHash: -823668238
   attackClip: 1080829965
+  eatClip: -1566672390
+  drinkClip: -864063531
+  locomotionTrigger: 1514662370
+  eatTrigger: 1982801699
+  drinkTrigger: 1932898575
 --- !u!195 &1833712233885600150
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -2704,7 +2709,7 @@ NavMeshAgent:
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1
   m_AutoRepath: 1
-  m_Height: 2
+  m_Height: 1
   m_BaseOffset: -0.1
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
@@ -2720,14 +2725,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7f0d35ee3c5b2aa409ad26e8a1a190b5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  hunger: 30
+  thirst: 27.91
+  stamina: 100
+  wanderRadius: 10
+  pickUpDistance: 2.3
+  restingDuration: 5
   chaseSensor: {fileID: 7996166461979541081}
   attackSensor: {fileID: 7549648818675722912}
   restingPosition: {fileID: 0}
-  foodShack: {fileID: 0}
+  foodBowl: {fileID: 0}
+  waterBowl: {fileID: 0}
   doorOnePosition: {fileID: 0}
   doorTwoPosition: {fileID: 0}
-  health: 100
-  stamina: 100
 --- !u!54 &7666100198560794592
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -2755,18 +2765,28 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &2690875126951398854
-MonoBehaviour:
+--- !u!64 &805335021527523224
+MeshCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4971611557724096039}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
   m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1888dabdece64344ea8c3f4fc89fec0a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  serializedVersion: 5
+  m_Convex: 1
+  m_CookingOptions: -1
+  m_Mesh: {fileID: 4300000, guid: e3cb8eab846d7e04fb821817d75d6467, type: 2}
 --- !u!1 &5050967701976069439
 GameObject:
   m_ObjectHideFlags: 0

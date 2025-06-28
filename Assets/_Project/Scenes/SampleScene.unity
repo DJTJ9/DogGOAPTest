@@ -528,6 +528,11 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &1041714514 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 2937941480635097522, guid: cc1d130c0e7512a4cadff14050b422dc, type: 3}
+  m_PrefabInstance: {fileID: 1418996370}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1101704565
 GameObject:
   m_ObjectHideFlags: 0
@@ -877,6 +882,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8143f992edef5de49984d0a8c07e93f6, type: 3}
+--- !u!4 &1662145857 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 2083778932578735553, guid: b23aa0f47b77fbc4c8e0a2a9adc0fb29, type: 3}
+  m_PrefabInstance: {fileID: 596004988}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &2053825135 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6920918337413409961, guid: b23aa0f47b77fbc4c8e0a2a9adc0fb29, type: 3}
@@ -903,9 +913,17 @@ PrefabInstance:
       value: 100
       objectReference: {fileID: 0}
     - target: {fileID: 1740293195698403335, guid: a25416aef927dcd45b69c5ee79f52ebf, type: 3}
+      propertyPath: foodBowl
+      value: 
+      objectReference: {fileID: 1662145857}
+    - target: {fileID: 1740293195698403335, guid: a25416aef927dcd45b69c5ee79f52ebf, type: 3}
       propertyPath: foodShack
       value: 
       objectReference: {fileID: 2053825135}
+    - target: {fileID: 1740293195698403335, guid: a25416aef927dcd45b69c5ee79f52ebf, type: 3}
+      propertyPath: waterBowl
+      value: 
+      objectReference: {fileID: 1041714514}
     - target: {fileID: 1740293195698403335, guid: a25416aef927dcd45b69c5ee79f52ebf, type: 3}
       propertyPath: doorOnePosition
       value: 

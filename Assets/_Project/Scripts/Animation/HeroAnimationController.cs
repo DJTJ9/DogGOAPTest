@@ -16,4 +16,8 @@ public class HeroAnimationController : AnimationController {
     protected override void SetEatClip() {
         eatClip = Animator.StringToHash("Eat");   
     }
+
+    protected override void SetDrinkClip() {
+        drinkClip = Animator.StringToHash("Drink");  
+    }
 }
