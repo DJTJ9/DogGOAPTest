@@ -221,6 +221,37 @@ Transform:
   - {fileID: 572703662042274565}
   m_Father: {fileID: 9154588468872414487}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &416715352913844285
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6197775878413007306}
+  m_Layer: 0
+  m_Name: ObjectGrabPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6197775878413007306
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 416715352913844285}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.685, z: 0.92}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2766324692857545076}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &422600853003236565
 GameObject:
   m_ObjectHideFlags: 0
@@ -2647,6 +2678,7 @@ Transform:
   - {fileID: 2887482409218190374}
   - {fileID: 2293704401645952793}
   - {fileID: 7477246468575077083}
+  - {fileID: 6197775878413007306}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!95 &8851668977642515786
@@ -2691,6 +2723,7 @@ MonoBehaviour:
   locomotionTrigger: 1514662370
   eatTrigger: 1982801699
   drinkTrigger: 1932898575
+  sleepIdleTrigger: 2096156337
 --- !u!195 &1833712233885600150
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -2725,9 +2758,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7f0d35ee3c5b2aa409ad26e8a1a190b5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hunger: 30
-  thirst: 27.91
-  stamina: 100
   wanderRadius: 10
   pickUpDistance: 2.3
   restingDuration: 5
@@ -2738,6 +2768,9 @@ MonoBehaviour:
   waterBowl: {fileID: 0}
   doorOnePosition: {fileID: 0}
   doorTwoPosition: {fileID: 0}
+  hunger: {fileID: 11400000, guid: 41adc23cea22e1b44b274678d4b6bf7c, type: 2}
+  thirst: {fileID: 11400000, guid: 022bf3f4048ca6c4b859295649650a57, type: 2}
+  stamina: {fileID: 11400000, guid: a03706b7611e8e54ea664e670d3755a9, type: 2}
 --- !u!54 &7666100198560794592
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -4769,7 +4802,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 29ff1d1c06584224e9eb31130a3a2374, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  detectionRadius: 10
+  detectionRadius: 5
   timerInterval: 1
 --- !u!1 &8953150829364108006
 GameObject:

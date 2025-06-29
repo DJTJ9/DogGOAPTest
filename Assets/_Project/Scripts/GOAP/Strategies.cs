@@ -76,7 +76,7 @@ public class WanderStrategy : IActionStrategy {
     
     
     public bool CanPerform => !Complete;
-    public bool Complete   => agent.remainingDistance <= 2f && !agent.pathPending && m_wanderStepsCounter >= wanderSteps; // Die letzte Condition funktioniert nicht
+    public bool Complete   => agent.remainingDistance <= 2f && !agent.pathPending; // Die letzte Condition funktioniert nicht: && m_wanderStepsCounter >= wanderSteps
     
     public WanderStrategy(NavMeshAgent agent, float wanderRadius, int wanderSteps = 5) {
         this.agent = agent;

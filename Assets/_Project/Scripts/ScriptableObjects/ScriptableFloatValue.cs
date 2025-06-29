@@ -1,0 +1,65 @@
+using UnityEngine;
+using System;
+
+namespace ScriptableValues
+{
+    [CreateAssetMenu(fileName = "Float Value", menuName = "ScriptableValues/Float")]
+    public class ScriptableFloatValue : ScriptableObject
+    {
+        [SerializeField] private float currentValue;
+        [SerializeField] private float defaultValue;
+        [SerializeField] private float minValue;
+        [SerializeField] private float maxValue;
+
+        // Öffentliche Properties für den Zugriff im Editor
+        public float MinValue => minValue;
+        public float MaxValue => maxValue;
+        public float DefaultValue => defaultValue;
+
+        // Event für Änderungen
+        public event Action<float> OnValueChanged;
+
+        // Property mit Getter und Setter
+        public float Value
+        {
+            get => currentValue;
+            set
+            {
+                float clampedValue = Mathf.Clamp(value, minValue, maxValue);
+                if (currentValue != clampedValue)
+                {
+                    currentValue = clampedValue;
+                    OnValueChanged?.Invoke(currentValue);
+                }
+            }
+        }
+
+        // Wird beim Spielstart aufgerufen
+        private void OnEnable()
+        {
+            currentValue = defaultValue;
+        }
+
+        // Methode zum Zurücksetzen
+        public void ResetToDefault()
+        {
+            Value = defaultValue;
+        }
+
+        // Nützliche Hilfsmethoden
+        public void Add(float amount)
+        {
+            Value += amount;
+        }
+
+        public void Subtract(float amount)
+        {
+            Value -= amount;
+        }
+
+        public void Multiply(float factor)
+        {
+            Value *= factor;
+        }
+    }
+}

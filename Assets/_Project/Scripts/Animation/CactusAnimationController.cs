@@ -20,4 +20,8 @@ public class CactusAnimationController : AnimationController {
     protected override void SetDrinkClip() {
         drinkClip = Animator.StringToHash("Drink");   
     }
+    
+    protected override void SetSleepClip() {
+        sleepIdleTrigger = Animator.StringToHash("Sleep_Idle_tr");
+    }
 }
