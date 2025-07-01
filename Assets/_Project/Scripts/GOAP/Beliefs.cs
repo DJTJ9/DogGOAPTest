@@ -4,32 +4,32 @@ using UnityEngine;
 
 public class BeliefFactory {
     readonly GoapAgent agent;
-    readonly Dictionary<string, AgentBelief> beliefs;
-    
-    public BeliefFactory(GoapAgent agent, Dictionary<string, AgentBelief> beliefs) {
+    readonly Dictionary<Beliefs, AgentBelief> beliefs;
+
+    public BeliefFactory(GoapAgent agent, Dictionary<Beliefs, AgentBelief> beliefs) {
         this.agent = agent;
         this.beliefs = beliefs;
     }
-    
-    public void AddBelief(string key, Func<bool> condition) {
-        beliefs.Add(key, new AgentBelief.Builder(key)
+
+    public void AddBelief(Beliefs type, Func<bool> condition) {
+        beliefs.Add(type, new AgentBelief.Builder(type)
             .WithCondition(condition)
             .Build());
     }
-    
-    public void AddSensorBelief(string key, Sensor sensor) {
-        beliefs.Add(key, new AgentBelief.Builder(key)
+
+    public void AddSensorBelief(Beliefs type, Sensor sensor) {
+        beliefs.Add(type, new AgentBelief.Builder(type)
             .WithCondition(() => sensor.IsTargetInRange)
             .WithLocation(() => sensor.TargetPosition)
             .Build());
     }
-    
-    public void AddLocationBelief(string key, float distance, Transform locationCondition) {
-        AddLocationBelief(key, distance, locationCondition.position);
+
+    public void AddLocationBelief(Beliefs type, float distance, Transform locationCondition) {
+        AddLocationBelief(type, distance, locationCondition.position);
     }
-    
-    public void AddLocationBelief(string key, float distance, Vector3 locationCondition) {
-        beliefs.Add(key, new AgentBelief.Builder(key)
+
+    public void AddLocationBelief(Beliefs type, float distance, Vector3 locationCondition) {
+        beliefs.Add(type, new AgentBelief.Builder(type)
             .WithCondition(() => InRangeOf(locationCondition, distance))
             .WithLocation(() => locationCondition)
             .Build());
@@ -38,25 +38,59 @@ public class BeliefFactory {
     bool InRangeOf(Vector3 pos, float range) => Vector3.Distance(agent.transform.position, pos) < range;
 }
 
-public class AgentBelief {
-    public string Name { get; }
+    public enum Beliefs {
+    Nothing,
+    DogIdle,
+    DogMoving,
+    DogStaminaLow,
+    DogIsRested,
+    DogHungerLow,
+    DogIsFed,
+    DogThirstLevelLow,
+    DogIsNotThirsty,
+    DogIsHappy,
+    DogWantsAttention,
+    DogIsBored,
+    AttackingPlayer,
+    AttackingRageVictim,
     
+    //Location Beliefs
+    DogAtDoorOne,
+    DogAtDoorTwo,
+    DogAtRestingPosition,
+    DogAtFoodBowl,
+    DogAtWaterBowl,
+    DogAtRageVictim,
+    
+    //Sensor Beliefs
+    PlayerInChaseRange,
+    PlayerInAttackRange
+    }
+
+    public enum LocationBeliefs
+    {
+       
+    }
+
+    public class AgentBelief {
+    public Beliefs Type { get; }
+
     Func<bool> condition = () => false;
     Func<Vector3> observedLocation = () => Vector3.zero;
-    
+
     public Vector3 Location => observedLocation();
-    
-    AgentBelief(string name) {
-        Name = name;
+
+    AgentBelief(Beliefs type) {
+        Type = type;
     }
-    
+
     public bool Evaluate() => condition();
 
     public class Builder {
         readonly AgentBelief belief;
-        
-        public Builder(string name) {
-            belief = new AgentBelief(name);
+
+        public Builder(Beliefs type) {
+            belief = new AgentBelief(type);
         }
         
         public Builder WithCondition(Func<bool> condition) {

@@ -28,26 +28,63 @@ public class AttackStrategy : IActionStrategy
     public bool CanPerform => true; // Agent can always attack
     public bool Complete   { get; private set; }
 
-    readonly CountdownTimer timer;
+    readonly CountdownTimer attackAnimationTimer;
+    readonly CountdownTimer waitTimer;
     readonly AnimationController animations;
+    
+    private bool isAttacking = true;
+    private int attackCount = 0;
+    private const int MAX_ATTACKS = 3;
 
-    public AttackStrategy(AnimationController animations, ScriptableFloatValue boredom, float funFactor = 80) {
+    public AttackStrategy(AnimationController animations, ScriptableFloatValue boredom, float funFactor = 35) {
         this.animations = animations;
-        timer = new CountdownTimer(animations.GetAnimationLength(animations.attackClip));
-        timer.OnTimerStart += () => Complete = false;
-        timer.OnTimerStop += () => {
-            animations.Locomotion();
-            boredom.Value -= funFactor;
-            Complete = true;
+        attackAnimationTimer = new CountdownTimer(2.2f);
+
+        attackAnimationTimer.OnTimerStart += () => {
+            isAttacking = true;
+            Complete = false;
         };
+        attackAnimationTimer.OnTimerStop += () => {
+            attackCount++;
+
+            if (attackCount < MAX_ATTACKS) {
+                // Starte den nächsten Angriff, bis MAX_ATTACKS erreicht ist
+                animations.Attack();
+                boredom.Value -= funFactor;
+                attackAnimationTimer.Start();
+            } else {
+                // Nach MAX_ATTACKS Angriffen: Wechsle zum Warten
+                isAttacking = false;
+                animations.Locomotion();
+                waitTimer.Start();
+                attackCount = 0; // Zurücksetzen für den nächsten Angriffszyklus
+            }
+        };
+        
+        waitTimer = new CountdownTimer(1f);
+        waitTimer.OnTimerStart += () => Complete = false;
+        waitTimer.OnTimerStop += () => Complete = true;
     }
 
     public void Start() {
-        timer.Start();
+        attackAnimationTimer.Start();
         animations.Attack();
     }
 
-    public void Update(float deltaTime) => timer.Tick(deltaTime);
+    public void Update(float deltaTime) {
+        if (isAttacking) attackAnimationTimer.Tick(deltaTime);
+        else waitTimer.Tick(deltaTime);
+    }
+    public void Stop() {
+        // Aufräumarbeiten, wenn die Strategy vorzeitig beendet wird
+        if (isAttacking) {
+            attackAnimationTimer.Stop();
+        } else {
+            waitTimer.Stop();
+        }
+        attackCount = 0; // Zurücksetzen des Angriffszählers
+        Complete = true;
+    }
 }
 
 public class MoveStrategy : IActionStrategy
@@ -203,9 +240,7 @@ public class EatAndWaitStrategy : IActionStrategy {
     }
 
     public void Start() {
-        // Starte die Animation
         animations.Eat();
-        // Starte den Timer für die Animation
         eatAnimationTimer.Start();
     }
 

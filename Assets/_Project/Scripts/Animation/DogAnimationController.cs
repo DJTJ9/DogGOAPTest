@@ -6,7 +6,7 @@ public class DogAnimationController : AnimationController {
     }
     
     protected override void SetAttackClip() {
-        attackClip = Animator.StringToHash("Attack");
+        attackClip = Animator.StringToHash("Attack2");
     }
     
     protected override void SetSpeedHash() {
