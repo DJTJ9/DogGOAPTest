@@ -17,12 +17,12 @@ public class GoapAgent : MonoBehaviour
     [SerializeField] private float pickUpDistance = 2.3f;
     [SerializeField] private float restingDuration = 5f;
 
-    [Header("Sensors")] [SerializeField] private Sensor chaseSensor;
+    [Header("Sensors")] 
+    [SerializeField] private Sensor chaseSensor;
     [SerializeField] private Sensor attackSensor;
 
-    [Header("Known Locations")] [SerializeField]
-    private Transform restingPosition;
-
+    [Header("Known Locations")] 
+    [SerializeField] private Transform restingPosition;
     [SerializeField] private Transform foodBowl;
     [SerializeField] private Transform waterBowl;
     [SerializeField] private Transform doorOnePosition;
@@ -137,7 +137,7 @@ public class GoapAgent : MonoBehaviour
 
         actions.Add(new AgentAction.Builder("Eat")
             .WithStrategy(
-                new EatAndWaitStrategy(animations))
+                new EatAndWaitStrategy(animations, hunger))
             .AddPrecondition(beliefs["AgentAtFoodBowl"])
             .AddEffect(beliefs["AgentIsFed"])
             .Build());
@@ -189,6 +189,7 @@ public class GoapAgent : MonoBehaviour
             .Build());
 
         actions.Add(new AgentAction.Builder("Sleep")
+            .WithCost(2f)
             .WithStrategy(new SleepAndWaitStrategy(animations))
             .AddPrecondition(beliefs["AgentAtRestingPosition"])
             .AddEffect(beliefs["AgentIsRested"])
@@ -261,12 +262,12 @@ public class GoapAgent : MonoBehaviour
         if (InRangeOf(restingPosition.position, 2f))
             stamina.Add(10);
         else
-            stamina.Subtract(2);
+            stamina.Subtract(1);
 
-        if (InRangeOf(foodBowl.position, 2f))
-            hunger.Add(40);
-        else
-            hunger.Subtract(1);
+        // if (InRangeOf(foodBowl.position, 2f))
+        //     hunger.Add(40);
+        // else
+        hunger.Subtract(1);
 
         if (InRangeOf(waterBowl.position, 2f))
             thirst.Add(40);

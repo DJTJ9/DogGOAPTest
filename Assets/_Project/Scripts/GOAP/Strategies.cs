@@ -1,5 +1,6 @@
 using System;
 using ImprovedTimers;
+using ScriptableValues;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -115,6 +116,67 @@ public class IdleStrategy : IActionStrategy
 
     public void Start()                 => timer.Start();
     public void Update(float deltaTime) => timer.Tick(deltaTime);
+}
+
+public class EatAndWaitStrategy : IActionStrategy {
+    public bool CanPerform => true; // Agent kann immer essen
+    public bool Complete   { get; private set; }
+
+    readonly CountdownTimer eatAnimationTimer;
+    readonly CountdownTimer waitTimer;
+    readonly AnimationController animations;
+    
+    private bool m_isEating = true;
+
+    public EatAndWaitStrategy(AnimationController animations, ScriptableFloatValue hunger, float saturation = 69f) {
+        this.animations = animations;
+
+        // Timer für die Eat-Animation
+        float eatDuration = animations.GetAnimationLength(animations.eatClip);
+        eatAnimationTimer = new CountdownTimer(5.7f);
+        eatAnimationTimer.OnTimerStart += () => {
+            m_isEating = true;
+            Complete = false;
+        };
+        eatAnimationTimer.OnTimerStop += () => {
+            m_isEating = false;
+            animations.Locomotion();
+            waitTimer.Start(); // Starte den Wait-Timer nach dem Essen
+        };
+
+        // Timer für die Wartezeit nach dem Essen
+        waitTimer = new CountdownTimer(1f);
+        waitTimer.OnTimerStart += () => Complete = false;
+        waitTimer.OnTimerStop += () => {
+            hunger.Value += saturation;
+            Complete = true;
+        };
+    }
+
+    public void Start() {
+        // Starte die Animation
+        animations.Eat();
+        // Starte den Timer für die Animation
+        eatAnimationTimer.Start();
+    }
+
+    public void Update(float deltaTime) {
+        if (m_isEating) {
+            eatAnimationTimer.Tick(deltaTime);
+        } else {
+            waitTimer.Tick(deltaTime);
+        }
+    }
+
+    public void Stop() {
+        // Aufräumarbeiten, wenn die Strategy vorzeitig beendet wird
+        if (m_isEating) {
+            eatAnimationTimer.Stop();
+        } else {
+            waitTimer.Stop();
+        }
+        Complete = true;
+    }
 }
 
 public class DrinkAndWaitStrategy : IActionStrategy
