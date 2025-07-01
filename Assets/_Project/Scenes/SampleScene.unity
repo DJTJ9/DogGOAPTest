@@ -294,6 +294,7 @@ Transform:
   - {fileID: 799595558}
   - {fileID: 664130569}
   - {fileID: 732810051}
+  - {fileID: 539735025}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!20 &323392777 stripped
@@ -535,6 +536,68 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 25269467461883209, guid: cc1d130c0e7512a4cadff14050b422dc, type: 3}
   m_PrefabInstance: {fileID: 1418996370}
   m_PrefabAsset: {fileID: 0}
+--- !u!4 &539735025 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 5734237290196956189, guid: 6e9c9061f40ea10418f651209cd4b949, type: 3}
+  m_PrefabInstance: {fileID: 569135210}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &569135210
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 278530566}
+    m_Modifications:
+    - target: {fileID: 5734237290196854845, guid: 6e9c9061f40ea10418f651209cd4b949, type: 3}
+      propertyPath: m_Name
+      value: RageVictim
+      objectReference: {fileID: 0}
+    - target: {fileID: 5734237290196956189, guid: 6e9c9061f40ea10418f651209cd4b949, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 10.041632
+      objectReference: {fileID: 0}
+    - target: {fileID: 5734237290196956189, guid: 6e9c9061f40ea10418f651209cd4b949, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.108567044
+      objectReference: {fileID: 0}
+    - target: {fileID: 5734237290196956189, guid: 6e9c9061f40ea10418f651209cd4b949, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 5.1084824
+      objectReference: {fileID: 0}
+    - target: {fileID: 5734237290196956189, guid: 6e9c9061f40ea10418f651209cd4b949, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5734237290196956189, guid: 6e9c9061f40ea10418f651209cd4b949, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5734237290196956189, guid: 6e9c9061f40ea10418f651209cd4b949, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5734237290196956189, guid: 6e9c9061f40ea10418f651209cd4b949, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5734237290196956189, guid: 6e9c9061f40ea10418f651209cd4b949, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5734237290196956189, guid: 6e9c9061f40ea10418f651209cd4b949, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5734237290196956189, guid: 6e9c9061f40ea10418f651209cd4b949, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 6e9c9061f40ea10418f651209cd4b949, type: 3}
 --- !u!1001 &596004988
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1297,7 +1360,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 15.481632, y: 0, z: 7.538482}
-  m_LocalScale: {x: 10, y: 1, z: 10}
+  m_LocalScale: {x: 3, y: 1, z: 3}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 278530566}
@@ -1935,6 +1998,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 1740293195698403335, guid: a25416aef927dcd45b69c5ee79f52ebf, type: 3}
+      propertyPath: boredom
+      value: 
+      objectReference: {fileID: 11400000, guid: 577a0fb4e480e824a91f6eeeae37733d, type: 2}
+    - target: {fileID: 1740293195698403335, guid: a25416aef927dcd45b69c5ee79f52ebf, type: 3}
       propertyPath: foodBowl
       value: 
       objectReference: {fileID: 1662145857}
@@ -1950,6 +2017,14 @@ PrefabInstance:
       propertyPath: ballThrown
       value: 
       objectReference: {fileID: 11400000, guid: 574a9b9a3d4591746a2c8492e7efe9fa, type: 2}
+    - target: {fileID: 1740293195698403335, guid: a25416aef927dcd45b69c5ee79f52ebf, type: 3}
+      propertyPath: rageVictim
+      value: 
+      objectReference: {fileID: 539735025}
+    - target: {fileID: 1740293195698403335, guid: a25416aef927dcd45b69c5ee79f52ebf, type: 3}
+      propertyPath: pickUpDistance
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 1740293195698403335, guid: a25416aef927dcd45b69c5ee79f52ebf, type: 3}
       propertyPath: doorOnePosition
       value: 

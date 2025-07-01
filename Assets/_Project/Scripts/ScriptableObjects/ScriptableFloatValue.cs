@@ -1,5 +1,6 @@
 using UnityEngine;
 using System;
+using Sirenix.OdinInspector;
 
 namespace ScriptableValues
 {
@@ -7,9 +8,9 @@ namespace ScriptableValues
     public class ScriptableFloatValue : ScriptableObject
     {
         [SerializeField] private float currentValue;
-        [SerializeField] private float defaultValue;
-        [SerializeField] private float minValue;
-        [SerializeField] private float maxValue;
+        [FoldoutGroup("Settings"), SerializeField] private float defaultValue;
+        [FoldoutGroup("Settings"), SerializeField] private float minValue;
+        [FoldoutGroup("Settings"), SerializeField] private float maxValue;
 
         // Öffentliche Properties für den Zugriff im Editor
         public float MinValue => minValue;

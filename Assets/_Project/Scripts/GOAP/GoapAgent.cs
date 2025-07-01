@@ -10,30 +10,45 @@ using UnityEngine.AI;
 [RequireComponent(typeof(AnimationController))]
 public class GoapAgent : MonoBehaviour
 {
-
-    [Header("Agent Parameters")] [SerializeField]
+    // [FoldoutGroup("Parameters")]
+    [FoldoutGroup("Agent Parameters", expanded: true)] [SerializeField]
     private float wanderRadius = 20f;
+    [FoldoutGroup("Agent Parameters")] [SerializeField]
+    private float pickUpDistance = 2f;
+    [FoldoutGroup("Agent Parameters")] [SerializeField]
+    private float restingDuration = 5f;
 
-    [SerializeField] private float pickUpDistance = 2.3f;
-    [SerializeField] private float restingDuration = 5f;
+    [FoldoutGroup("Stats", expanded: true), SerializeField, InlineEditor]
+    private ScriptableFloatValue stamina;
+    [FoldoutGroup("Stats"), SerializeField, InlineEditor]
+    private ScriptableFloatValue thirst;
+    [FoldoutGroup("Stats"), SerializeField, InlineEditor]
+    private ScriptableFloatValue hunger;
+    [FoldoutGroup("Stats"), SerializeField, InlineEditor]
+    private ScriptableFloatValue boredom;
+    [FoldoutGroup("Stats"), SerializeField, InlineEditor]
+    private ScriptableBoolValue ballInHand;
+    [FoldoutGroup("Stats"), SerializeField, InlineEditor]
+    private ScriptableBoolValue ballThrown;
 
-    [Header("Sensors")] 
-    [SerializeField] private Sensor chaseSensor;
-    [SerializeField] private Sensor attackSensor;
+    [FoldoutGroup("Sensors", expanded: true), SerializeField] 
+    private Sensor chaseSensor;
+    [FoldoutGroup("Sensors"), SerializeField] 
+    private Sensor attackSensor;
 
-    [Header("Known Locations")] 
-    [SerializeField] private Transform restingPosition;
-    [SerializeField] private Transform foodBowl;
-    [SerializeField] private Transform waterBowl;
-    [SerializeField] private Transform doorOnePosition;
-    [SerializeField] private Transform doorTwoPosition;
+    [FoldoutGroup("Known Locations", expanded: true), SerializeField]
+    private Transform restingPosition;
+    [FoldoutGroup("Known Locations"), SerializeField] 
+    private Transform foodBowl;
+    [FoldoutGroup("Known Locations"), SerializeField] 
+    private Transform waterBowl;
+    [FoldoutGroup("Known Locations"), SerializeField] 
+    private Transform rageVictim;
+    [FoldoutGroup("Known Locations"), SerializeField] 
+    private Transform doorOnePosition;
+    [FoldoutGroup("Known Locations"), SerializeField] 
+    private Transform doorTwoPosition;
 
-    [Header("Stats")] 
-    [SerializeField, InlineEditor] private ScriptableFloatValue hunger;
-    [SerializeField, InlineEditor] private ScriptableFloatValue thirst;
-    [SerializeField, InlineEditor] private ScriptableFloatValue stamina;
-    [SerializeField, InlineEditor] private ScriptableBoolValue ballInHand;
-    [SerializeField, InlineEditor] private ScriptableBoolValue ballThrown;
     // [Header("Strategy Scriptable Objects")]
     // [SerializeField] private IdleStrategyScriptableObject idleStrategy;
     // [SerializeField] private WanderStrategyScriptableObject wanderStrategy;
@@ -56,9 +71,10 @@ public class GoapAgent : MonoBehaviour
     private AgentGoal currentGoal;
     private ActionPlan actionPlan;
     private AgentAction currentAction;
-
-
     private IGoapPlanner gPlanner;
+
+    private int sleepCost = 1;
+    private int restCost = 1;
 
     void Awake() {
         navMeshAgent = GetComponent<NavMeshAgent>();
@@ -75,130 +91,136 @@ public class GoapAgent : MonoBehaviour
         SetupActions();
         SetupGoals();
     }
-    
-    void OnEnable()  => chaseSensor.OnTargetChanged += HandleTargetChanged;
-    
+
+    void OnEnable() => chaseSensor.OnTargetChanged += HandleTargetChanged;
+
     void OnDisable() => chaseSensor.OnTargetChanged -= HandleTargetChanged;
-    
+
     void SetupBeliefs() {
         beliefs = new Dictionary<string, AgentBelief>();
         BeliefFactory factory = new BeliefFactory(this, beliefs);
 
         factory.AddBelief("Nothing", () => false);
-        factory.AddBelief("AgentIdle", () => !navMeshAgent.hasPath);
-        factory.AddBelief("AgentMoving", () => navMeshAgent.hasPath);
-        factory.AddBelief("AgentHungerLow", () => hunger.Value < 10);
-        factory.AddBelief("AgentIsFed", () => hunger.Value >= 30);
-        factory.AddBelief("AgentThirstLevelLow", () => thirst.Value < 10);
-        factory.AddBelief("AgentIsNotThirsty", () => thirst.Value >= 30);
-        factory.AddBelief("AgentStaminaLow", () => stamina.Value < 20);
-        factory.AddBelief("AgentIsRested", () => stamina.Value >= 75);
+        factory.AddBelief("DogIdle", () => !navMeshAgent.hasPath);
+        factory.AddBelief("DogMoving", () => navMeshAgent.hasPath);
+        factory.AddBelief("DogStaminaLow", () => stamina.Value < 10);
+        factory.AddBelief("DogIsRested", () => stamina.Value >= 30);
+        factory.AddBelief("DogHungerLow", () => hunger.Value < 10);
+        factory.AddBelief("DogIsFed", () => hunger.Value >= 30);
+        factory.AddBelief("DogThirstLevelLow", () => thirst.Value < 10);
+        factory.AddBelief("DogIsNotThirsty", () => thirst.Value >= 30);
+        factory.AddBelief("DogIsHappy", () => boredom.Value < 90);
+        factory.AddBelief("DogIsBored", () => boredom.Value >= 70);
+        
 
-        factory.AddLocationBelief("AgentAtDoorOne", 3f, doorOnePosition);
-        factory.AddLocationBelief("AgentAtDoorTwo", 3f, doorTwoPosition);
-        factory.AddLocationBelief("AgentAtRestingPosition", 3f, restingPosition);
-        factory.AddLocationBelief("AgentAtFoodBowl", 3f, foodBowl);
-        factory.AddLocationBelief("AgentAtWaterBowl", 3f, waterBowl);
+        factory.AddLocationBelief("DogAtDoorOne", 3f, doorOnePosition);
+        factory.AddLocationBelief("DogAtDoorTwo", 3f, doorTwoPosition);
+        factory.AddLocationBelief("DogAtRestingPosition", 3f, restingPosition);
+        factory.AddLocationBelief("DogAtFoodBowl", 3f, foodBowl);
+        factory.AddLocationBelief("DogAtWaterBowl", 3f, waterBowl);
+        factory.AddLocationBelief("DogAtRageVictim", 3f, rageVictim);
 
         factory.AddSensorBelief("PlayerInChaseRange", chaseSensor);
         factory.AddSensorBelief("PlayerInAttackRange", attackSensor);
         factory.AddBelief("AttackingPlayer", () => false); // Player can always be attacked, this will never become true
+        factory.AddBelief("AttackingRageVictim", () => false);
     }
 
     protected virtual void SetupActions() {
         actions = new HashSet<AgentAction>();
 
         actions.Add(new AgentAction.Builder("Relax")
-            .WithStrategy(new IdleStrategy(restingDuration))
+            .WithStrategy(new IdleStrategy(restingDuration, stamina))
             .AddEffect(beliefs["Nothing"])
             .Build());
 
         actions.Add(new AgentAction.Builder("WanderAround")
             .WithStrategy(new WanderStrategy(navMeshAgent, wanderRadius))
-            .AddEffect(beliefs["AgentMoving"])
+            .AddEffect(beliefs["DogMoving"])
             .Build());
-        
+
         actions.Add(new AgentAction.Builder("MoveFromRelaxToRestArea")
             .WithStrategy(new MoveStrategy(navMeshAgent, () => restingPosition.position, 2.0f))
-            .AddPrecondition(beliefs["AgentIdle"])
-            .AddEffect(beliefs["AgentAtRestingPosition"])
+            .AddPrecondition(beliefs["DogIdle"])
+            .AddEffect(beliefs["DogAtRestingPosition"])
             .Build());
-        
+
         actions.Add(new AgentAction.Builder("MoveFromWanderToRestArea")
             .WithStrategy(new MoveStrategy(navMeshAgent, () => restingPosition.position, 2.0f))
-            .AddPrecondition(beliefs["AgentMoving"])
-            .AddEffect(beliefs["AgentAtRestingPosition"])
+            .AddPrecondition(beliefs["DogMoving"])
+            .AddEffect(beliefs["DogAtRestingPosition"])
             .Build());
 
         actions.Add(new AgentAction.Builder("MoveToEatingPosition")
             .WithStrategy(new MoveStrategy(navMeshAgent, () => foodBowl.position, pickUpDistance))
-            .AddEffect(beliefs["AgentAtFoodBowl"])
+            .AddEffect(beliefs["DogAtFoodBowl"])
             .Build());
 
         actions.Add(new AgentAction.Builder("Eat")
             .WithStrategy(
                 new EatAndWaitStrategy(animations, hunger))
-            .AddPrecondition(beliefs["AgentAtFoodBowl"])
-            .AddEffect(beliefs["AgentIsFed"])
+            .AddPrecondition(beliefs["DogAtFoodBowl"])
+            .AddEffect(beliefs["DogIsFed"])
             .Build());
-        
+
         actions.Add(new AgentAction.Builder("MoveFromFoodBowlToRestArea")
             .WithStrategy(new MoveStrategy(navMeshAgent, () => restingPosition.position, 2.0f))
-            .AddPrecondition(beliefs["AgentAtFoodBowl"])
-            .AddEffect(beliefs["AgentAtRestingPosition"])
+            .AddPrecondition(beliefs["DogAtFoodBowl"])
+            .AddEffect(beliefs["DogAtRestingPosition"])
             .Build());
 
         actions.Add(new AgentAction.Builder("MoveToDrinkingPosition")
             .WithStrategy(new MoveStrategy(navMeshAgent, () => waterBowl.position, pickUpDistance))
-            .AddEffect(beliefs["AgentAtWaterBowl"])
+            .AddEffect(beliefs["DogAtWaterBowl"])
             .Build());
 
         actions.Add(new AgentAction.Builder("Drink")
-            .WithStrategy(new DrinkAndWaitStrategy(animations))
-            .AddPrecondition(beliefs["AgentAtWaterBowl"])
-            .AddEffect(beliefs["AgentIsNotThirsty"])
+            .WithStrategy(new DrinkAndWaitStrategy(animations, thirst))
+            .AddPrecondition(beliefs["DogAtWaterBowl"])
+            .AddEffect(beliefs["DogIsNotThirsty"])
             .Build());
-        
+
         actions.Add(new AgentAction.Builder("MoveFromWaterBowlToRestArea")
             .WithStrategy(new MoveStrategy(navMeshAgent, () => restingPosition.position, 2.0f))
-            .AddPrecondition(beliefs["AgentAtWaterBowl"])
-            .AddEffect(beliefs["AgentAtRestingPosition"])
+            .AddPrecondition(beliefs["DogAtWaterBowl"])
+            .AddEffect(beliefs["DogAtRestingPosition"])
             .Build());
 
         actions.Add(new AgentAction.Builder("MoveToDoorOne")
             .WithStrategy(new MoveStrategy(navMeshAgent, () => doorOnePosition.position))
-            .AddEffect(beliefs["AgentAtDoorOne"])
+            .AddEffect(beliefs["DogAtDoorOne"])
             .Build());
 
         actions.Add(new AgentAction.Builder("MoveToDoorTwo")
             .WithStrategy(new MoveStrategy(navMeshAgent, () => doorTwoPosition.position))
-            .AddEffect(beliefs["AgentAtDoorTwo"])
+            .AddEffect(beliefs["DogAtDoorTwo"])
             .Build());
 
         actions.Add(new AgentAction.Builder("MoveFromDoorOneToRestArea")
             // .WithCost(2)
             .WithStrategy(new MoveStrategy(navMeshAgent, () => restingPosition.position, 2.0f))
-            .AddPrecondition(beliefs["AgentAtDoorOne"])
-            .AddEffect(beliefs["AgentAtRestingPosition"])
+            .AddPrecondition(beliefs["DogAtDoorOne"])
+            .AddEffect(beliefs["DogAtRestingPosition"])
             .Build());
 
         actions.Add(new AgentAction.Builder("MoveFromDoorTwoToRestArea")
             .WithStrategy(new MoveStrategy(navMeshAgent, () => restingPosition.position, 2.0f))
-            .AddPrecondition(beliefs["AgentAtDoorTwo"])
-            .AddEffect(beliefs["AgentAtRestingPosition"])
-            .Build());
-
-        actions.Add(new AgentAction.Builder("Sleep")
-            .WithCost(2f)
-            .WithStrategy(new SleepAndWaitStrategy(animations))
-            .AddPrecondition(beliefs["AgentAtRestingPosition"])
-            .AddEffect(beliefs["AgentIsRested"])
+            .AddPrecondition(beliefs["DogAtDoorTwo"])
+            .AddEffect(beliefs["DogAtRestingPosition"])
             .Build());
         
+        actions.Add(new AgentAction.Builder("Sleep")
+            .WithCost(sleepCost)
+            .WithStrategy(new SleepAndWaitStrategy(animations, stamina))
+            .AddPrecondition(beliefs["DogAtRestingPosition"])
+            .AddEffect(beliefs["DogIsRested"])
+            .Build());
+
         actions.Add(new AgentAction.Builder("Rest")
-            .WithStrategy(new IdleStrategy(restingDuration))
-            .AddPrecondition(beliefs["AgentAtRestingPosition"])
-            .AddEffect(beliefs["AgentIsRested"])
+            .WithCost(restCost)
+            .WithStrategy(new IdleStrategy(restingDuration, stamina))
+            .AddPrecondition(beliefs["DogIdle"])
+            .AddEffect(beliefs["DogIsRested"])
             .Build());
 
         actions.Add(new AgentAction.Builder("ChasePlayer")
@@ -208,9 +230,21 @@ public class GoapAgent : MonoBehaviour
             .Build());
 
         actions.Add(new AgentAction.Builder("AttackPlayer")
-            .WithStrategy(new AttackStrategy(animations))
+            .WithStrategy(new AttackStrategy(animations, boredom))
             .AddPrecondition(beliefs["PlayerInAttackRange"])
             .AddEffect(beliefs["AttackingPlayer"])
+            .Build());
+
+        actions.Add(new AgentAction.Builder("MoveFromRelaxToRageVictim")
+            .WithStrategy(new MoveStrategy(navMeshAgent, () => rageVictim.position, 1.5f))
+            .AddPrecondition(beliefs["DogIdle"])
+            .AddEffect(beliefs["DogAtRageVictim"])
+            .Build());
+        
+        actions.Add(new AgentAction.Builder("AttackRageVictim")
+            .WithStrategy(new AttackStrategy(animations, boredom))
+            .AddPrecondition(beliefs["DogAtRageVictim"])
+            .AddEffect(beliefs["DogIsHappy"])
             .Build());
     }
 
@@ -224,27 +258,32 @@ public class GoapAgent : MonoBehaviour
 
         goals.Add(new AgentGoal.Builder("Wander")
             .WithPriority(2)
-            .WithDesiredEffect(beliefs["AgentMoving"])
+            .WithDesiredEffect(beliefs["DogMoving"])
             .Build());
 
         goals.Add(new AgentGoal.Builder("KeepThirstLevelUp")
             .WithPriority(3)
-            .WithDesiredEffect(beliefs["AgentIsNotThirsty"])
+            .WithDesiredEffect(beliefs["DogIsNotThirsty"])
             .Build());
 
         goals.Add(new AgentGoal.Builder("KeepHungerLevelUp")
             .WithPriority(3)
-            .WithDesiredEffect(beliefs["AgentIsFed"])
+            .WithDesiredEffect(beliefs["DogIsFed"])
             .Build());
 
         goals.Add(new AgentGoal.Builder("KeepStaminaUp")
             .WithPriority(3)
-            .WithDesiredEffect(beliefs["AgentIsRested"])
+            .WithDesiredEffect(beliefs["DogIsRested"])
             .Build());
 
         goals.Add(new AgentGoal.Builder("AttackPlayer")
-            .WithPriority(2)
+            .WithPriority(3)
             .WithDesiredEffect(beliefs["AttackingPlayer"])
+            .Build());
+
+        goals.Add(new AgentGoal.Builder("KeepBoredomLow")
+            .WithPriority(3)
+            .WithDesiredEffect(beliefs["DogIsHappy"])
             .Build());
     }
 
@@ -259,34 +298,20 @@ public class GoapAgent : MonoBehaviour
 
     // TODO eigenes Stat System
     void UpdateStats() {
-        if (InRangeOf(restingPosition.position, 2f))
-            stamina.Add(10);
-        else
-            stamina.Subtract(1);
-
-        // if (InRangeOf(foodBowl.position, 2f))
-        //     hunger.Add(40);
-        // else
-        hunger.Subtract(1);
-
-        if (InRangeOf(waterBowl.position, 2f))
-            thirst.Add(40);
-        else
-            thirst.Subtract(1);
+        // sleepCost = Random.Range(2, 6);
+        // restCost = Random.Range(1, 5);
+        // SetupActions();
         
-        // stamina += InRangeOf(restingPosition.position, 3f) ? 40 : -20;
-        // hunger += InRangeOf(foodBowl.position, 3f) ? 40 : -2;
-        // thirst += InRangeOf(waterBowl.position, 3f) ? 40 : -2;
-        // stamina = Mathf.Clamp(stamina, 0, 100);
-        // hunger = Mathf.Clamp(hunger, 0, 100);
-        // thirst = Mathf.Clamp(thirst, 0, 100);
+        hunger.Subtract(1);
+        boredom.Add(1); 
+        stamina.Subtract(1);
+        thirst.Subtract(1);
     }
 
     bool InRangeOf(Vector3 pos, float range) => Vector3.Distance(transform.position, pos) < range;
 
-    #if UNITY_EDITOR
-    private void OnGUI()
-    {
+#if UNITY_EDITOR
+    private void OnGUI() {
         // Nur im Play-Mode anzeigen
         if (!Application.isPlaying) return;
 
@@ -305,7 +330,7 @@ public class GoapAgent : MonoBehaviour
 
         // Position und Größe der Box
         int width = 200;
-        int height = 120;
+        int height = 155;
         int padding = 10;
         Rect rect = new Rect(Screen.width - width - padding, padding, width, height);
 
@@ -314,12 +339,13 @@ public class GoapAgent : MonoBehaviour
 
         GUILayout.BeginArea(rect);
         GUILayout.Label($"<b>Dog Stats:</b>", style);
+        GUILayout.Label($"Stamina: {stamina.Value:F1}", style);
         GUILayout.Label($"Hunger: {hunger.Value:F1}", style);
         GUILayout.Label($"Thirst: {thirst.Value:F1}", style);
-        GUILayout.Label($"Stamina: {stamina.Value:F1}", style);
+        GUILayout.Label($"Boredom: {boredom.Value:F1}", style);
         GUILayout.EndArea();
     }
-    #endif
+#endif
 
     // Zugriffsmethoden für Locations
     public Transform GetRestingPosition() => restingPosition;

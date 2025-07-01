@@ -31,11 +31,15 @@ public class AttackStrategy : IActionStrategy
     readonly CountdownTimer timer;
     readonly AnimationController animations;
 
-    public AttackStrategy(AnimationController animations) {
+    public AttackStrategy(AnimationController animations, ScriptableFloatValue boredom, float funFactor = 80) {
         this.animations = animations;
         timer = new CountdownTimer(animations.GetAnimationLength(animations.attackClip));
         timer.OnTimerStart += () => Complete = false;
-        timer.OnTimerStop += () => Complete = true;
+        timer.OnTimerStop += () => {
+            animations.Locomotion();
+            boredom.Value -= funFactor;
+            Complete = true;
+        };
     }
 
     public void Start() {
@@ -66,7 +70,10 @@ public class MoveStrategy : IActionStrategy
         agent.SetDestination(destination());
     }
 
-    public void Stop() => agent.ResetPath();
+    public void Stop() {
+        agent.transform.LookAt(destination());
+        agent.ResetPath();
+    }
 }
 
 public class WanderStrategy : IActionStrategy {
@@ -108,14 +115,58 @@ public class IdleStrategy : IActionStrategy
 
     readonly CountdownTimer timer;
 
-    public IdleStrategy(float duration) {
+    public IdleStrategy(float duration, ScriptableFloatValue stamina, float refill = 10) {
         timer = new CountdownTimer(duration);
         timer.OnTimerStart += () => Complete = false;
-        timer.OnTimerStop += () => Complete = true;
+        timer.OnTimerStop += () => {
+            stamina.Value += refill;
+            Complete = true;
+        };
     }
 
     public void Start()                 => timer.Start();
     public void Update(float deltaTime) => timer.Tick(deltaTime);
+}
+
+public class SleepAndWaitStrategy : IActionStrategy
+{
+    public bool CanPerform => true; // Agent kann immer schlafen
+    public bool Complete   { get; private set; }
+
+    readonly CountdownTimer sleepAnimationTimer;
+    readonly AnimationController animations;
+
+    public SleepAndWaitStrategy(AnimationController animations, ScriptableFloatValue stamina, float refill = 100) {
+        this.animations = animations;
+
+        // Timer für die Sleep-Animation
+        sleepAnimationTimer = new CountdownTimer(10f); // 10 Sekunden Dauer
+        sleepAnimationTimer.OnTimerStart += () => {
+            Complete = false;
+        };
+        sleepAnimationTimer.OnTimerStop += () => {
+            stamina.Value += refill;
+            animations.Locomotion(); // Wechsel zurück zur Locomotion-Animation
+            Complete = true;
+        };
+    }
+
+    public void Start() {
+        // Starte die Sleep-Animation
+        animations.Sleep();
+        // Starte den Timer
+        sleepAnimationTimer.Start();
+    }
+
+    public void Update(float deltaTime) {
+        sleepAnimationTimer.Tick(deltaTime);
+    }
+
+    public void Stop() {
+        // Aufräumarbeiten, wenn die Strategy vorzeitig beendet wird
+        sleepAnimationTimer.Stop();
+        Complete = true;
+    }
 }
 
 public class EatAndWaitStrategy : IActionStrategy {
@@ -139,6 +190,7 @@ public class EatAndWaitStrategy : IActionStrategy {
             Complete = false;
         };
         eatAnimationTimer.OnTimerStop += () => {
+            hunger.Value += saturation;
             m_isEating = false;
             animations.Locomotion();
             waitTimer.Start(); // Starte den Wait-Timer nach dem Essen
@@ -147,10 +199,7 @@ public class EatAndWaitStrategy : IActionStrategy {
         // Timer für die Wartezeit nach dem Essen
         waitTimer = new CountdownTimer(1f);
         waitTimer.OnTimerStart += () => Complete = false;
-        waitTimer.OnTimerStop += () => {
-            hunger.Value += saturation;
-            Complete = true;
-        };
+        waitTimer.OnTimerStop += () => Complete = true;
     }
 
     public void Start() {
@@ -189,7 +238,7 @@ public class DrinkAndWaitStrategy : IActionStrategy
     readonly AnimationController animations;
     private bool isDrinking = true;
 
-    public DrinkAndWaitStrategy(AnimationController animations) {
+    public DrinkAndWaitStrategy(AnimationController animations, ScriptableFloatValue thirst, float hydration = 69f) {
         this.animations = animations;
 
         // Timer für die Eat-Animation
@@ -200,6 +249,7 @@ public class DrinkAndWaitStrategy : IActionStrategy
             Complete = false;
         };
         drinkAnimationTimer.OnTimerStop += () => {
+            thirst.Value += hydration;
             isDrinking = false;
             animations.Locomotion();
             waitTimer.Start(); // Starte den Wait-Timer nach dem Essen
