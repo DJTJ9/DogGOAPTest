@@ -158,6 +158,7 @@ public class PlayerController : MonoBehaviour {
                         grabbableObj.Grab(objectGrabPoint);
                         grabbableObject = grabbableObj;
                         ballThrown.Value = false;
+                        ballInHand.Value = true;
                     }
                 }
             }

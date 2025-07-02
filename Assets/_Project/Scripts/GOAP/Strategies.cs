@@ -31,7 +31,7 @@ public class AttackStrategy : IActionStrategy
     readonly CountdownTimer attackAnimationTimer;
     readonly CountdownTimer waitTimer;
     readonly AnimationController animations;
-    
+
     private bool isAttacking = true;
     private int attackCount = 0;
     private const int MAX_ATTACKS = 3;
@@ -52,7 +52,8 @@ public class AttackStrategy : IActionStrategy
                 animations.Attack();
                 boredom.Value -= funFactor;
                 attackAnimationTimer.Start();
-            } else {
+            }
+            else {
                 // Nach MAX_ATTACKS Angriffen: Wechsle zum Warten
                 isAttacking = false;
                 animations.Locomotion();
@@ -60,7 +61,7 @@ public class AttackStrategy : IActionStrategy
                 attackCount = 0; // Zurücksetzen für den nächsten Angriffszyklus
             }
         };
-        
+
         waitTimer = new CountdownTimer(1f);
         waitTimer.OnTimerStart += () => Complete = false;
         waitTimer.OnTimerStop += () => Complete = true;
@@ -75,13 +76,16 @@ public class AttackStrategy : IActionStrategy
         if (isAttacking) attackAnimationTimer.Tick(deltaTime);
         else waitTimer.Tick(deltaTime);
     }
+
     public void Stop() {
         // Aufräumarbeiten, wenn die Strategy vorzeitig beendet wird
         if (isAttacking) {
             attackAnimationTimer.Stop();
-        } else {
+        }
+        else {
             waitTimer.Stop();
         }
+
         attackCount = 0; // Zurücksetzen des Angriffszählers
         Complete = true;
     }
@@ -90,19 +94,22 @@ public class AttackStrategy : IActionStrategy
 public class MoveStrategy : IActionStrategy
 {
     readonly NavMeshAgent agent;
+    readonly AnimationController animations;
     readonly Func<Vector3> destination;
     readonly float stoppingDistance;
 
     public bool CanPerform => !Complete;
     public bool Complete   => agent.remainingDistance <= agent.stoppingDistance && !agent.pathPending;
 
-    public MoveStrategy(NavMeshAgent agent, Func<Vector3> destination, float stoppingDistance = 1f) {
+    public MoveStrategy(NavMeshAgent agent, AnimationController animations, Func<Vector3> destination, float stoppingDistance = 1f) {
         this.agent = agent;
+        this.animations = animations;
         this.destination = destination;
         this.stoppingDistance = stoppingDistance;
     }
 
     public void Start() {
+        animations.Locomotion();
         agent.stoppingDistance = stoppingDistance;
         agent.SetDestination(destination());
     }
@@ -113,16 +120,20 @@ public class MoveStrategy : IActionStrategy
     }
 }
 
-public class WanderStrategy : IActionStrategy {
+public class WanderStrategy : IActionStrategy
+{
     readonly NavMeshAgent agent;
     readonly float wanderRadius;
     private readonly int wanderSteps;
     private int m_wanderStepsCounter;
-    
-    
+
+
     public bool CanPerform => !Complete;
-    public bool Complete   => agent.remainingDistance <= 2f && !agent.pathPending; // Die letzte Condition funktioniert nicht: && m_wanderStepsCounter >= wanderSteps
-    
+
+    public bool Complete =>
+        agent.remainingDistance <= 2f &&
+        !agent.pathPending; // Die letzte Condition funktioniert nicht: && m_wanderStepsCounter >= wanderSteps
+
     public WanderStrategy(NavMeshAgent agent, float wanderRadius, int wanderSteps = 5) {
         this.agent = agent;
         this.wanderRadius = wanderRadius;
@@ -178,9 +189,7 @@ public class SleepAndWaitStrategy : IActionStrategy
 
         // Timer für die Sleep-Animation
         sleepAnimationTimer = new CountdownTimer(10f); // 10 Sekunden Dauer
-        sleepAnimationTimer.OnTimerStart += () => {
-            Complete = false;
-        };
+        sleepAnimationTimer.OnTimerStart += () => { Complete = false; };
         sleepAnimationTimer.OnTimerStop += () => {
             stamina.Value += refill;
             animations.Locomotion(); // Wechsel zurück zur Locomotion-Animation
@@ -206,14 +215,15 @@ public class SleepAndWaitStrategy : IActionStrategy
     }
 }
 
-public class EatAndWaitStrategy : IActionStrategy {
+public class EatAndWaitStrategy : IActionStrategy
+{
     public bool CanPerform => true; // Agent kann immer essen
     public bool Complete   { get; private set; }
 
     readonly CountdownTimer eatAnimationTimer;
     readonly CountdownTimer waitTimer;
     readonly AnimationController animations;
-    
+
     private bool m_isEating = true;
 
     public EatAndWaitStrategy(AnimationController animations, ScriptableFloatValue hunger, float saturation = 69f) {
@@ -247,7 +257,8 @@ public class EatAndWaitStrategy : IActionStrategy {
     public void Update(float deltaTime) {
         if (m_isEating) {
             eatAnimationTimer.Tick(deltaTime);
-        } else {
+        }
+        else {
             waitTimer.Tick(deltaTime);
         }
     }
@@ -256,9 +267,11 @@ public class EatAndWaitStrategy : IActionStrategy {
         // Aufräumarbeiten, wenn die Strategy vorzeitig beendet wird
         if (m_isEating) {
             eatAnimationTimer.Stop();
-        } else {
+        }
+        else {
             waitTimer.Stop();
         }
+
         Complete = true;
     }
 }
@@ -321,6 +334,172 @@ public class DrinkAndWaitStrategy : IActionStrategy
             waitTimer.Stop();
         }
 
+        Complete = true;
+    }
+}
+
+public class FetchBallStrategy : IActionStrategy
+{
+    public bool CanPerform => true;
+    public bool Complete   { get; private set; }
+
+    private readonly NavMeshAgent agent;
+    private readonly AnimationController animations;
+    private readonly GameObject ball;
+    private readonly Transform playerTransform;
+    private readonly Transform objectGrabPoint;
+    private readonly ScriptableBoolValue ballThrown;
+    private readonly ScriptableBoolValue ballInHand;
+    private readonly float pickupRange;
+    private readonly float dropRange;
+
+    private enum FetchState
+    {
+        MovingToBall,
+        PickingUpBall,
+        ReturningToPlayer,
+        DroppingBall,
+        Completed
+    }
+
+    private FetchState currentState;
+    private CountdownTimer pickupAnimationTimer;
+    private CountdownTimer dropAnimationTimer;
+
+    public FetchBallStrategy(NavMeshAgent agent, AnimationController animations, GameObject ball,
+        Transform playerTransform,
+        Transform objectGrabPoint, ScriptableBoolValue ballInHand, ScriptableBoolValue ballThrown,
+        float pickupRange = 2f, float dropRange = 2f) {
+        this.agent = agent;
+        this.animations = animations;
+        this.ball = ball;
+        this.playerTransform = playerTransform;
+        this.objectGrabPoint = objectGrabPoint;
+        this.pickupRange = pickupRange;
+        this.dropRange = dropRange;
+        this.ballInHand = ballInHand;
+        this.ballThrown = ballThrown;
+
+        // Timer für die Aufheb-Animation
+        pickupAnimationTimer = new CountdownTimer(2.4f);
+        pickupAnimationTimer.OnTimerStart += () => Complete = false;
+        pickupAnimationTimer.OnTimerStop += () => {
+            animations.Locomotion();
+            if (ball.TryGetComponent(out GrabbableObject grabbableObject)) {
+                grabbableObject.Grab(objectGrabPoint);
+                currentState = FetchState.ReturningToPlayer;
+            }
+        };
+
+        // Timer für die Ableg-Animation
+        dropAnimationTimer = new CountdownTimer(2.4f);
+        dropAnimationTimer.OnTimerStart += () => Complete = false;
+        dropAnimationTimer.OnTimerStop += () => {
+            if (ball.TryGetComponent(out GrabbableObject grabbableObject)) {
+                grabbableObject.Drop();
+                currentState = FetchState.Completed;
+                Complete = true;
+            }
+        };
+    }
+
+    public void Start() {
+        Complete = false;
+       
+        currentState = FetchState.MovingToBall;
+        animations.SetSpeed(agent.velocity.magnitude);
+        agent.stoppingDistance = pickupRange - 0.2f;
+        agent.SetDestination(ball.transform.position);
+    }
+
+    public void Update(float deltaTime) {
+        switch (currentState) {
+            case FetchState.MovingToBall:
+                MoveToBall();
+                break;
+            case FetchState.PickingUpBall:
+                PickUpBall(deltaTime);
+                break;
+            case FetchState.ReturningToPlayer:
+                ReturnToPlayer();
+                break;
+            case FetchState.DroppingBall:
+                DropBall(deltaTime);
+                break;
+            case FetchState.Completed:
+                // Bereits abgeschlossen
+                break;
+        }
+    }
+
+    private void MoveToBall() {
+        // Setze Laufanimation
+        animations.Locomotion();
+
+        // Überprüfe, ob Ziel erreicht wurde
+        if (Vector3.Distance(agent.transform.position, ball.transform.position) <= pickupRange) {
+            currentState = FetchState.PickingUpBall;
+
+        }
+    }
+
+    private void PickUpBall(float deltaTime) {
+        if (!pickupAnimationTimer.IsRunning) {
+            animations.Eat(); // Verwende Attack als Aufheben-Animation
+            pickupAnimationTimer.Start();
+        }
+
+        pickupAnimationTimer.Tick(deltaTime);
+    }
+
+    private void ReturnToPlayer() {
+        agent.stoppingDistance = dropRange - 0.2f;
+        agent.SetDestination(playerTransform.position);
+
+        // // Setze Laufanimation
+        // animations.Locomotion();
+        // animations.SetSpeed(agent.velocity.magnitude);
+
+        // Überprüfe, ob Ziel erreicht wurde
+        if (Vector3.Distance(agent.transform.position, playerTransform.position) <= dropRange) {
+            currentState = FetchState.DroppingBall;
+        }
+    }
+
+    private void DropBall(float deltaTime) {
+        if (!dropAnimationTimer.IsRunning) {
+            animations.Eat();
+            dropAnimationTimer.Start();
+            if (ball.TryGetComponent(out GrabbableObject grabbableObject)) {
+                grabbableObject.Drop();
+                // Explizit ballThrown auf false setzen, um zu verhindern, dass die FetchBall-Aktion sofort wieder ausgeführt wird
+                ballThrown.Value = false;
+            }
+        }
+
+        // Wichtig: Stelle sicher, dass der Ball wirklich abgelegt wird, wenn die Strategie gestoppt wird
+        if (currentState == FetchState.ReturningToPlayer || currentState == FetchState.DroppingBall) {
+            if (ball.TryGetComponent(out GrabbableObject grabbableObject)) {
+                grabbableObject.Drop();
+                ballThrown.Value = false;
+                ballInHand.Value = false;
+            }
+        }
+
+        dropAnimationTimer.Tick(deltaTime);
+    }
+
+    public void Stop() {
+        if (pickupAnimationTimer.IsRunning) {
+            pickupAnimationTimer.Stop();
+        }
+
+        if (dropAnimationTimer.IsRunning) {
+            dropAnimationTimer.Stop();
+        }
+        
+        animations.Locomotion();
+        agent.ResetPath();
         Complete = true;
     }
 }

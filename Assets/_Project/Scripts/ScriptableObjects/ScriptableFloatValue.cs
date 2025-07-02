@@ -7,7 +7,7 @@ namespace ScriptableValues
     [CreateAssetMenu(fileName = "Float Value", menuName = "ScriptableValues/Float")]
     public class ScriptableFloatValue : ScriptableObject
     {
-        [SerializeField] private float currentValue;
+        [SerializeField, ProgressBar(0, 100)] private float currentValue;
         [FoldoutGroup("Settings"), SerializeField] private float defaultValue;
         [FoldoutGroup("Settings"), SerializeField] private float minValue;
         [FoldoutGroup("Settings"), SerializeField] private float maxValue;

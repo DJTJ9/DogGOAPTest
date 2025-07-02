@@ -51,6 +51,8 @@ public class BeliefFactory {
     DogIsHappy,
     DogWantsAttention,
     DogIsBored,
+        BallThrown,
+        BallRetrieved,
     AttackingPlayer,
     AttackingRageVictim,
     
@@ -61,6 +63,7 @@ public class BeliefFactory {
     DogAtFoodBowl,
     DogAtWaterBowl,
     DogAtRageVictim,
+    DogAtBall,
     
     //Sensor Beliefs
     PlayerInChaseRange,

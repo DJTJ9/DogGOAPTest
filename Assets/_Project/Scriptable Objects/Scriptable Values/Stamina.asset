@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e600de64db824c108e729afea169008a, type: 3}
   m_Name: Stamina
   m_EditorClassIdentifier: 
-  currentValue: 20
+  currentValue: 22
   defaultValue: 50
   minValue: 0
   maxValue: 100

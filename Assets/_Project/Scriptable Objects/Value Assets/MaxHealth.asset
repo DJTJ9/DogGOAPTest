@@ -9,8 +9,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4cf74fb343924ca499e388730eec3207, type: 3}
-  m_Name: BallThrown
+  m_Script: {fileID: 11500000, guid: b67849f696984f458e2cfab3944a614a, type: 3}
+  m_Name: MaxHealth
   m_EditorClassIdentifier: 
-  currentValue: 1
-  defaultValue: 0
+  currentValue: 100
+  defaultValue: 100
+  minValue: 0
+  maxValue: 100
