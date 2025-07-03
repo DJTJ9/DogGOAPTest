@@ -1,20 +1,36 @@
 using System.Collections.Generic;
 
+public enum GoalType
+{
+    Idle,
+    Wander,
+    KeepThirstLevelUp,
+    KeepHungerLevelUp,
+    KeepStaminaUp,
+    AttackPlayer,
+    KeepBoredomLow,
+    GetAttention,
+    FetchBallAndReturnIt
+}
+
 public class AgentGoal
 {
-    public string               Name           { get; }
-    public float                Priority       { get; private set; }
+    public GoalType Type { get; }
+    public float Priority { get; private set; }
     public HashSet<AgentBelief> DesiredEffects { get; } = new();
 
-    AgentGoal(string name) {
-        Name = name;
+
+    
+    
+    AgentGoal(GoalType type) {
+        Type = type;
     }
 
     public class Builder
     {
         readonly AgentGoal goal;
 
-        public Builder(string name) {
+        public Builder(GoalType name) {
             goal = new AgentGoal(name);
         }
 

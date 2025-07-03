@@ -19,6 +19,7 @@ public abstract class AnimationController : MonoBehaviour {
     [HideInInspector] public int drinkTrigger = Animator.StringToHash("IsDrinking_tr");
     [HideInInspector] public int sleepIdleTrigger = Animator.StringToHash("Sleep_Idle_tr");
     [HideInInspector] public int attack2Trigger = Animator.StringToHash("Attack2_tr");
+    [HideInInspector] public int begTrigger = Animator.StringToHash("Beg_tr");
     
     void Awake() {
         animator = GetComponentInChildren<Animator>();
@@ -36,6 +37,7 @@ public abstract class AnimationController : MonoBehaviour {
     public void Eat() => animator.SetTrigger(eatTrigger); // PlayAnimationUsingTimer(eatClip);
     public void Drink() => animator.SetTrigger(drinkTrigger);
     public void Sleep() => animator.SetTrigger(sleepIdleTrigger);
+    public void Beg() => animator.SetTrigger(begTrigger);
     
     void Update() => timer?.Tick(Time.deltaTime);
 

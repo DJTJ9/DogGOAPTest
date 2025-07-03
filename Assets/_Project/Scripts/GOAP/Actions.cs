@@ -1,7 +1,39 @@
 using System.Collections.Generic;
 
+public enum ActionType
+{
+    Relax,
+    WanderAround,
+    MoveFromRelaxToRestArea,
+    FetchBall,
+    MoveFromWanderToRestArea,
+    MoveToEatingPosition,
+    Eat,
+    MoveFromFoodBowlToRestArea,
+    MoveToDrinkingPosition,
+    Drink,
+    MoveFromWaterBowlToRestArea,
+    MoveToDoorOne,
+    MoveToDoorTwo,
+    MoveFromDoorOneToRestArea,
+    MoveFromDoorTwoToRestArea,
+    Sleep,
+    Rest,
+    ChasePlayer,
+    AttackPlayer,
+    MoveFromRelaxToRageVictim,
+    AttackRageVictim,
+    SeekAttention,
+    PickUpBall,
+    DropBall,
+    MoveToPlayer,
+    MoveToBall,
+    ReturnToPlayer,
+}
+
 public class AgentAction {
-    public string Name { get; }
+    // public string Name { get; }
+    public ActionType Type { get; }
     public float  Cost { get; private set; }
     
     public HashSet<AgentBelief> Preconditions { get; } = new();
@@ -10,8 +42,8 @@ public class AgentAction {
     IActionStrategy strategy;
     public bool Complete => strategy.Complete;
     
-    AgentAction(string name) {
-        Name = name;
+    AgentAction(ActionType type) {
+        Type = type;
     }
     
     public void Start() => strategy.Start();
@@ -36,8 +68,8 @@ public class AgentAction {
     public class Builder {
         readonly AgentAction action;
         
-        public Builder(string name) {
-            action = new AgentAction(name) {
+        public Builder(ActionType type) {
+            action = new AgentAction(type) {
                 Cost = 1
             };
         }

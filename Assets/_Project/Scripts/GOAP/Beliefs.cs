@@ -51,10 +51,15 @@ public class BeliefFactory {
     DogIsHappy,
     DogWantsAttention,
     DogIsBored,
-        BallThrown,
-        BallRetrieved,
+    BallInHand,
+    BallThrown,
+    // BallRetrieved,
     AttackingPlayer,
     AttackingRageVictim,
+    BallReturned,
+    ReturnBall,
+    FetchBall,
+    DropBall,
     
     //Location Beliefs
     DogAtDoorOne,
@@ -68,11 +73,6 @@ public class BeliefFactory {
     //Sensor Beliefs
     PlayerInChaseRange,
     PlayerInAttackRange
-    }
-
-    public enum LocationBeliefs
-    {
-       
     }
 
     public class AgentBelief {

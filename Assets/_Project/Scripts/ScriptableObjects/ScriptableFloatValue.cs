@@ -13,8 +13,8 @@ namespace ScriptableValues
         [FoldoutGroup("Settings"), SerializeField] private float maxValue;
 
         // Öffentliche Properties für den Zugriff im Editor
-        public float MinValue => minValue;
-        public float MaxValue => maxValue;
+        public float MinValue => 0;
+        public float MaxValue => 100;
         public float DefaultValue => defaultValue;
 
         // Event für Änderungen

@@ -9,10 +9,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e600de64db824c108e729afea169008a, type: 3}
-  m_Name: Boredom
+  m_Script: {fileID: 11500000, guid: 4cf74fb343924ca499e388730eec3207, type: 3}
+  m_Name: BallReturned
   m_EditorClassIdentifier: 
-  currentValue: 56
-  defaultValue: 85
-  minValue: 0
-  maxValue: 100
+  currentValue: 1
+  defaultValue: 1

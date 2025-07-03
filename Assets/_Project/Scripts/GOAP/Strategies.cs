@@ -101,7 +101,8 @@ public class MoveStrategy : IActionStrategy
     public bool CanPerform => !Complete;
     public bool Complete   => agent.remainingDistance <= agent.stoppingDistance && !agent.pathPending;
 
-    public MoveStrategy(NavMeshAgent agent, AnimationController animations, Func<Vector3> destination, float stoppingDistance = 1f) {
+    public MoveStrategy(NavMeshAgent agent, AnimationController animations, Func<Vector3> destination,
+        float                        stoppingDistance = 1f) {
         this.agent = agent;
         this.animations = animations;
         this.destination = destination;
@@ -149,7 +150,6 @@ public class WanderStrategy : IActionStrategy
             if (NavMesh.SamplePosition(agent.transform.position + randomDirection, out hit, wanderRadius, 1)) {
                 agent.SetDestination(hit.position);
                 m_wanderStepsCounter++;
-                return;
             }
         }
     }
@@ -405,7 +405,7 @@ public class FetchBallStrategy : IActionStrategy
 
     public void Start() {
         Complete = false;
-       
+
         currentState = FetchState.MovingToBall;
         animations.SetSpeed(agent.velocity.magnitude);
         agent.stoppingDistance = pickupRange - 0.2f;
@@ -439,13 +439,12 @@ public class FetchBallStrategy : IActionStrategy
         // Überprüfe, ob Ziel erreicht wurde
         if (Vector3.Distance(agent.transform.position, ball.transform.position) <= pickupRange) {
             currentState = FetchState.PickingUpBall;
-
         }
     }
 
     private void PickUpBall(float deltaTime) {
         if (!pickupAnimationTimer.IsRunning) {
-            animations.Eat(); // Verwende Attack als Aufheben-Animation
+            animations.Eat(); // Eat als aufheben
             pickupAnimationTimer.Start();
         }
 
@@ -497,9 +496,159 @@ public class FetchBallStrategy : IActionStrategy
         if (dropAnimationTimer.IsRunning) {
             dropAnimationTimer.Stop();
         }
-        
+
         animations.Locomotion();
         agent.ResetPath();
+        Complete = true;
+    }
+}
+
+public class SeekAttentionStrategy : IActionStrategy
+{
+    public bool CanPerform => true; // Agent kann immer schlafen
+    public bool Complete   { get; private set; }
+
+    readonly CountdownTimer begAnimationTimer;
+    readonly NavMeshAgent navMeshAgent;
+    readonly AnimationController animations;
+
+    public SeekAttentionStrategy(NavMeshAgent navMeshAgent, AnimationController animations, Transform playerPos, ScriptableFloatValue boredom, float frust = 2) {
+        this.navMeshAgent = navMeshAgent;
+        this.animations = animations;
+
+        begAnimationTimer = new CountdownTimer(5f);
+        begAnimationTimer.OnTimerStart += () => {
+            navMeshAgent.transform.LookAt(playerPos);
+
+            Complete = false;
+        };
+        begAnimationTimer.OnTimerStop += () => {
+            boredom.Value -= frust;
+            animations.Locomotion(); // Wechsel zurück zur Locomotion-Animation
+            Complete = true;
+        };
+    }
+
+    public void Start() {
+        // Starte die Sleep-Animation
+        animations.Beg();
+        // Starte den Timer
+        begAnimationTimer.Start();
+    }
+
+    public void Update(float deltaTime) {
+        begAnimationTimer.Tick(deltaTime);
+    }
+
+    public void Stop() {
+        // Aufräumarbeiten, wenn die Strategy vorzeitig beendet wird
+        begAnimationTimer.Stop();
+        Complete = true;
+    }
+}
+
+public class PickUpBallStrategy : IActionStrategy
+{
+    public bool CanPerform => true;
+    public bool Complete   { get; private set; }
+
+    private readonly NavMeshAgent agent;
+    private readonly AnimationController animations;
+    private readonly GameObject ball;
+    private readonly Transform objectGrabPoint;
+    private readonly float pickupRange;
+
+    private CountdownTimer pickupAnimationTimer;
+
+    public PickUpBallStrategy(NavMeshAgent agent,           AnimationController animations, GameObject ball,
+        Transform                          objectGrabPoint, float               pickupRange = 2f) {
+        this.agent = agent;
+        this.animations = animations;
+        this.ball = ball;
+        this.objectGrabPoint = objectGrabPoint;
+        this.pickupRange = pickupRange;
+
+        pickupAnimationTimer = new CountdownTimer(2.4f);
+        pickupAnimationTimer.OnTimerStart += () => {
+            animations.Eat();
+            Complete = false;
+        };
+        pickupAnimationTimer.OnTimerStop += () => {
+            animations.Locomotion();
+            if (ball.TryGetComponent(out GrabbableObject grabbableObject)) {
+                grabbableObject.Grab(objectGrabPoint);
+            }
+
+            Complete = true;
+        };
+    }
+
+    public void Start() {
+        pickupAnimationTimer.Start();
+        agent.stoppingDistance = pickupRange - 0.2f;
+        agent.SetDestination(ball.transform.position);
+    }
+
+    public void Update(float deltaTime) {
+        pickupAnimationTimer.Tick(deltaTime);
+    }
+
+    public void Stop() {
+        pickupAnimationTimer.Stop();
+        animations.Locomotion();
+        Complete = true;
+    }
+}
+
+public class DropBallStrategy : IActionStrategy
+{
+    public bool CanPerform => true;
+    public bool Complete   { get; private set; }
+
+    private readonly NavMeshAgent agent;
+    private readonly AnimationController animations;
+    private readonly GameObject ball;
+    private readonly float dropRange;
+
+    private CountdownTimer dropAnimationTimer;
+
+    public DropBallStrategy(NavMeshAgent agent,           AnimationController animations,   GameObject ball,
+        Transform                        objectGrabPoint, ScriptableBoolValue ballReturned, float      dropRange = 2f) {
+        this.agent = agent;
+        this.animations = animations;
+        this.ball = ball;
+        this.dropRange = dropRange;
+
+        dropAnimationTimer = new CountdownTimer(2.4f);
+        dropAnimationTimer.OnTimerStart += () => {
+            animations.Eat();
+            Complete = false;
+        };
+        dropAnimationTimer.OnTimerStop += () => {
+            animations.Locomotion();
+            if (ball.TryGetComponent(out GrabbableObject grabbableObject)) {
+                // Animation Event beim Aufheben und Droppen
+                grabbableObject.Grab(objectGrabPoint);
+            }
+
+            ballReturned.Value = true;
+            Complete = true;
+        };
+    }
+
+    public void Start() {
+        dropAnimationTimer.Start();
+        agent.stoppingDistance = dropRange - 0.2f;
+        agent.SetDestination(ball.transform.position);
+    }
+
+    public void Update(float deltaTime) {
+        dropAnimationTimer.Tick(deltaTime);
+    }
+
+    public void Stop() {
+        dropAnimationTimer.Stop();
+        animations.Locomotion();
         Complete = true;
     }
 }

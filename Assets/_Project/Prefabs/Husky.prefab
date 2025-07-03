@@ -246,7 +246,7 @@ Transform:
   m_GameObject: {fileID: 416715352913844285}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.685, z: 0.92}
+  m_LocalPosition: {x: 0, y: 0.685, z: 1.026}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2511,7 +2511,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 29ff1d1c06584224e9eb31130a3a2374, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  detectionRadius: 2
+  detectionRadius: 2.5
   timerInterval: 1
 --- !u!1 &4502918825412004714
 GameObject:
@@ -2693,21 +2693,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7f0d35ee3c5b2aa409ad26e8a1a190b5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  wanderRadius: 10
-  pickUpDistance: 2.3
-  restingDuration: 5
+  stamina: {fileID: 11400000, guid: a03706b7611e8e54ea664e670d3755a9, type: 2}
+  thirst: {fileID: 11400000, guid: 022bf3f4048ca6c4b859295649650a57, type: 2}
+  hunger: {fileID: 11400000, guid: 41adc23cea22e1b44b274678d4b6bf7c, type: 2}
+  boredom: {fileID: 11400000, guid: 577a0fb4e480e824a91f6eeeae37733d, type: 2}
+  ballInHand: {fileID: 11400000, guid: e218d8f69f18b5f41ace3a5559f9df96, type: 2}
+  dogParams: {fileID: 11400000, guid: 1b08550701af21b44aac0e77b049f306, type: 2}
+  ballThrown: {fileID: 11400000, guid: 574a9b9a3d4591746a2c8492e7efe9fa, type: 2}
   chaseSensor: {fileID: 7996166461979541081}
   attackSensor: {fileID: 7549648818675722912}
   restingPosition: {fileID: 0}
   foodBowl: {fileID: 0}
   waterBowl: {fileID: 0}
+  rageVictim: {fileID: 0}
   doorOnePosition: {fileID: 0}
   doorTwoPosition: {fileID: 0}
-  hunger: {fileID: 11400000, guid: 41adc23cea22e1b44b274678d4b6bf7c, type: 2}
-  thirst: {fileID: 11400000, guid: 022bf3f4048ca6c4b859295649650a57, type: 2}
-  stamina: {fileID: 11400000, guid: a03706b7611e8e54ea664e670d3755a9, type: 2}
-  ballInHand: {fileID: 11400000, guid: e218d8f69f18b5f41ace3a5559f9df96, type: 2}
-  ballThrown: {fileID: 11400000, guid: 574a9b9a3d4591746a2c8492e7efe9fa, type: 2}
+  playerPosition: {fileID: 0}
+  ballPosition: {fileID: 0}
+  objectGrabPointPosition: {fileID: 6197775878413007306}
+  ball: {fileID: 0}
 --- !u!114 &4633404804099785122
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2729,6 +2733,8 @@ MonoBehaviour:
   eatTrigger: 1982801699
   drinkTrigger: 1932898575
   sleepIdleTrigger: 2096156337
+  attack2Trigger: -1837203225
+  begTrigger: -1765148628
 --- !u!95 &8851668977642515786
 Animator:
   serializedVersion: 7
@@ -2764,7 +2770,7 @@ NavMeshAgent:
   m_Speed: 3.5
   m_Acceleration: 8
   avoidancePriority: 50
-  m_AngularSpeed: 120
+  m_AngularSpeed: 240
   m_StoppingDistance: 0
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1
@@ -4790,7 +4796,7 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 10
+  m_Radius: 6
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &7996166461979541081
 MonoBehaviour:
@@ -4804,7 +4810,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 29ff1d1c06584224e9eb31130a3a2374, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  detectionRadius: 5
+  detectionRadius: 6
   timerInterval: 1
 --- !u!1 &8953150829364108006
 GameObject:
