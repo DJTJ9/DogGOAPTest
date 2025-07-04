@@ -11,9 +11,6 @@ public class DogBeliefs : MonoBehaviour
     [FoldoutGroup("Stats", expanded: true), SerializeField, InlineEditor]
     private ScriptableFloatValue stamina;
 
-    [FoldoutGroup("Stats"), ProgressBar(0, 100)]
-    public float Stamina => stamina.Value;
-
     [FoldoutGroup("Stats"), SerializeField, InlineEditor]
     private ScriptableFloatValue thirst;
 

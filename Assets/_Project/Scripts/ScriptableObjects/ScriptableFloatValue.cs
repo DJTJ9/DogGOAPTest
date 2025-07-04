@@ -4,6 +4,7 @@ using Sirenix.OdinInspector;
 
 namespace ScriptableValues
 {
+    [ManageableData]
     [CreateAssetMenu(fileName = "Float Value", menuName = "ScriptableValues/Float")]
     public class ScriptableFloatValue : ScriptableObject
     {

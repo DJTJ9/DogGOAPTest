@@ -69,10 +69,11 @@ public class BeliefFactory {
     DogAtWaterBowl,
     DogAtRageVictim,
     DogAtBall,
+    DogAtPlayer,
     
     //Sensor Beliefs
     PlayerInChaseRange,
-    PlayerInAttackRange
+    PlayerInAttackRange,
     }
 
     public class AgentBelief {

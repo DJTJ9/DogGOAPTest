@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d57663b0a2694684b3fac9e853867049, type: 3}
+  m_Name: Goal Priorities
+  m_EditorClassIdentifier: 
+  Idle: 1
+  idleDefaultCosts: 1
+  Wander: 2
+  wanderDefaultCosts: 2
+  KeepThirstLevelUp: 3
+  keepThirstLevelUpDefaultCosts: 3
+  KeepHungerLevelUp: 3
+  keepHungerLevelUpDefaultCosts: 3
+  KeepStaminaUp: 3
+  keepStaminaUpDefaultCosts: 3
+  KeepBoredomLow: 3
+  keepBoredomLowDefaultCosts: 3
+  GetAttention: 3
+  getAttentionDefaultCosts: 3
+  FetchBallAndReturnIt: 4
+  fetchBallAndReturnItDefaultCosts: 4

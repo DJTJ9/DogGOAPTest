@@ -9,10 +9,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e600de64db824c108e729afea169008a, type: 3}
-  m_Name: Boredom
+  m_Script: {fileID: 11500000, guid: bbac5caca3e74480b8407af7bcb9a349, type: 3}
+  m_Name: Action Costs
   m_EditorClassIdentifier: 
-  currentValue: 40
-  defaultValue: 85
-  minValue: 0
-  maxValue: 100
+  Sleep: 4
+  sleepDefaultCosts: 1
+  Rest: 1
+  wanderDefaultCosts: 1
+  Attention: 3
+  attentionDefaultCosts: 1
+  Rage: 4
+  rageDefaultCosts: 1

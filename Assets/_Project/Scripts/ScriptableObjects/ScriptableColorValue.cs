@@ -3,6 +3,7 @@ using System;
 
 namespace ScriptableValues
 {
+    [ManageableData]
     [CreateAssetMenu(fileName = "Color Value", menuName = "ScriptableValues/Color")]
     public class ScriptableColorValue : ScriptableObject
     {

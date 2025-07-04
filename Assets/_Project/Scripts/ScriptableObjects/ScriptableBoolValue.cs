@@ -3,6 +3,7 @@ using System;
 
 namespace ScriptableValues
 {
+    [ManageableData]
     [CreateAssetMenu(fileName = "Bool Value", menuName = "ScriptableValues/Bool")]
     public class ScriptableBoolValue : ScriptableObject
     {
