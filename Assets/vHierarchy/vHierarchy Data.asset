@@ -27,6 +27,8 @@ MonoBehaviour:
         - globalObjectIdString: GlobalObjectId_V1-2-99c9720ab356a0642a771bea13969a05-8569849248783026426-3192548455436608554
         - globalObjectIdString: GlobalObjectId_V1-2-99c9720ab356a0642a771bea13969a05-4467616895111699046-3192548455436608554
         - globalObjectIdString: GlobalObjectId_V1-2-99c9720ab356a0642a771bea13969a05-3939702485691419614-6852984987193732290
+        - globalObjectIdString: GlobalObjectId_V1-2-99c9720ab356a0642a771bea13969a05-502537706-0
+        - globalObjectIdString: GlobalObjectId_V1-2-99c9720ab356a0642a771bea13969a05-6483026097544379479-1799860004
         values:
         - colorIndex: 7
           iconNameOrGuid: b20590aafbdb7c74ab7de5dcd5d6bac6
@@ -46,3 +48,7 @@ MonoBehaviour:
           iconNameOrGuid: 
         - colorIndex: 5
           iconNameOrGuid: AvatarMask On Icon
+        - colorIndex: 7
+          iconNameOrGuid: b20590aafbdb7c74ab7de5dcd5d6bac6
+        - colorIndex: 2
+          iconNameOrGuid: b20590aafbdb7c74ab7de5dcd5d6bac6

@@ -40,17 +40,17 @@ namespace ImprovedTimers {
         }
 
         public abstract void Tick(float deltaTime);
-        //public virtual bool IsFinished { get; }
+        public virtual bool IsFinished { get; }
 
         public void Resume() => IsRunning = true;
         public void Pause() => IsRunning = false;
 
-        //public virtual void Reset() => CurrentTime = initialTime;
-        //public virtual void Reset(float newTime)
-        //{
-        //    initialTime = newTime;
-        //    Reset();
-        //}
+        public virtual void Reset() => CurrentTime = initialTime;
+        public virtual void Reset(float newTime)
+        {
+            initialTime = newTime;
+            Reset();
+        }
 
         ~Timer() {
             Dispose(false);
