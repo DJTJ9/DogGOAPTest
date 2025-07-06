@@ -3,7 +3,7 @@ using System;
 using System.Linq;
 using UnityEditor;
 
-public class DataManager : OdinMenuEditorWindow
+public class ScriptableObjectManager : OdinMenuEditorWindow
 {
     private static Type[] typesToDisplay = TypeCache.GetTypesWithAttribute<ManageableDataAttribute>()
         .OrderBy(m => m.Name)
@@ -11,8 +11,8 @@ public class DataManager : OdinMenuEditorWindow
 
     private Type selectedType;
 
-    [MenuItem("Tools/Data Manager")]
-    private static void OpenEditor() => GetWindow<DataManager>();
+    [MenuItem("Tools/Scriptable Objects Manager")]
+    private static void OpenEditor() => GetWindow<ScriptableObjectManager>();
 
     protected override void OnImGUI()
     {
