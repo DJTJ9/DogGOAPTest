@@ -36,7 +36,7 @@ public class PlayerController : MonoBehaviour
     private InputAction moveInputAction;
     private InputAction jumpInputAction;
     private InputAction lookInputAction;
-    private InputAction grabInputAction;
+    private InputAction interactionInputAction;
     private InputAction dropInputAction;
     private InputAction throwInputAction;
     private InputAction callDogInputAction;
@@ -44,7 +44,7 @@ public class PlayerController : MonoBehaviour
 
     // private PlayerInteraction playerInteraction;
 
-    private const float pickUpDistance = 3f;
+    private const float interactionDistance = 5f;
 
     private void Awake() {
         MapInputActions();
@@ -110,8 +110,9 @@ public class PlayerController : MonoBehaviour
 
         lookInputAction = playerInput.actions["Look"];
 
-        grabInputAction = playerInput.actions["Interact"];
-        grabInputAction.started += OnGrabInput;
+        interactionInputAction = playerInput.actions["Interact"];
+        interactionInputAction.started += OnFoodBowlInteraction;
+        interactionInputAction.started += OnInteractionInput;
 
         dropInputAction = playerInput.actions["Drop"];
         dropInputAction.started += OnDropInput;
@@ -126,8 +127,8 @@ public class PlayerController : MonoBehaviour
         applicationQuitInputAction.started += context => OnApplicationQuit();
     }
 
-    private void OnJumpInput(InputAction.CallbackContext _context) {
-        if (_context.phase == InputActionPhase.Started)
+    private void OnJumpInput(InputAction.CallbackContext context) {
+        if (context.phase == InputActionPhase.Started)
             rigidbodyMovement.Jump();
     }
 
@@ -147,11 +148,22 @@ public class PlayerController : MonoBehaviour
         return lookInputAction.ReadValue<Vector2>();
     }
 
-    private void OnGrabInput(InputAction.CallbackContext _context) {
-        if (_context.phase == InputActionPhase.Started)
+    private void OnFoodBowlInteraction(InputAction.CallbackContext context) {
+        if (context.phase == InputActionPhase.Started) {
+            if (Physics.Raycast(mainCameraTransform.position, mainCameraTransform.forward, out RaycastHit raycastHit, interactionDistance)) {
+                if (raycastHit.transform.TryGetComponent(out IInteractable interactable)) {
+                    interactable.Interact();
+                    Debug.Log("Player refilled food or water bowl");
+                }
+            }
+        }
+    }
+    
+    private void OnInteractionInput(InputAction.CallbackContext context) {
+        if (context.phase == InputActionPhase.Started)
             if (grabbableObject == null) {
                 if (Physics.Raycast(mainCameraTransform.position, mainCameraTransform.forward,
-                        out RaycastHit raycastHit, pickUpDistance)) {
+                        out RaycastHit raycastHit, interactionDistance)) {
                     if (raycastHit.transform.TryGetComponent(out GrabbableObject grabbableObj)) {
                         grabbableObj.Grab(objectGrabPoint);
                         grabbableObject = grabbableObj;
@@ -163,11 +175,13 @@ public class PlayerController : MonoBehaviour
             }
     }
 
-    private void OnDropInput(InputAction.CallbackContext _context) {
-        grabbableObject.Drop();
-        grabbableObject = null;
-        ballInHand.Value = false;
-        ballReturned.Value = true;
+    private void OnDropInput(InputAction.CallbackContext context) {
+        if (context.phase == InputActionPhase.Started) {
+            grabbableObject.Drop();
+            grabbableObject = null;
+            ballInHand.Value = false;
+            ballReturned.Value = true;
+        }
     }
 
     private void OnThrowInput(InputAction.CallbackContext context) {

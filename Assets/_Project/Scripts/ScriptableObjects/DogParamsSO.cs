@@ -4,17 +4,23 @@ using UnityEngine;
 
 namespace ScriptableValues
 {
-    [ManageableData]
+    [ManageableData, InlineEditor(Expanded = true)]
     [CreateAssetMenu(fileName = "Dog Params", menuName = "Scriptable Objects/Dog Parameters")]
     public class DogParamsSO : ScriptableObject
     {
-        [FoldoutGroup("Settings", expanded: true)]
-        public float wanderRadius;
+        [FoldoutGroup("Movement Settings", expanded: false)]
+        public float stoppingDistance;
         
-        [FoldoutGroup("Settings")]
+        [FoldoutGroup("Movement Settings")]
+        public float playerInRangeDistance;
+        
+        [FoldoutGroup("Movement Settings")]
+        public float wanderRadius;
+
+        [FoldoutGroup("Pick Up Settings", expanded: false)]
         public float pickUpDistance;
         
-        [FoldoutGroup("Settings")]
+        [FoldoutGroup("Resting Settings", expanded: false)]
         public float restingDuration;
     }
 }

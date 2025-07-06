@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace ScriptableValues
 {
-    [ManageableData]
+    [ManageableData, InlineEditor(Expanded = true)]
     [CreateAssetMenu(fileName = "Goal Priorities", menuName = "Scriptable Objects/Goal Priorities")]
     public class GoalPrioritiesSO : ScriptableObject
     {

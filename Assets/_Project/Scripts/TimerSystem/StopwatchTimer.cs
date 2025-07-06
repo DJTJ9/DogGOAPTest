@@ -10,7 +10,7 @@ namespace ImprovedTimers {
             }
         }
 
-        public void Reset() => CurrentTime = 0;
+        public override void Reset() => CurrentTime = 0;
 
         public float GetTime() => CurrentTime;
     }

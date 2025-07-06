@@ -13,11 +13,11 @@ namespace ImprovedTimers {
             }
         }
 
-        public bool IsFinished => CurrentTime <= 0;
+        public override bool IsFinished => CurrentTime <= 0;
 
-        public void Reset() => CurrentTime = initialTime;
+        public override void Reset() => CurrentTime = initialTime;
 
-        public void Reset(float newTime) {
+        public override void Reset(float newTime) {
             initialTime = newTime;
             Reset();
         }

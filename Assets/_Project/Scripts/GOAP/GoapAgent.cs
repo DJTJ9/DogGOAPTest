@@ -17,89 +17,83 @@ public class GoapAgent : MonoBehaviour
 
     // [InlineEditor, AssetList(Path = "/_Project/Scriptable Objects/Scriptable Values", AutoPopulate = true)]
     // public List<ScriptableFloatValue> floatValues;
-    //
-    //
-    // [FoldoutGroup("Agent Parameters", expanded: false)] [SerializeField]
-    // private float wanderRadius = 20f;
-    //
-    // [FoldoutGroup("Agent Parameters")] [SerializeField]
-    // private float pickUpDistance = 2f;
-    //
-    // [FoldoutGroup("Agent Parameters")] [SerializeField]
-    // private float restingDuration = 5f;
-    
+
     [FoldoutGroup("Stats", expanded: true), SerializeField, InlineEditor]
     private ScriptableFloatValue stamina;
-    
+
     [FoldoutGroup("Stats"), SerializeField, InlineEditor]
     private ScriptableFloatValue thirst;
-    
+
     [FoldoutGroup("Stats"), SerializeField, InlineEditor]
     private ScriptableFloatValue hunger;
-    
+
     [FoldoutGroup("Stats"), SerializeField, InlineEditor]
     private ScriptableFloatValue boredom;
-    
+
     [FoldoutGroup("Stats"), SerializeField, InlineEditor]
     private ScriptableBoolValue ballInHand;
-    
+
     [FoldoutGroup("Stats"), SerializeField, InlineEditor]
     private ScriptableBoolValue ballThrown;
-    
+
     [FoldoutGroup("Stats"), SerializeField, InlineEditor]
     private ScriptableBoolValue ballReturned;
-    
+
     [FoldoutGroup("Stats"), SerializeField, InlineEditor]
     private ScriptableBoolValue returnBall;
-    
-    [FoldoutGroup("Dog Parameters", expanded: true), InlineEditor] [SerializeField]
+
+    [FoldoutGroup("Dog Parameters", expanded: true), InlineEditor]
+    [SerializeField]
     private DogParamsSO dogParams;
-    
+
     [FoldoutGroup("Dog Parameters"), InlineEditor, SerializeField]
     private ActionCostsSO actionCosts;
 
     [FoldoutGroup("Dog Parameters"), InlineEditor, SerializeField]
     private GoalPrioritiesSO goalPriorities;
     
+    [FoldoutGroup("Dog Parameters"), InlineEditor, SerializeField]
+    private StatManager statManager;
+
     [FoldoutGroup("Sensors", expanded: false), SerializeField]
     private Sensor chaseSensor;
-    
+
     [FoldoutGroup("Sensors"), SerializeField]
     private Sensor attackSensor;
-    
+
     [FoldoutGroup("Known Locations", expanded: false), SerializeField]
     private Transform restingPosition;
-    
+
     [FoldoutGroup("Known Locations"), SerializeField]
     private Transform foodBowl;
-    
+
     [FoldoutGroup("Known Locations"), SerializeField]
     private Transform waterBowl;
-    
+
     [FoldoutGroup("Known Locations"), SerializeField]
     private Transform rageVictim;
-    
+
     [FoldoutGroup("Known Locations"), SerializeField]
     private Transform doorOnePosition;
-    
+
     [FoldoutGroup("Known Locations"), SerializeField]
     private Transform doorTwoPosition;
-    
+
     [FoldoutGroup("Known Locations"), SerializeField]
     private Transform playerTransform;
-   
+
     [FoldoutGroup("Known Locations"), SerializeField]
     private Transform objectGrabPointPosition;
-    
+
     public GameObject ball;
-    
+
     private NavMeshAgent navMeshAgent;
     private AnimationController animations;
     private Rigidbody rb;
     private CountdownTimer statsTimer;
     private GameObject target;
     private Vector3 destination;
-    
+
     public HashSet<AgentAction> actions;
     private Dictionary<Beliefs, AgentBelief> beliefs;
     private HashSet<AgentGoal> goals;
@@ -108,8 +102,6 @@ public class GoapAgent : MonoBehaviour
     private ActionPlan actionPlan;
     private AgentAction currentAction;
     private IGoapPlanner gPlanner;
-    
-    private DogBeliefs dogBeliefs;
 
     #endregion
 
@@ -120,7 +112,6 @@ public class GoapAgent : MonoBehaviour
         rb.freezeRotation = true;
 
         gPlanner = new GoapPlanner();
-        dogBeliefs = GetComponent<DogBeliefs>();
     }
 
     void Start() {
@@ -137,7 +128,7 @@ public class GoapAgent : MonoBehaviour
     void SetupBeliefs() {
         beliefs = new Dictionary<Beliefs, AgentBelief>();
         BeliefFactory factory = new BeliefFactory(this, beliefs);
-    
+
         factory.AddBelief(Beliefs.Nothing, () => false);
         factory.AddBelief(Beliefs.DogIdle, () => !navMeshAgent.hasPath);
         factory.AddBelief(Beliefs.DogMoving, () => navMeshAgent.hasPath);
@@ -150,14 +141,15 @@ public class GoapAgent : MonoBehaviour
         factory.AddBelief(Beliefs.DogIsHappy, () => boredom.Value < 90);
         factory.AddBelief(Beliefs.DogWantsAttention, () => boredom.Value is > 50 and <= 90);
         factory.AddBelief(Beliefs.DogIsBored, () => boredom.Value >= 50);
-        factory.AddBelief(Beliefs.BallInHand, () => ballInHand.Value);;
+        factory.AddBelief(Beliefs.BallInHand, () => ballInHand.Value);
+        ;
         factory.AddBelief(Beliefs.BallThrown, () => ballThrown.Value);
         factory.AddBelief(Beliefs.ReturnBall, () => returnBall.Value);
         // factory.AddBelief(Beliefs.BallRetrieved, () => !ballThrown.Value && !ballInHand.Value);
         factory.AddBelief(Beliefs.BallReturned, () => ballReturned.Value);
         factory.AddBelief(Beliefs.FetchBall, () => !ballThrown.Value && !ballInHand.Value);
         factory.AddBelief(Beliefs.DropBall, () => false);
-    
+
         factory.AddLocationBelief(Beliefs.DogAtDoorOne, 3f, doorOnePosition);
         factory.AddLocationBelief(Beliefs.DogAtDoorTwo, 3f, doorTwoPosition);
         factory.AddLocationBelief(Beliefs.DogAtRestingPosition, 3f, restingPosition);
@@ -166,7 +158,7 @@ public class GoapAgent : MonoBehaviour
         factory.AddLocationBelief(Beliefs.DogAtRageVictim, 3f, rageVictim);
         factory.AddLocationBelief(Beliefs.DogAtBall, 2f, ball.transform.position);
         factory.AddLocationBelief(Beliefs.DogAtPlayer, 5f, playerTransform.position);
-    
+
         // factory.AddSensorBelief(Beliefs.PlayerInChaseRange, chaseSensor);
         // factory.AddSensorBelief(Beliefs.PlayerInAttackRange, attackSensor);
         factory.AddBelief(Beliefs.AttackingPlayer, () => false); // Player can always be attacked, this will never become true
@@ -242,7 +234,7 @@ public class GoapAgent : MonoBehaviour
 
         actions.Add(new AgentAction.Builder(ActionType.Eat)
             .WithStrategy(
-                new EatAndWaitStrategy(animations, hunger))
+                new EatAndWaitStrategy(animations, foodBowl, hunger))
             .AddPrecondition(beliefs[Beliefs.DogAtFoodBowl])
             .AddEffect(beliefs[Beliefs.DogIsFed])
             .Build());
@@ -259,7 +251,7 @@ public class GoapAgent : MonoBehaviour
             .Build());
 
         actions.Add(new AgentAction.Builder(ActionType.Drink)
-            .WithStrategy(new DrinkAndWaitStrategy(animations, thirst))
+            .WithStrategy(new DrinkAndWaitStrategy(animations, waterBowl, thirst))
             .AddPrecondition(beliefs[Beliefs.DogAtWaterBowl])
             .AddEffect(beliefs[Beliefs.DogIsNotThirsty])
             .Build());
@@ -312,12 +304,12 @@ public class GoapAgent : MonoBehaviour
         //     .AddPrecondition(beliefs[Beliefs.PlayerInChaseRange])
         //     .AddEffect(beliefs[Beliefs.PlayerInChaseRange])
         //     .Build());
-        
+
         actions.Add(new AgentAction.Builder(ActionType.MoveToPlayer)
             .WithStrategy(new MoveStrategy(navMeshAgent, animations, () => playerTransform.position, 5f))
             .AddEffect(beliefs[Beliefs.DogAtPlayer])
             .Build());
-        
+
         actions.Add(new AgentAction.Builder(ActionType.SeekAttention)
             .WithCost(actionCosts.Attention)
             .WithStrategy(new SeekAttentionStrategy(navMeshAgent, animations, playerTransform, boredom))
@@ -400,17 +392,18 @@ public class GoapAgent : MonoBehaviour
 
     // TODO eigenes Stat System
     void UpdateStats() {
-        actionCosts.Sleep = Random.Range(2, 6);
-        actionCosts.Rest = Random.Range(1, 5);
-        actionCosts.Attention = Random.Range(1, 5);
-       actionCosts.Rage = Random.Range(2, 6);
-       SetupActions();
+        actionCosts.Sleep = Mathf.Clamp(Random.Range(actionCosts.minSleepCosts, actionCosts.maxSleepCosts), actionCosts.minSleepCosts, actionCosts.maxSleepCosts);
+        actionCosts.Rest = Mathf.Clamp(Random.Range(actionCosts.minRestCosts, actionCosts.maxRestCosts), actionCosts.minRestCosts, actionCosts.maxRestCosts);
+        actionCosts.Attention = Mathf.Clamp(Random.Range(actionCosts.minAttentionCosts, actionCosts.maxAttentionCosts), actionCosts.minAttentionCosts, actionCosts.maxAttentionCosts);
+        actionCosts.Rage = Mathf.Clamp(Random.Range(actionCosts.minRageCosts, actionCosts.maxRageCosts), actionCosts.minRageCosts, actionCosts.maxRageCosts);
 
-       SetupGoals();
-        hunger.Subtract(1);
-        boredom.Add(1);
-        stamina.Subtract(1);
-        thirst.Subtract(1);
+        SetupActions();
+
+        SetupGoals();
+        hunger.Subtract(statManager.HungerLevelLost);
+        boredom.Add(statManager.BoredomLevelLost);
+        stamina.Subtract(statManager.StaminaLevelLost);
+        thirst.Subtract(statManager.ThirstLevelLost);
     }
 
     bool InRangeOf(Vector3 pos, float range) => Vector3.Distance(transform.position, pos) < range;
@@ -418,8 +411,8 @@ public class GoapAgent : MonoBehaviour
 
     // Zugriffsmethoden für Locations
     public Transform GetRestingPosition() => restingPosition;
-    public Transform GetFoodBowl() => foodBowl;
-    public Transform GetWaterBowl() => waterBowl;
+    public Transform GetFoodBowl()        => foodBowl;
+    public Transform GetWaterBowl()       => waterBowl;
     public Transform GetDoorOnePosition() => doorOnePosition;
     public Transform GetDoorTwoPosition() => doorTwoPosition;
 

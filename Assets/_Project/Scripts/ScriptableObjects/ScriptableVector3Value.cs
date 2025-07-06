@@ -3,7 +3,6 @@ using System;
 
 namespace ScriptableValues
 {
-    [ManageableData]
     [CreateAssetMenu(fileName = "Vector3 Value", menuName = "ScriptableValues/Vector3")]
     public class ScriptableVector3Value : ScriptableObject
     {

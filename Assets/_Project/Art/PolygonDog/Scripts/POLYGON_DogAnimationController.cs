@@ -83,7 +83,7 @@ public class POLYGON_DogAnimationController : MonoBehaviour
     public float timeRemaining = 1.0f;
     private int countDown = 1;
     bool Movement_f;
-    bool death_b = false;
+    // bool death_b = false;
     bool Sleep_b = false;
     bool Sit_b = false;
     private float w_movement = 0.0f; // Run value
@@ -221,10 +221,10 @@ public class POLYGON_DogAnimationController : MonoBehaviour
     {
         if(DisplayUI) // Display Dog keycodes on UI
         {
-        GUI.backgroundColor = Color.yellow;
+            GUI.backgroundColor = Color.yellow;
         for (int i = 0; i < dogKeyCodes.Length; i++)
-        {
-        GUI.Label(new Rect(10, 10 + (i * 30), 400, 30), dogLabels[i] + " " + dogKeyCodes[i].ToString(), guiStyle);
+        { 
+            GUI.Label(new Rect(10, 10 + (i * 30), 400, 30), dogLabels[i] + " " + dogKeyCodes[i].ToString(), guiStyle);
         }
         } 
     }

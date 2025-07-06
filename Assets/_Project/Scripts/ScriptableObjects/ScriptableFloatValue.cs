@@ -4,12 +4,11 @@ using Sirenix.OdinInspector;
 
 namespace ScriptableValues
 {
-    [ManageableData]
     [CreateAssetMenu(fileName = "Float Value", menuName = "ScriptableValues/Float")]
     public class ScriptableFloatValue : ScriptableObject
     {
         [SerializeField, ProgressBar(0, 100)] private float currentValue;
-        [FoldoutGroup("Settings"), SerializeField] private float defaultValue;
+        [FoldoutGroup("Settings", expanded: false), SerializeField] private float defaultValue;
         [FoldoutGroup("Settings"), SerializeField] private float minValue;
         [FoldoutGroup("Settings"), SerializeField] private float maxValue;
 

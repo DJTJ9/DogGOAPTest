@@ -34,7 +34,6 @@ public class AttackStrategy : IActionStrategy
 
     private bool isAttacking = true;
     private int attackCount = 0;
-    private int maxAttacks = 3;
 
     public AttackStrategy(AnimationController animations, ScriptableFloatValue boredom, float funFactor = 35, float maxAttacks = 3) {
         this.animations = animations;
@@ -219,7 +218,7 @@ public class EatAndWaitStrategy : IActionStrategy
 
     private bool m_isEating = true;
 
-    public EatAndWaitStrategy(AnimationController animations, ScriptableFloatValue hunger, float saturation = 69f) {
+    public EatAndWaitStrategy(AnimationController animations, Transform food, ScriptableFloatValue hunger, float saturation = 69f) {
         this.animations = animations;
 
         float eatDuration = animations.GetAnimationLength(animations.eatClip);
@@ -230,6 +229,7 @@ public class EatAndWaitStrategy : IActionStrategy
         };
         eatAnimationTimer.OnTimerStop += () => {
             hunger.Value += saturation;
+            food.position += new Vector3(0f, -0.05f, 0f);
             m_isEating = false;
             animations.Locomotion();
             waitTimer.Start();
@@ -276,7 +276,7 @@ public class DrinkAndWaitStrategy : IActionStrategy
     readonly AnimationController animations;
     private bool isDrinking = true;
 
-    public DrinkAndWaitStrategy(AnimationController animations, ScriptableFloatValue thirst, float hydration = 69f) {
+    public DrinkAndWaitStrategy(AnimationController animations, Transform water, ScriptableFloatValue thirst, float hydration = 69f) {
         this.animations = animations;
 
         float drinkDuration = animations.GetAnimationLength(animations.drinkClip);
@@ -287,6 +287,7 @@ public class DrinkAndWaitStrategy : IActionStrategy
         };
         drinkAnimationTimer.OnTimerStop += () => {
             thirst.Value += hydration;
+            water.position += new Vector3(0f, -0.05f, 0f);
             isDrinking = false;
             animations.Locomotion();
             waitTimer.Start();
@@ -497,7 +498,7 @@ public class SeekAttentionStrategy : IActionStrategy
     readonly NavMeshAgent navMeshAgent;
     readonly AnimationController animations;
 
-    public SeekAttentionStrategy(NavMeshAgent navMeshAgent, AnimationController animations, Transform playerPos, ScriptableFloatValue boredom, float frust = 2) {
+    public SeekAttentionStrategy(NavMeshAgent navMeshAgent, AnimationController animations, Transform playerPos, ScriptableFloatValue boredom, float fun = 100) {
         this.navMeshAgent = navMeshAgent;
         this.animations = animations;
 
@@ -508,7 +509,7 @@ public class SeekAttentionStrategy : IActionStrategy
             Complete = false;
         };
         begAnimationTimer.OnTimerStop += () => {
-            boredom.Value -= frust;
+            boredom.Value -= fun;
             animations.Locomotion();
             Complete = true;
         };

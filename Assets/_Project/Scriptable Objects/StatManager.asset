@@ -9,10 +9,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e600de64db824c108e729afea169008a, type: 3}
-  m_Name: Hunger
+  m_Script: {fileID: 11500000, guid: 0754180e0ea24a969a593ce7cb85f0d4, type: 3}
+  m_Name: StatManager
   m_EditorClassIdentifier: 
-  currentValue: 0
-  defaultValue: 30
-  minValue: 0
-  maxValue: 100
+  StaminaLevelLost: 5
+  HungerLevelLost: 5
+  ThirstLevelLost: 5
+  BoredomLevelLost: 5

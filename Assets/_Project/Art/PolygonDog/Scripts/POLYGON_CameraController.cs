@@ -21,7 +21,7 @@ public class POLYGON_CameraController : MonoBehaviour
     Vector3 newPosition;
     Quaternion rotation;
     Quaternion newRotation;
-    Transform camera;
+    Transform cam;
     // (Move to input script)
     float MouseX;
     void Start()
@@ -31,9 +31,9 @@ public class POLYGON_CameraController : MonoBehaviour
         position = new Vector3(target.position.x, target.position.y + distance, target.position.z);
         rotation = Quaternion.Euler(new Vector3(45f, target.rotation.eulerAngles.y, 0f));
         // camera offset 
-        camera = this.gameObject.transform.GetChild(0);
-        camera.position = new Vector3(0f, cameraPositionY, cameraPositionZ);
-        camera.rotation = Quaternion.Euler(cameraRotationX, 0f, 0f);
+        cam = this.gameObject.transform.GetChild(0);
+        cam.position = new Vector3(0f, cameraPositionY, cameraPositionZ);
+        cam.rotation = Quaternion.Euler(cameraRotationX, 0f, 0f);
     }
     void Update()
     {

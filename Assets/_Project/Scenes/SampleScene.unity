@@ -271,6 +271,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Fence (10)
       objectReference: {fileID: 0}
+    - target: {fileID: 8393868103735826516, guid: a694ab454aae5ef4293a0ccfaa1295fc, type: 3}
+      propertyPath: m_IncludeLayers.m_Bits
+      value: 4294967295
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -327,6 +331,10 @@ PrefabInstance:
     - target: {fileID: 7412278212725581184, guid: a694ab454aae5ef4293a0ccfaa1295fc, type: 3}
       propertyPath: m_Name
       value: Fence (17)
+      objectReference: {fileID: 0}
+    - target: {fileID: 8393868103735826516, guid: a694ab454aae5ef4293a0ccfaa1295fc, type: 3}
+      propertyPath: m_IncludeLayers.m_Bits
+      value: 4294967295
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -461,6 +469,11 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 3886689881687488122, guid: a694ab454aae5ef4293a0ccfaa1295fc, type: 3}
   m_PrefabInstance: {fileID: 1800090791}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &166361908 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1632938634403251778, guid: b23aa0f47b77fbc4c8e0a2a9adc0fb29, type: 3}
+  m_PrefabInstance: {fileID: 596004988}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &199526062 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3886689881687488122, guid: a694ab454aae5ef4293a0ccfaa1295fc, type: 3}
@@ -580,6 +593,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Fence (20)
       objectReference: {fileID: 0}
+    - target: {fileID: 8393868103735826516, guid: a694ab454aae5ef4293a0ccfaa1295fc, type: 3}
+      propertyPath: m_IncludeLayers.m_Bits
+      value: 4294967295
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -677,6 +694,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Fence (11)
       objectReference: {fileID: 0}
+    - target: {fileID: 8393868103735826516, guid: a694ab454aae5ef4293a0ccfaa1295fc, type: 3}
+      propertyPath: m_IncludeLayers.m_Bits
+      value: 4294967295
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -733,6 +754,10 @@ PrefabInstance:
     - target: {fileID: 7412278212725581184, guid: a694ab454aae5ef4293a0ccfaa1295fc, type: 3}
       propertyPath: m_Name
       value: Fence (6)
+      objectReference: {fileID: 0}
+    - target: {fileID: 8393868103735826516, guid: a694ab454aae5ef4293a0ccfaa1295fc, type: 3}
+      propertyPath: m_IncludeLayers.m_Bits
+      value: 4294967295
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -795,6 +820,10 @@ PrefabInstance:
     - target: {fileID: 7412278212725581184, guid: a694ab454aae5ef4293a0ccfaa1295fc, type: 3}
       propertyPath: m_Name
       value: Fence (18)
+      objectReference: {fileID: 0}
+    - target: {fileID: 8393868103735826516, guid: a694ab454aae5ef4293a0ccfaa1295fc, type: 3}
+      propertyPath: m_IncludeLayers.m_Bits
+      value: 4294967295
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1035,6 +1064,11 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 25269467461883209, guid: cc1d130c0e7512a4cadff14050b422dc, type: 3}
   m_PrefabInstance: {fileID: 1418996370}
   m_PrefabAsset: {fileID: 0}
+--- !u!4 &512481321 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 5737229891726645480, guid: c4a95511dca35f0499c7d525ef29cddf, type: 3}
+  m_PrefabInstance: {fileID: 6852984987193732290}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &539735025 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5734237290196956189, guid: 6e9c9061f40ea10418f651209cd4b949, type: 3}
@@ -1149,6 +1183,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Fence (3)
       objectReference: {fileID: 0}
+    - target: {fileID: 8393868103735826516, guid: a694ab454aae5ef4293a0ccfaa1295fc, type: 3}
+      propertyPath: m_IncludeLayers.m_Bits
+      value: 4294967295
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1167,9 +1205,21 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 278530566}
     m_Modifications:
+    - target: {fileID: 1316276264652659998, guid: b23aa0f47b77fbc4c8e0a2a9adc0fb29, type: 3}
+      propertyPath: m_Name
+      value: Food
+      objectReference: {fileID: 0}
+    - target: {fileID: 1316276264652659998, guid: b23aa0f47b77fbc4c8e0a2a9adc0fb29, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1632938634403251778, guid: b23aa0f47b77fbc4c8e0a2a9adc0fb29, type: 3}
       propertyPath: m_Name
       value: FoodBowl
+      objectReference: {fileID: 0}
+    - target: {fileID: 1632938634403251778, guid: b23aa0f47b77fbc4c8e0a2a9adc0fb29, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2083778932578735553, guid: b23aa0f47b77fbc4c8e0a2a9adc0fb29, type: 3}
       propertyPath: m_LocalPosition.y
@@ -1230,7 +1280,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 1632938634403251778, guid: b23aa0f47b77fbc4c8e0a2a9adc0fb29, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2053825140}
   m_SourcePrefab: {fileID: 100100000, guid: b23aa0f47b77fbc4c8e0a2a9adc0fb29, type: 3}
 --- !u!1001 &599471755
 PrefabInstance:
@@ -1283,6 +1336,10 @@ PrefabInstance:
     - target: {fileID: 7412278212725581184, guid: a694ab454aae5ef4293a0ccfaa1295fc, type: 3}
       propertyPath: m_Name
       value: Fence (30)
+      objectReference: {fileID: 0}
+    - target: {fileID: 8393868103735826516, guid: a694ab454aae5ef4293a0ccfaa1295fc, type: 3}
+      propertyPath: m_IncludeLayers.m_Bits
+      value: 4294967295
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1448,6 +1505,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Fence (9)
       objectReference: {fileID: 0}
+    - target: {fileID: 8393868103735826516, guid: a694ab454aae5ef4293a0ccfaa1295fc, type: 3}
+      propertyPath: m_IncludeLayers.m_Bits
+      value: 4294967295
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1576,6 +1637,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Fence (5)
       objectReference: {fileID: 0}
+    - target: {fileID: 8393868103735826516, guid: a694ab454aae5ef4293a0ccfaa1295fc, type: 3}
+      propertyPath: m_IncludeLayers.m_Bits
+      value: 4294967295
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1638,6 +1703,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Fence (8)
       objectReference: {fileID: 0}
+    - target: {fileID: 8393868103735826516, guid: a694ab454aae5ef4293a0ccfaa1295fc, type: 3}
+      propertyPath: m_IncludeLayers.m_Bits
+      value: 4294967295
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1695,6 +1764,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Fence (14)
       objectReference: {fileID: 0}
+    - target: {fileID: 8393868103735826516, guid: a694ab454aae5ef4293a0ccfaa1295fc, type: 3}
+      propertyPath: m_IncludeLayers.m_Bits
+      value: 4294967295
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1751,6 +1824,10 @@ PrefabInstance:
     - target: {fileID: 7412278212725581184, guid: a694ab454aae5ef4293a0ccfaa1295fc, type: 3}
       propertyPath: m_Name
       value: Fence (29)
+      objectReference: {fileID: 0}
+    - target: {fileID: 8393868103735826516, guid: a694ab454aae5ef4293a0ccfaa1295fc, type: 3}
+      propertyPath: m_IncludeLayers.m_Bits
+      value: 4294967295
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1930,6 +2007,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Fence (4)
       objectReference: {fileID: 0}
+    - target: {fileID: 8393868103735826516, guid: a694ab454aae5ef4293a0ccfaa1295fc, type: 3}
+      propertyPath: m_IncludeLayers.m_Bits
+      value: 4294967295
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1986,6 +2067,10 @@ PrefabInstance:
     - target: {fileID: 7412278212725581184, guid: a694ab454aae5ef4293a0ccfaa1295fc, type: 3}
       propertyPath: m_Name
       value: Fence (22)
+      objectReference: {fileID: 0}
+    - target: {fileID: 8393868103735826516, guid: a694ab454aae5ef4293a0ccfaa1295fc, type: 3}
+      propertyPath: m_IncludeLayers.m_Bits
+      value: 4294967295
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -2156,6 +2241,10 @@ PrefabInstance:
     - target: {fileID: 7412278212725581184, guid: a694ab454aae5ef4293a0ccfaa1295fc, type: 3}
       propertyPath: m_Name
       value: Fence (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 8393868103735826516, guid: a694ab454aae5ef4293a0ccfaa1295fc, type: 3}
+      propertyPath: m_IncludeLayers.m_Bits
+      value: 4294967295
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -2332,6 +2421,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Fence (21)
       objectReference: {fileID: 0}
+    - target: {fileID: 8393868103735826516, guid: a694ab454aae5ef4293a0ccfaa1295fc, type: 3}
+      propertyPath: m_IncludeLayers.m_Bits
+      value: 4294967295
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -2444,6 +2537,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Fence (15)
       objectReference: {fileID: 0}
+    - target: {fileID: 8393868103735826516, guid: a694ab454aae5ef4293a0ccfaa1295fc, type: 3}
+      propertyPath: m_IncludeLayers.m_Bits
+      value: 4294967295
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -2501,6 +2598,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Fence (23)
       objectReference: {fileID: 0}
+    - target: {fileID: 8393868103735826516, guid: a694ab454aae5ef4293a0ccfaa1295fc, type: 3}
+      propertyPath: m_IncludeLayers.m_Bits
+      value: 4294967295
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -2557,6 +2658,10 @@ PrefabInstance:
     - target: {fileID: 7412278212725581184, guid: a694ab454aae5ef4293a0ccfaa1295fc, type: 3}
       propertyPath: m_Name
       value: Fence (16)
+      objectReference: {fileID: 0}
+    - target: {fileID: 8393868103735826516, guid: a694ab454aae5ef4293a0ccfaa1295fc, type: 3}
+      propertyPath: m_IncludeLayers.m_Bits
+      value: 4294967295
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -2741,6 +2846,24 @@ MonoBehaviour:
   m_MinRegionArea: 2
   m_NavMeshData: {fileID: 23800000, guid: 7cc1fbe7f9034a241a8c77357233f466, type: 2}
   m_BuildHeightMesh: 0
+--- !u!1 &1244875342 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4438361123424968881, guid: cc1d130c0e7512a4cadff14050b422dc, type: 3}
+  m_PrefabInstance: {fileID: 1418996370}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1244875346
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1244875342}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 349afdb42fc94693b6d7551bdc1888a4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  foodAmount: {fileID: 1041714514}
 --- !u!1001 &1295756003
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2792,6 +2915,10 @@ PrefabInstance:
     - target: {fileID: 7412278212725581184, guid: a694ab454aae5ef4293a0ccfaa1295fc, type: 3}
       propertyPath: m_Name
       value: Fence (7)
+      objectReference: {fileID: 0}
+    - target: {fileID: 8393868103735826516, guid: a694ab454aae5ef4293a0ccfaa1295fc, type: 3}
+      propertyPath: m_IncludeLayers.m_Bits
+      value: 4294967295
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -2854,6 +2981,10 @@ PrefabInstance:
     - target: {fileID: 7412278212725581184, guid: a694ab454aae5ef4293a0ccfaa1295fc, type: 3}
       propertyPath: m_Name
       value: Fence (28)
+      objectReference: {fileID: 0}
+    - target: {fileID: 8393868103735826516, guid: a694ab454aae5ef4293a0ccfaa1295fc, type: 3}
+      propertyPath: m_IncludeLayers.m_Bits
+      value: 4294967295
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -2928,6 +3059,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Fence (2)
       objectReference: {fileID: 0}
+    - target: {fileID: 8393868103735826516, guid: a694ab454aae5ef4293a0ccfaa1295fc, type: 3}
+      propertyPath: m_IncludeLayers.m_Bits
+      value: 4294967295
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -2993,14 +3128,25 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2632868419592774394, guid: cc1d130c0e7512a4cadff14050b422dc, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4438361123424968881, guid: cc1d130c0e7512a4cadff14050b422dc, type: 3}
       propertyPath: m_Name
       value: WaterBowl
       objectReference: {fileID: 0}
+    - target: {fileID: 4438361123424968881, guid: cc1d130c0e7512a4cadff14050b422dc, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 4438361123424968881, guid: cc1d130c0e7512a4cadff14050b422dc, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1244875346}
   m_SourcePrefab: {fileID: 100100000, guid: cc1d130c0e7512a4cadff14050b422dc, type: 3}
 --- !u!4 &1421189346 stripped
 Transform:
@@ -3058,6 +3204,10 @@ PrefabInstance:
     - target: {fileID: 7412278212725581184, guid: a694ab454aae5ef4293a0ccfaa1295fc, type: 3}
       propertyPath: m_Name
       value: Fence (26)
+      objectReference: {fileID: 0}
+    - target: {fileID: 8393868103735826516, guid: a694ab454aae5ef4293a0ccfaa1295fc, type: 3}
+      propertyPath: m_IncludeLayers.m_Bits
+      value: 4294967295
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -3246,6 +3396,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Fence (19)
       objectReference: {fileID: 0}
+    - target: {fileID: 8393868103735826516, guid: a694ab454aae5ef4293a0ccfaa1295fc, type: 3}
+      propertyPath: m_IncludeLayers.m_Bits
+      value: 4294967295
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -3332,6 +3486,108 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 1479967359}
   m_SourcePrefab: {fileID: 100100000, guid: 8143f992edef5de49984d0a8c07e93f6, type: 3}
+--- !u!1 &1537938560
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1537938561}
+  - component: {fileID: 1537938564}
+  - component: {fileID: 1537938563}
+  - component: {fileID: 1537938562}
+  m_Layer: 0
+  m_Name: Crosshair
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1537938561
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1537938560}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 0, y: 0, z: 0}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 1929652280}
+  m_Father: {fileID: 512481321}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
+  m_Pivot: {x: 0, y: 0}
+--- !u!114 &1537938562
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1537938560}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc42784cf147c0c48a680349fa168899, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_IgnoreReversedGraphics: 1
+  m_BlockingObjects: 0
+  m_BlockingMask:
+    serializedVersion: 2
+    m_Bits: 247
+--- !u!114 &1537938563
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1537938560}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0cd44c1031e13a943bb63640046fad76, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_UiScaleMode: 0
+  m_ReferencePixelsPerUnit: 100
+  m_ScaleFactor: 1
+  m_ReferenceResolution: {x: 800, y: 600}
+  m_ScreenMatchMode: 0
+  m_MatchWidthOrHeight: 0
+  m_PhysicalUnit: 3
+  m_FallbackScreenDPI: 96
+  m_DefaultSpriteDPI: 96
+  m_DynamicPixelsPerUnit: 1
+  m_PresetInfoIsWorld: 0
+--- !u!223 &1537938564
+Canvas:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1537938560}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_RenderMode: 0
+  m_Camera: {fileID: 0}
+  m_PlaneDistance: 100
+  m_PixelPerfect: 0
+  m_ReceivesEvents: 1
+  m_OverrideSorting: 0
+  m_OverridePixelPerfect: 0
+  m_SortingBucketNormalizedSize: 0
+  m_VertexColorAlwaysGammaSpace: 0
+  m_AdditionalShaderChannelsFlag: 0
+  m_UpdateRectTransformForStandalone: 0
+  m_SortingLayerID: 0
+  m_SortingOrder: 0
+  m_TargetDisplay: 0
 --- !u!4 &1574754564 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3886689881687488122, guid: a694ab454aae5ef4293a0ccfaa1295fc, type: 3}
@@ -3388,6 +3644,10 @@ PrefabInstance:
     - target: {fileID: 7412278212725581184, guid: a694ab454aae5ef4293a0ccfaa1295fc, type: 3}
       propertyPath: m_Name
       value: Fence (25)
+      objectReference: {fileID: 0}
+    - target: {fileID: 8393868103735826516, guid: a694ab454aae5ef4293a0ccfaa1295fc, type: 3}
+      propertyPath: m_IncludeLayers.m_Bits
+      value: 4294967295
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -3477,6 +3737,10 @@ PrefabInstance:
     - target: {fileID: 7412278212725581184, guid: a694ab454aae5ef4293a0ccfaa1295fc, type: 3}
       propertyPath: m_Name
       value: Fence (24)
+      objectReference: {fileID: 0}
+    - target: {fileID: 8393868103735826516, guid: a694ab454aae5ef4293a0ccfaa1295fc, type: 3}
+      propertyPath: m_IncludeLayers.m_Bits
+      value: 4294967295
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -3771,6 +4035,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Fence (31)
       objectReference: {fileID: 0}
+    - target: {fileID: 8393868103735826516, guid: a694ab454aae5ef4293a0ccfaa1295fc, type: 3}
+      propertyPath: m_IncludeLayers.m_Bits
+      value: 4294967295
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -3832,6 +4100,10 @@ PrefabInstance:
     - target: {fileID: 7412278212725581184, guid: a694ab454aae5ef4293a0ccfaa1295fc, type: 3}
       propertyPath: m_Name
       value: Fence
+      objectReference: {fileID: 0}
+    - target: {fileID: 8393868103735826516, guid: a694ab454aae5ef4293a0ccfaa1295fc, type: 3}
+      propertyPath: m_IncludeLayers.m_Bits
+      value: 4294967295
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -4070,6 +4342,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Fence (27)
       objectReference: {fileID: 0}
+    - target: {fileID: 8393868103735826516, guid: a694ab454aae5ef4293a0ccfaa1295fc, type: 3}
+      propertyPath: m_IncludeLayers.m_Bits
+      value: 4294967295
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -4247,6 +4523,78 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 3886689881687488122, guid: a694ab454aae5ef4293a0ccfaa1295fc, type: 3}
   m_PrefabInstance: {fileID: 1331646148}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1929652279
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1929652280}
+  - component: {fileID: 1929652282}
+  - component: {fileID: 1929652281}
+  m_Layer: 0
+  m_Name: RawImage
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1929652280
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1929652279}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1537938561}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1929652281
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1929652279}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1344c3c82d62a2a41a3576d8abb8e3ea, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Texture: {fileID: 2800000, guid: e6872b0c2611ee44e85bbfa7a2fb02ee, type: 3}
+  m_UVRect:
+    serializedVersion: 2
+    x: 0
+    y: 0
+    width: 1
+    height: 1
+--- !u!222 &1929652282
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1929652279}
+  m_CullTransparentMesh: 1
 --- !u!1 &1933799084 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 4971611557724096039, guid: a25416aef927dcd45b69c5ee79f52ebf, type: 3}
@@ -4282,6 +4630,12 @@ MonoBehaviour:
   playerPosition: {fileID: 1592060951}
   objectGrabPointPosition: {fileID: 1693260350}
   ball: {fileID: 1056734358}
+  navMeshAgent: {fileID: 0}
+  animations: {fileID: 0}
+  rb: {fileID: 0}
+  target: {fileID: 0}
+  destination: {x: 0, y: 0, z: 0}
+  agent: {fileID: 0}
 --- !u!1 &1942188520
 GameObject:
   m_ObjectHideFlags: 0
@@ -4355,6 +4709,19 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 6920918337413409961, guid: b23aa0f47b77fbc4c8e0a2a9adc0fb29, type: 3}
   m_PrefabInstance: {fileID: 596004988}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &2053825140
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 166361908}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 349afdb42fc94693b6d7551bdc1888a4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  foodAmount: {fileID: 1662145857}
 --- !u!1001 &2069741506
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4406,6 +4773,10 @@ PrefabInstance:
     - target: {fileID: 7412278212725581184, guid: a694ab454aae5ef4293a0ccfaa1295fc, type: 3}
       propertyPath: m_Name
       value: Fence (12)
+      objectReference: {fileID: 0}
+    - target: {fileID: 8393868103735826516, guid: a694ab454aae5ef4293a0ccfaa1295fc, type: 3}
+      propertyPath: m_IncludeLayers.m_Bits
+      value: 4294967295
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -4473,6 +4844,10 @@ PrefabInstance:
     - target: {fileID: 7412278212725581184, guid: a694ab454aae5ef4293a0ccfaa1295fc, type: 3}
       propertyPath: m_Name
       value: Fence (13)
+      objectReference: {fileID: 0}
+    - target: {fileID: 8393868103735826516, guid: a694ab454aae5ef4293a0ccfaa1295fc, type: 3}
+      propertyPath: m_IncludeLayers.m_Bits
+      value: 4294967295
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -4553,6 +4928,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 11400000, guid: 08475dd489d14c24bb3764986945779a, type: 2}
     - target: {fileID: 1740293195698403335, guid: a25416aef927dcd45b69c5ee79f52ebf, type: 3}
+      propertyPath: statManager
+      value: 
+      objectReference: {fileID: 11400000, guid: dc99d76271051df439d8051053ea5fab, type: 2}
+    - target: {fileID: 1740293195698403335, guid: a25416aef927dcd45b69c5ee79f52ebf, type: 3}
       propertyPath: ballPosition
       value: 
       objectReference: {fileID: 1056734364}
@@ -4586,7 +4965,7 @@ PrefabInstance:
       objectReference: {fileID: 1101704566}
     - target: {fileID: 2766324692857545076, guid: a25416aef927dcd45b69c5ee79f52ebf, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 14.16995
+      value: -3.61
       objectReference: {fileID: 0}
     - target: {fileID: 2766324692857545076, guid: a25416aef927dcd45b69c5ee79f52ebf, type: 3}
       propertyPath: m_LocalPosition.y
@@ -4594,7 +4973,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2766324692857545076, guid: a25416aef927dcd45b69c5ee79f52ebf, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -14.333333
+      value: 0.26
       objectReference: {fileID: 0}
     - target: {fileID: 2766324692857545076, guid: a25416aef927dcd45b69c5ee79f52ebf, type: 3}
       propertyPath: m_LocalRotation.w
@@ -4794,7 +5173,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
-    m_AddedGameObjects: []
+    m_AddedGameObjects:
+    - targetCorrespondingSourceObject: {fileID: 5737229891726645480, guid: c4a95511dca35f0499c7d525ef29cddf, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1537938561}
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 3939702485691419614, guid: c4a95511dca35f0499c7d525ef29cddf, type: 3}
       insertIndex: -1

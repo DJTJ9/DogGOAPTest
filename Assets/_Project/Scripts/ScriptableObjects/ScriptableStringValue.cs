@@ -3,7 +3,6 @@ using System;
 
 namespace ScriptableValues
 {
-    [ManageableData]
     [CreateAssetMenu(fileName = "String Value", menuName = "ScriptableValues/String")]
     public class ScriptableStringValue : ScriptableObject
     {
