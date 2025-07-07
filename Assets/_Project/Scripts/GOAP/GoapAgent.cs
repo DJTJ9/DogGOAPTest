@@ -6,7 +6,7 @@ using ScriptableValues;
 using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.AI;
-using Random = UnityEngine.Random;
+// using Random = UnityEngine.Random;
 
 [RequireComponent(typeof(NavMeshAgent))]
 [RequireComponent(typeof(AnimationController))]
@@ -315,7 +315,7 @@ public class GoapAgent : MonoBehaviour
             .WithStrategy(new SeekAttentionStrategy(navMeshAgent, animations, playerTransform, boredom))
             .AddPrecondition(beliefs[Beliefs.DogIsBored])
             .AddPrecondition(beliefs[Beliefs.DogAtPlayer])
-            .AddEffect(beliefs[Beliefs.DogWantsAttention])
+            .AddEffect(beliefs[Beliefs.DogIsHappy])
             .Build());
 
         actions.Add(new AgentAction.Builder(ActionType.MoveFromRelaxToRageVictim)
@@ -370,10 +370,10 @@ public class GoapAgent : MonoBehaviour
             .WithDesiredEffect(beliefs[Beliefs.DogIsHappy])
             .Build());
 
-        goals.Add(new AgentGoal.Builder(GoalType.GetAttention)
-            .WithPriority(goalPriorities.GetAttention)
-            .WithDesiredEffect(beliefs[Beliefs.DogWantsAttention])
-            .Build());
+        // goals.Add(new AgentGoal.Builder(GoalType.GetAttention)
+        //     .WithPriority(goalPriorities.GetAttention)
+        //     .WithDesiredEffect(beliefs[Beliefs.DogWantsAttention])
+        //     .Build());
 
         goals.Add(new AgentGoal.Builder(GoalType.FetchBallAndReturnIt)
             .WithPriority(goalPriorities.FetchBallAndReturnIt)
@@ -392,10 +392,10 @@ public class GoapAgent : MonoBehaviour
 
     // TODO eigenes Stat System
     void UpdateStats() {
-        actionCosts.Sleep = Mathf.Clamp(Random.Range(actionCosts.minSleepCosts, actionCosts.maxSleepCosts), actionCosts.minSleepCosts, actionCosts.maxSleepCosts);
-        actionCosts.Rest = Mathf.Clamp(Random.Range(actionCosts.minRestCosts, actionCosts.maxRestCosts), actionCosts.minRestCosts, actionCosts.maxRestCosts);
-        actionCosts.Attention = Mathf.Clamp(Random.Range(actionCosts.minAttentionCosts, actionCosts.maxAttentionCosts), actionCosts.minAttentionCosts, actionCosts.maxAttentionCosts);
-        actionCosts.Rage = Mathf.Clamp(Random.Range(actionCosts.minRageCosts, actionCosts.maxRageCosts), actionCosts.minRageCosts, actionCosts.maxRageCosts);
+        actionCosts.Sleep = Mathf.Clamp(UnityEngine.Random.Range(actionCosts.minSleepCosts, actionCosts.maxSleepCosts), actionCosts.minSleepCosts, actionCosts.maxSleepCosts);
+        actionCosts.Rest = Mathf.Clamp(UnityEngine.Random.Range(actionCosts.minRestCosts, actionCosts.maxRestCosts), actionCosts.minRestCosts, actionCosts.maxRestCosts);
+        actionCosts.Attention = Mathf.Clamp(UnityEngine.Random.Range(actionCosts.minAttentionCosts, actionCosts.maxAttentionCosts), actionCosts.minAttentionCosts, actionCosts.maxAttentionCosts);
+        actionCosts.Rage = Mathf.Clamp(UnityEngine.Random.Range(actionCosts.minRageCosts, actionCosts.maxRageCosts), actionCosts.minRageCosts, actionCosts.maxRageCosts);
 
         SetupActions();
 

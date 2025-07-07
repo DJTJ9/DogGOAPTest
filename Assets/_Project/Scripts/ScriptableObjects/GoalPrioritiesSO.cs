@@ -38,10 +38,10 @@ namespace ScriptableValues
         [FoldoutGroup("Settings"), SerializeField]
         private float keepBoredomLowDefaultCosts;
         
-        [FoldoutGroup("Current Values")]
-        public float GetAttention;
-        [FoldoutGroup("Settings"), SerializeField]
-        private float getAttentionDefaultCosts;
+        // [FoldoutGroup("Current Values")]
+        // public float GetAttention;
+        // [FoldoutGroup("Settings"), SerializeField]
+        // private float getAttentionDefaultCosts;
         
         [FoldoutGroup("Current Values")]
         public float FetchBallAndReturnIt;
@@ -55,7 +55,7 @@ namespace ScriptableValues
             KeepHungerLevelUp = keepHungerLevelUpDefaultCosts;
             KeepStaminaUp = keepStaminaUpDefaultCosts;
             KeepBoredomLow = keepBoredomLowDefaultCosts;
-            GetAttention = getAttentionDefaultCosts;
+            // GetAttention = getAttentionDefaultCosts;
             FetchBallAndReturnIt = fetchBallAndReturnItDefaultCosts;
         }
     }

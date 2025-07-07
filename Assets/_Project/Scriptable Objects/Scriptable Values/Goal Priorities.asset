@@ -22,9 +22,7 @@ MonoBehaviour:
   keepHungerLevelUpDefaultCosts: 3
   KeepStaminaUp: 3
   keepStaminaUpDefaultCosts: 3
-  KeepBoredomLow: 6
+  KeepBoredomLow: 3
   keepBoredomLowDefaultCosts: 3
-  GetAttention: 3
-  getAttentionDefaultCosts: 3
   FetchBallAndReturnIt: 4
   fetchBallAndReturnItDefaultCosts: 4

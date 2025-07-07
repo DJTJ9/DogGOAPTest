@@ -12,19 +12,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bbac5caca3e74480b8407af7bcb9a349, type: 3}
   m_Name: Action Costs
   m_EditorClassIdentifier: 
-  Sleep: 1
+  Sleep: 1.5730538
   sleepDefaultCosts: 1
   minSleepCosts: 1
-  maxSleepCosts: 1
-  Rest: 5
+  maxSleepCosts: 5
+  Rest: 2.1089647
   restDefaultCosts: 1
-  minRestCosts: 5
+  minRestCosts: 1
   maxRestCosts: 5
-  Attention: 5
+  Attention: 1.519567
   attentionDefaultCosts: 1
-  minAttentionCosts: 5
+  minAttentionCosts: 1
   maxAttentionCosts: 5
-  Rage: 1.4067631
+  Rage: 3.2364628
   rageDefaultCosts: 1
   minRageCosts: 1
   maxRageCosts: 5
