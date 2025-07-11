@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0754180e0ea24a969a593ce7cb85f0d4, type: 3}
   m_Name: StatManager
   m_EditorClassIdentifier: 
-  StaminaLevelLost: 5
-  HungerLevelLost: 5
-  ThirstLevelLost: 5
-  BoredomLevelLost: 5
+  StaminaLost: 5
+  HungerLost: 2
+  ThirstLost: 2
+  BoredomLost: 5

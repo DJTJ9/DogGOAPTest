@@ -1037,6 +1037,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 3886689881687488122, guid: a694ab454aae5ef4293a0ccfaa1295fc, type: 3}
   m_PrefabInstance: {fileID: 1636152823}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &591713602 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7996166461979541081, guid: a25416aef927dcd45b69c5ee79f52ebf, type: 3}
+  m_PrefabInstance: {fileID: 3192548455436608554}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 29ff1d1c06584224e9eb31130a3a2374, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &596004988
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1998,7 +2009,7 @@ Rigidbody:
   m_ImplicitCom: 1
   m_ImplicitTensor: 1
   m_UseGravity: 1
-  m_IsKinematic: 0
+  m_IsKinematic: 1
   m_Interpolate: 0
   m_Constraints: 112
   m_CollisionDetection: 2
@@ -4226,6 +4237,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 11400000, guid: 7f739333dcb45464f8e036f88c2e6778, type: 2}
     - target: {fileID: 1740293195698403335, guid: a25416aef927dcd45b69c5ee79f52ebf, type: 3}
+      propertyPath: playerSensor
+      value: 
+      objectReference: {fileID: 591713602}
+    - target: {fileID: 1740293195698403335, guid: a25416aef927dcd45b69c5ee79f52ebf, type: 3}
       propertyPath: goalPriorities
       value: 
       objectReference: {fileID: 11400000, guid: 3df359c60aa7ac04999c4d86b0287540, type: 2}
@@ -4291,7 +4306,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2914303152659642666, guid: a25416aef927dcd45b69c5ee79f52ebf, type: 3}
       propertyPath: m_Radius
-      value: 7.5
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 4467616895111699046, guid: a25416aef927dcd45b69c5ee79f52ebf, type: 3}
       propertyPath: m_IsActive
@@ -4306,13 +4321,25 @@ PrefabInstance:
       value: 2.5
       objectReference: {fileID: 0}
     - target: {fileID: 7996166461979541081, guid: a25416aef927dcd45b69c5ee79f52ebf, type: 3}
+      propertyPath: timerInterval
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7996166461979541081, guid: a25416aef927dcd45b69c5ee79f52ebf, type: 3}
       propertyPath: detectionRadius
-      value: 7.5
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 8569849248783026426, guid: a25416aef927dcd45b69c5ee79f52ebf, type: 3}
+      propertyPath: m_Name
+      value: PlayerSensor
       objectReference: {fileID: 0}
     - target: {fileID: 8569849248783026426, guid: a25416aef927dcd45b69c5ee79f52ebf, type: 3}
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8851668977642515786, guid: a25416aef927dcd45b69c5ee79f52ebf, type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: d77b462bd0899394d974ffe6c6062f95, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects:
@@ -4562,9 +4589,17 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6901763883541882653, guid: 31557f2222da4c34a8cc275223c8ee6b, type: 3}
+      propertyPath: m_PresetInfoIsWorld
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7633491411706622422, guid: 31557f2222da4c34a8cc275223c8ee6b, type: 3}
       propertyPath: m_Name
       value: Status Canvas
+      objectReference: {fileID: 0}
+    - target: {fileID: 7633491411706622422, guid: 31557f2222da4c34a8cc275223c8ee6b, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

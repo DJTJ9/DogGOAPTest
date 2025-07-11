@@ -1,0 +1,27 @@
+using UnityEngine;
+
+public class DogAnimationController : AnimationController {
+    // protected override void SetLocomotionClip() {
+    //     locomotionClip = Animator.StringToHash("Locomotion");
+    // }
+    //
+    // protected override void SetAttackClip() {
+    //     attackClip = Animator.StringToHash("Attack2");
+    // }
+    
+    protected override void SetSpeedHash() {
+        speedHash = Animator.StringToHash("Movement_f");
+    }
+
+    // protected override void SetEatClip() {
+    //     eatClip = Animator.StringToHash("Eat");   
+    // }
+    //
+    // protected override void SetDrinkClip() {
+    //     drinkClip = Animator.StringToHash("Drink");   
+    // }
+    //
+    // protected override void SetSleepClip() {
+    //     sleepIdleTrigger = Animator.StringToHash("Sleep_Idle_tr");
+    // }
+}
