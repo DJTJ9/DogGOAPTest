@@ -15,14 +15,13 @@ public enum Beliefs {
     Nothing,
     Idle,
     IsMoving,
-    DogStaminaLow,
+    DogIsExhausted,
     DogIsRested,
-    DogHungerLow,
-    DogIsFed,
+    DogIsNotHungry,
+    DogIsHungry,
     DogIsThirsty,
     DogIsNotThirsty,
     DogIsHappy,
-    DogWantsAttention,
     DogIsBored,
     BallInHand,
     BallThrown,
@@ -65,5 +64,6 @@ public enum ActionType
     MoveToPlayer,
     MoveToBall,
     ReturnToPlayer,
-    MoveToRestArea
+    MoveToRestArea,
+    Digging
 }

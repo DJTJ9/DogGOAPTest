@@ -2377,7 +2377,7 @@ MonoBehaviour:
   m_OverrideVoxelSize: 0
   m_VoxelSize: 0.16666667
   m_MinRegionArea: 2
-  m_NavMeshData: {fileID: 23800000, guid: 7cc1fbe7f9034a241a8c77357233f466, type: 2}
+  m_NavMeshData: {fileID: 23800000, guid: a0b9c67b50edc18468cfefce6aef2dfe, type: 2}
   m_BuildHeightMesh: 0
 --- !u!1 &1244875342 stripped
 GameObject:
@@ -2396,7 +2396,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 349afdb42fc94693b6d7551bdc1888a4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  foodAmount: {fileID: 1041714514}
+  fillAmount: {fileID: 1041714514}
+  minYPosition: -0.08
+  maxYPosition: 0
 --- !u!1001 &1295756003
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2652,6 +2654,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2632868419592774394, guid: cc1d130c0e7512a4cadff14050b422dc, type: 3}
       propertyPath: m_StaticEditorFlags
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2937941480635097522, guid: cc1d130c0e7512a4cadff14050b422dc, type: 3}
+      propertyPath: m_LocalPosition.y
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4438361123424968881, guid: cc1d130c0e7512a4cadff14050b422dc, type: 3}
@@ -4018,7 +4024,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 349afdb42fc94693b6d7551bdc1888a4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  foodAmount: {fileID: 1662145857}
+  fillAmount: {fileID: 1662145857}
+  minYPosition: -0.08
+  maxYPosition: 0
 --- !u!1001 &2069741506
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4201,13 +4209,25 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 1740293195698403335, guid: a25416aef927dcd45b69c5ee79f52ebf, type: 3}
+      propertyPath: fun
+      value: 
+      objectReference: {fileID: 11400000, guid: 577a0fb4e480e824a91f6eeeae37733d, type: 2}
+    - target: {fileID: 1740293195698403335, guid: a25416aef927dcd45b69c5ee79f52ebf, type: 3}
       propertyPath: ball
       value: 
       objectReference: {fileID: 1056734358}
     - target: {fileID: 1740293195698403335, guid: a25416aef927dcd45b69c5ee79f52ebf, type: 3}
+      propertyPath: satiety
+      value: 
+      objectReference: {fileID: 11400000, guid: 41adc23cea22e1b44b274678d4b6bf7c, type: 2}
+    - target: {fileID: 1740293195698403335, guid: a25416aef927dcd45b69c5ee79f52ebf, type: 3}
       propertyPath: foodBowl
       value: 
       objectReference: {fileID: 1662145857}
+    - target: {fileID: 1740293195698403335, guid: a25416aef927dcd45b69c5ee79f52ebf, type: 3}
+      propertyPath: hydration
+      value: 
+      objectReference: {fileID: 11400000, guid: 022bf3f4048ca6c4b859295649650a57, type: 2}
     - target: {fileID: 1740293195698403335, guid: a25416aef927dcd45b69c5ee79f52ebf, type: 3}
       propertyPath: waterBowl
       value: 
@@ -4241,6 +4261,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 591713602}
     - target: {fileID: 1740293195698403335, guid: a25416aef927dcd45b69c5ee79f52ebf, type: 3}
+      propertyPath: foodAvailable
+      value: 
+      objectReference: {fileID: 11400000, guid: 803a13c8ae8b6c841b5342a8d40846f3, type: 2}
+    - target: {fileID: 1740293195698403335, guid: a25416aef927dcd45b69c5ee79f52ebf, type: 3}
       propertyPath: goalPriorities
       value: 
       objectReference: {fileID: 11400000, guid: 3df359c60aa7ac04999c4d86b0287540, type: 2}
@@ -4264,6 +4288,10 @@ PrefabInstance:
       propertyPath: restingPosition
       value: 
       objectReference: {fileID: 1101704566}
+    - target: {fileID: 1833712233885600150, guid: a25416aef927dcd45b69c5ee79f52ebf, type: 3}
+      propertyPath: m_BaseOffset
+      value: -0.04
+      objectReference: {fileID: 0}
     - target: {fileID: 2766324692857545076, guid: a25416aef927dcd45b69c5ee79f52ebf, type: 3}
       propertyPath: m_LocalPosition.x
       value: -3.61
@@ -4312,6 +4340,14 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4633404804099785122, guid: a25416aef927dcd45b69c5ee79f52ebf, type: 3}
+      propertyPath: dirtFX
+      value: 
+      objectReference: {fileID: 167078512657808147, guid: bd598f7c3e3eead4cb3646f43c174255, type: 3}
+    - target: {fileID: 4633404804099785122, guid: a25416aef927dcd45b69c5ee79f52ebf, type: 3}
+      propertyPath: fxTransform
+      value: 
+      objectReference: {fileID: 1933799092}
     - target: {fileID: 4971611557724096039, guid: a25416aef927dcd45b69c5ee79f52ebf, type: 3}
       propertyPath: m_Name
       value: Husky

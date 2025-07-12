@@ -3,6 +3,24 @@ using UnityEngine;
 using ImprovedTimers;
 using VFavorites.Libs;
 
+public enum AnimationActionType
+{
+    NoAction = 0,
+    Bark,
+    Beg = 2,
+    Cower,
+    Dig,
+    Eat,
+    Howl,
+    Drink,
+    Pee,
+    Poo,
+    Shake,
+    Sniff,
+    Yawn,
+    ShakeToy
+}
+
 public abstract class AnimationController : MonoBehaviour {
     const float k_crossfadeDuration = 0.1f;
     
@@ -12,45 +30,29 @@ public abstract class AnimationController : MonoBehaviour {
     float animationLength;
     bool dogActionEnabled;
     bool Sit_b = false;
-    private float w_movement = 0.0f; // Run value
+    private float w_movement = 0.0f; 
     public float acceleration = 1.0f;
     public float deceleration = 1.0f;
     private float maxWalk = 0.5f;
     private float maxRun = 1.0f;
     private float currentSpeed;
     
-    // [HideInInspector] public int locomotionClip = Animator.StringToHash("Locomotion");
+    public ParticleSystem dirtFX;
+    public Transform fxTransform;
+    
     [HideInInspector] public int speedHash = Animator.StringToHash("Movement_f");
-    // [HideInInspector] public int attackClip = Animator.StringToHash("Attack_2");
-    // [HideInInspector] public int eatClip = Animator.StringToHash("Eat");
-    // [HideInInspector] public int drinkClip = Animator.StringToHash("Drink");
-    // [HideInInspector] public int locomotionTrigger = Animator.StringToHash("Locomotion_tr");
-    // [HideInInspector] public int eatTrigger = Animator.StringToHash("IsEating_tr");
-    // [HideInInspector] public int drinkTrigger = Animator.StringToHash("IsDrinking_tr");
-    // [HideInInspector] public int sleepIdleTrigger = Animator.StringToHash("Sleep_Idle_tr");
-    // [HideInInspector] public int attack2Trigger = Animator.StringToHash("Attack2_tr");
-    // [HideInInspector] public int begTrigger = Animator.StringToHash("Beg_tr");
+
     
     void Awake() {
         animator = GetComponentInChildren<Animator>();
         SetSpeedHash();
-        // SetLocomotionClip();
-        // SetAttackClip();
-        // SetEatClip();
-        // SetDrinkClip();
-        // SetSleepClip();
     }
 
     public void SetSpeed(float speed) => animator.SetFloat(speedHash, speed);
-    // public void Attack()              => animator.SetTrigger(attack2Trigger);
-    // public void Locomotion()          => animator.SetTrigger(locomotionTrigger);
-    // public void Eat()                 => animator.SetTrigger(eatTrigger); // PlayAnimationUsingTimer(eatClip);
-    // public void Drink()               => animator.SetTrigger(drinkTrigger);
-    // public void Sleep()               => animator.SetTrigger(sleepIdleTrigger);
-    // public void Beg()                 => animator.SetTrigger(begTrigger);
     
     void Update() => timer?.Tick(Time.deltaTime);
 
+    #region Helper Methods
     // void PlayAnimationUsingTimer(int clipHash) {
     //     timer = new CountdownTimer(GetAnimationLength(clipHash));
     //     timer.OnTimerStart += () => animator.CrossFade(clipHash, k_crossfadeDuration);
@@ -70,6 +72,7 @@ public abstract class AnimationController : MonoBehaviour {
     //
     //     return -1f;
     // }
+    #endregion
     
     public IEnumerator DogActions(AnimationActionType actionType, float duration = 1f)
     {
@@ -82,33 +85,16 @@ public abstract class AnimationController : MonoBehaviour {
     
     public void SetAnimatorBool(string name, bool value) => animator.SetBool(name, value);
 
-    // Direkte Methode ohne Coroutine für Strategien
     public void StartDogAction(AnimationActionType actionType, float countDown = 1f) {
         StartCoroutine(DogActions(actionType, countDown));
     }
 
-    // protected abstract void SetLocomotionClip();
-    // protected abstract void SetAttackClip();
+    public void SpawnDirtWhileDigging() {
+        ParticleSystem go = Instantiate(dirtFX, new Vector3(transform.position.x, fxTransform.transform.position.y, fxTransform.transform.position.z), transform.rotation);
+        go.transform.SetParent(fxTransform);
+        go.transform.localPosition = new Vector3(go.transform.localPosition.x, go.transform.localPosition.y, go.transform.localPosition.z + 0.3f);
+    }
+
     protected abstract void SetSpeedHash();
-    // protected abstract void SetEatClip();
-    // protected abstract void SetDrinkClip();
-    // protected abstract void SetSleepClip();
 }
 
-public enum AnimationActionType
-{
-    NoAction = 0,
-    Bark,
-    Beg = 2,
-    Cower,
-    Dig,
-    Eat,
-    Howl,
-    Drink,
-    Pee,
-    Poo,
-    Shake,
-    Sniff,
-    Yawn,
-    ShakeToy
-}

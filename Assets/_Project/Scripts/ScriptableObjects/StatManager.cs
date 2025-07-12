@@ -2,15 +2,15 @@
 using UnityEngine;
 
 [ManageableData, InlineEditor(Expanded = true)]
-[CreateAssetMenu(fileName = "StatManager", menuName = "ScriptableObjects/StatManager")]
+[CreateAssetMenu(fileName = "StatManager", menuName = "Scriptable Objects/StatManager")]
 public class StatManager : ScriptableObject
 {
     [FoldoutGroup("Stat Loses", expanded: true)]
     public float StaminaLost;
     [FoldoutGroup("Stat Loses")]
-    public float HungerLost;
+    public float SatietyLost;
     [FoldoutGroup("Stat Loses")]
-    public float ThirstLost;
+    public float HydrationLost;
     [FoldoutGroup("Stat Loses")]
-    public float BoredomLost;
+    public float FunLost;
 }

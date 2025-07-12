@@ -38,7 +38,7 @@ public class AttackStrategy : IActionStrategy
         attackAnimationTimer = new CountdownTimer(2.2f);
 
         attackAnimationTimer.OnTimerStart += () => {
-            boredom.Value -= funFactor;
+            boredom.Value += funFactor;
             Complete = false;
         };
         attackAnimationTimer.OnTimerStop += () => { };
@@ -99,32 +99,60 @@ public class WanderStrategy : IActionStrategy
     private readonly NavMeshAgent agent;
     private readonly float wanderRadius;
     private const float stoppingDistance = 2f;
-    private readonly int wanderSteps;
-    private int m_wanderStepsCounter;
 
 
     public bool CanPerform => !Complete;
 
-    public bool Complete => agent.remainingDistance <= stoppingDistance && !agent.pathPending; // Die letzte Condition funktioniert nicht: && m_wanderStepsCounter >= wanderSteps
+    public bool Complete => agent.remainingDistance <= stoppingDistance && !agent.pathPending;
 
-    public WanderStrategy(NavMeshAgent agent, float wanderRadius, int wanderSteps = 5) {
+    public WanderStrategy(NavMeshAgent agent, float wanderRadius) {
         this.agent = agent;
         this.wanderRadius = wanderRadius;
-        this.wanderSteps = wanderSteps;
     }
 
     public void Start() {
-        m_wanderStepsCounter = 0;
+        Vector3 randomDirection = (UnityEngine.Random.insideUnitSphere * wanderRadius).With(y: 0);
+        NavMeshHit hit;
 
-        for (int i = 0; i < wanderSteps; i++) {
-            Vector3 randomDirection = (UnityEngine.Random.insideUnitSphere * wanderRadius).With(y: 0);
-            NavMeshHit hit;
-
-            if (NavMesh.SamplePosition(agent.transform.position + randomDirection, out hit, wanderRadius, 1)) {
-                agent.SetDestination(hit.position);
-                m_wanderStepsCounter++;
-            }
+        if (NavMesh.SamplePosition(agent.transform.position + randomDirection, out hit, wanderRadius, 1)) {
+            agent.SetDestination(hit.position);
         }
+    }
+
+    public void Stop() {
+        agent.ResetPath();
+    }
+}
+
+public class DiggingStrategy : IActionStrategy
+{
+    private readonly AnimationController animations;
+    private readonly CountdownTimer digAnimationTimer;
+
+    public bool CanPerform => !Complete;
+
+    public bool Complete { get; private set; }
+
+    public DiggingStrategy(AnimationController animations, ScriptableFloatValue fun, float funFactor = 100) {
+        this.animations = animations;
+
+        digAnimationTimer = new CountdownTimer(7f);
+        digAnimationTimer.OnTimerStart += () => { Complete = false; };
+        digAnimationTimer.OnTimerStop += () => {
+            fun.Value += funFactor;
+            Complete = true;
+        };
+    }
+
+    public void Start() {
+        digAnimationTimer.Start();
+        animations.StartCoroutine(animations.DogActions(AnimationActionType.Dig));
+        animations.SpawnDirtWhileDigging();
+    }
+
+    public void Stop() {
+        digAnimationTimer.Stop();
+        Complete = true;
     }
 }
 
@@ -136,7 +164,7 @@ public class IdleStrategy : IActionStrategy
 
     readonly CountdownTimer timer;
 
-    public IdleStrategy(float duration, ScriptableFloatValue stamina, float refill = 10) {
+    public IdleStrategy(float duration, ScriptableFloatValue stamina, float refill = 2) {
         timer = new CountdownTimer(duration);
         timer.OnTimerStart += () => Complete = false;
         timer.OnTimerStop += () => {
@@ -191,7 +219,7 @@ public class SleepAndWaitStrategy : IActionStrategy
     }
 }
 
-public class EatAndWaitStrategy : IActionStrategy
+public class EatStrategy : IActionStrategy
 {
     public bool CanPerform => true;
     public bool Complete   { get; private set; }
@@ -200,13 +228,20 @@ public class EatAndWaitStrategy : IActionStrategy
     readonly CountdownTimer foodDropTimer;
     readonly AnimationController animations;
 
-    public EatAndWaitStrategy(AnimationController animations, Transform food, ScriptableFloatValue hunger, float saturation = 69f) {
+    readonly float eatAmount = -0.02f;
+    readonly float minFoodYPos = -0.08f;
+    readonly float maxFoodYPos = 0f;
+
+    public EatStrategy(AnimationController animations, Transform food, ScriptableFloatValue hunger, ScriptableBoolValue foodAvailable, float saturation = 100f) {
         this.animations = animations;
 
-        eatAnimationTimer = new CountdownTimer(11.4f);
-        eatAnimationTimer.OnTimerStart += () => {
-            Complete = false;
-        };
+        if (food.position.y <= minFoodYPos) {
+            foodAvailable.Value = false;
+            Complete = true;
+        }
+
+        eatAnimationTimer = new CountdownTimer(12.4f);
+        eatAnimationTimer.OnTimerStart += () => { Complete = false; };
         eatAnimationTimer.OnTimerStop += () => {
             hunger.Value += saturation;
             Complete = true;
@@ -214,7 +249,11 @@ public class EatAndWaitStrategy : IActionStrategy
 
         foodDropTimer = new CountdownTimer(5f);
         foodDropTimer.OnTimerStart += () => Complete = false;
-        foodDropTimer.OnTimerStop += () => food.position += new Vector3(0f, -0.05f, 0f);
+        foodDropTimer.OnTimerStop += () => {
+            Vector3 newPosition = food.position + new Vector3(0f, eatAmount, 0f);
+            newPosition.y = Mathf.Clamp(newPosition.y, minFoodYPos, maxFoodYPos);
+            food.position = newPosition;
+        };
     }
 
     public void Start() {
@@ -236,7 +275,7 @@ public class EatAndWaitStrategy : IActionStrategy
     }
 }
 
-public class DrinkAndWaitStrategy : IActionStrategy
+public class DrinkStrategy : IActionStrategy
 {
     public bool CanPerform => true;
     public bool Complete   { get; private set; }
@@ -244,59 +283,42 @@ public class DrinkAndWaitStrategy : IActionStrategy
     readonly CountdownTimer drinkAnimationTimer;
     readonly CountdownTimer waterDropTimer;
     readonly AnimationController animations;
-    private bool isDrinking = true;
-    private readonly float hydration;
+    readonly float drinkAmount = -0.01f;
+    readonly float minFoodYPos = -0.04f;
+    readonly float maxFoodYPos = 0f;
 
-    public DrinkAndWaitStrategy(AnimationController animations, Transform water, ScriptableFloatValue thirst, float hydration = 69f) {
+    public DrinkStrategy(AnimationController animations, Transform water, ScriptableFloatValue thirst, float hydration = 100f) {
         this.animations = animations;
-        this.hydration = hydration;
 
         drinkAnimationTimer = new CountdownTimer(11f);
-        drinkAnimationTimer.OnTimerStart += () => {
-            isDrinking = true;
-            Complete = false;
-        };
+        drinkAnimationTimer.OnTimerStart += () => { Complete = false; };
         drinkAnimationTimer.OnTimerStop += () => {
             thirst.Value += hydration;
-            isDrinking = false;
-            // animations.Locomotion();
             Complete = true;
-            // waitTimer.Start();
         };
 
         waterDropTimer = new CountdownTimer(4f);
-        waterDropTimer.OnTimerStop += () => water.position += new Vector3(0f, -0.05f, 0f);
-
-        // waitTimer = new CountdownTimer(1f);
-        // waitTimer.OnTimerStart += () => Complete = false;
-        // waitTimer.OnTimerStop += () => Complete = true;
+        waterDropTimer.OnTimerStop += () => {
+            Vector3 newPosition = water.position + new Vector3(0f, drinkAmount, 0f);
+            newPosition.y = Mathf.Clamp(newPosition.y, minFoodYPos, maxFoodYPos);
+            water.position = newPosition;
+        };
     }
 
     public void Start() {
-        // Animation und Timer mit gleicher Dauer starten
-        animations.StartCoroutine(animations.DogActions(AnimationActionType.Drink, 5.7f));
+        animations.StartCoroutine(animations.DogActions(AnimationActionType.Drink));
         drinkAnimationTimer.Start();
         waterDropTimer.Start();
     }
 
     public void Update(float deltaTime) {
-        // if (isDrinking) {
         drinkAnimationTimer.Tick(deltaTime);
-        // }
-        // else {
-        //     waitTimer.Tick(deltaTime);
-        // }
+        waterDropTimer.Tick(deltaTime);
     }
 
     public void Stop() {
-        // if (isDrinking) {
         drinkAnimationTimer.Stop();
-        // foodDropTimer.Stop();
-        // }
-        // else {
-        //     waitTimer.Stop();
-        // }
-
+        waterDropTimer.Stop();
         Complete = true;
     }
 }
@@ -479,15 +501,13 @@ public class SeekAttentionStrategy : IActionStrategy
         this.navMeshAgent = navMeshAgent;
         this.animations = animations;
 
-        begAnimationTimer = new CountdownTimer(16f);
+        begAnimationTimer = new CountdownTimer(14f);
         begAnimationTimer.OnTimerStart += () => {
             navMeshAgent.transform.LookAt(playerPos);
-
             Complete = false;
         };
         begAnimationTimer.OnTimerStop += () => {
-            boredom.Value -= fun;
-            // animations.Locomotion();
+            boredom.Value += fun;
             Complete = true;
         };
     }
