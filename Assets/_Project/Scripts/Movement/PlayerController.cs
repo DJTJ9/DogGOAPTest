@@ -24,6 +24,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private ScriptableBoolValue ballThrown;
     [SerializeField] private ScriptableBoolValue ballReturned;
     [SerializeField] private ScriptableBoolValue dogCalled;
+    
+    [SerializeField] private DogStatus dogStatus;
 
 
     // [SerializeField] BlackboardData blackboardData;
@@ -111,8 +113,8 @@ public class PlayerController : MonoBehaviour
         lookInputAction = playerInput.actions["Look"];
 
         interactionInputAction = playerInput.actions["Interact"];
-        interactionInputAction.started += OnFoodBowlInteraction;
-        interactionInputAction.started += OnInteractionInput;
+        interactionInputAction.started += OnInteractInput;
+        interactionInputAction.started += OnGrabInput;
 
         dropInputAction = playerInput.actions["Drop"];
         dropInputAction.started += OnDropInput;
@@ -148,18 +150,18 @@ public class PlayerController : MonoBehaviour
         return lookInputAction.ReadValue<Vector2>();
     }
 
-    private void OnFoodBowlInteraction(InputAction.CallbackContext context) {
+    private void OnInteractInput(InputAction.CallbackContext context) {
         if (context.phase == InputActionPhase.Started) {
             if (Physics.Raycast(mainCameraTransform.position, mainCameraTransform.forward, out RaycastHit raycastHit, interactionDistance)) {
                 if (raycastHit.transform.TryGetComponent(out IInteractable interactable)) {
                     interactable.Interact();
-                    Debug.Log("Player refilled food or water bowl");
+                    Debug.Log($"Player interacted with {interactable.GetType().Name}");
                 }
             }
         }
     }
     
-    private void OnInteractionInput(InputAction.CallbackContext context) {
+    private void OnGrabInput(InputAction.CallbackContext context) {
         if (context.phase == InputActionPhase.Started)
             if (grabbableObject == null) {
                 if (Physics.Raycast(mainCameraTransform.position, mainCameraTransform.forward,
@@ -185,7 +187,7 @@ public class PlayerController : MonoBehaviour
     }
 
     private void OnThrowInput(InputAction.CallbackContext context) {
-        // if (grabbableObject != null) return;
+        if (grabbableObject == null) return;
         
         if (context.phase == InputActionPhase.Started) {
             grabbableObject.Throw(mainCameraTransform.forward);

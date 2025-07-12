@@ -43,11 +43,21 @@ namespace ScriptableValues
         [FoldoutGroup("Settings"), SerializeField]
         public float maxRageCosts;
 
+        [FoldoutGroup("Current Values")]
+        public float Digging;
+        [FoldoutGroup("Settings"), SerializeField, Title("Digging")]
+        private float diggingDefaultCosts;
+        [FoldoutGroup("Settings"), SerializeField]
+        public float minDiggingCosts;
+        [FoldoutGroup("Settings"), SerializeField]
+        public float maxDiggingCosts;
+
         private void OnEnable() {
             Sleep = sleepDefaultCosts;
             Rest = restDefaultCosts;
             Attention = attentionDefaultCosts;
             Rage = rageDefaultCosts;
+            Digging = diggingDefaultCosts;
         }
     }
 }

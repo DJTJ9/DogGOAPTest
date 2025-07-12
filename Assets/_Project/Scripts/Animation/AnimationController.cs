@@ -24,21 +24,24 @@ public enum AnimationActionType
 public abstract class AnimationController : MonoBehaviour {
     const float k_crossfadeDuration = 0.1f;
     
-    Animator animator;
-    CountdownTimer timer;
-    
-    float animationLength;
-    bool dogActionEnabled;
-    bool Sit_b = false;
-    private float w_movement = 0.0f; 
-    public float acceleration = 1.0f;
-    public float deceleration = 1.0f;
-    private float maxWalk = 0.5f;
-    private float maxRun = 1.0f;
+    private Animator animator;
+    private CountdownTimer timer;
+    private float animationLength;
+    // bool dogActionEnabled;
+    // bool Sit_b = false;
+    // private float w_movement = 0.0f; 
+    // public float acceleration = 1.0f;
+    // public float deceleration = 1.0f;
+    // private float maxWalk = 0.5f;
+    // private float maxRun = 1.0f;
     private float currentSpeed;
     
-    public ParticleSystem dirtFX;
     public Transform fxTransform;
+    public ParticleSystem dirtFX;
+    public ParticleSystem pooFX;
+    public ParticleSystem peeFX;
+    public ParticleSystem splashWaterFX;
+    
     
     [HideInInspector] public int speedHash = Animator.StringToHash("Movement_f");
 
@@ -76,11 +79,11 @@ public abstract class AnimationController : MonoBehaviour {
     
     public IEnumerator DogActions(AnimationActionType actionType, float duration = 1f)
     {
-        dogActionEnabled = true;                                 
+        // dogActionEnabled = true;                                 
         animator.SetInteger("ActionType_int", (int)actionType); 
         yield return new WaitForSeconds(duration);              
         animator.SetInteger("ActionType_int", 0);                
-        dogActionEnabled = false;                                
+        // dogActionEnabled = false;                                
     }
     
     public void SetAnimatorBool(string name, bool value) => animator.SetBool(name, value);

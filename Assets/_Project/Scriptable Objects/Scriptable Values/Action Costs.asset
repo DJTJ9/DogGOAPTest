@@ -28,3 +28,7 @@ MonoBehaviour:
   rageDefaultCosts: 1
   minRageCosts: 1
   maxRageCosts: 5
+  Digging: 0
+  diggingDefaultCosts: 0
+  minDiggingCosts: 0
+  maxDiggingCosts: 0

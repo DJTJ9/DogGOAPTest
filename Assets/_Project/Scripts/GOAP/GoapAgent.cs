@@ -133,14 +133,14 @@ public class GoapAgent : MonoBehaviour
         factory.AddBelief(Beliefs.Nothing, () => false);
         factory.AddBelief(Beliefs.Idle, () => !navMeshAgent.hasPath);
         factory.AddBelief(Beliefs.IsMoving, () => navMeshAgent.hasPath);
-        factory.AddBelief(Beliefs.DogIsExhausted, () => (stamina.Value < 30));
-        factory.AddBelief(Beliefs.DogIsRested, () => (stamina.Value >= 70));
-        factory.AddBelief(Beliefs.DogIsHungry, () => (satiety.Value < 30));
-        factory.AddBelief(Beliefs.DogIsNotHungry, () => (satiety.Value >= 70));
-        factory.AddBelief(Beliefs.DogIsThirsty, () => (hydration.Value < 30));
-        factory.AddBelief(Beliefs.DogIsNotThirsty, () => (hydration.Value >= 70));
-        factory.AddBelief(Beliefs.DogIsHappy, () => (fun.Value >= 30));
-        factory.AddBelief(Beliefs.DogIsBored, () => (fun.Value < 70));
+        factory.AddBelief(Beliefs.DogIsExhausted, () => stamina.Value < 30);
+        factory.AddBelief(Beliefs.DogIsRested, () => stamina.Value >= 70);
+        factory.AddBelief(Beliefs.DogIsHungry, () => satiety.Value < 30);
+        factory.AddBelief(Beliefs.DogIsNotHungry, () => satiety.Value >= 70);
+        factory.AddBelief(Beliefs.DogIsThirsty, () => hydration.Value < 30);
+        factory.AddBelief(Beliefs.DogIsNotThirsty, () => hydration.Value >= 70);
+        factory.AddBelief(Beliefs.DogIsHappy, () => fun.Value >= 30);
+        factory.AddBelief(Beliefs.DogIsBored, () => fun.Value < 70);
         ;
         factory.AddBelief(Beliefs.BallInHand, () => ballInHand.Value);
         factory.AddBelief(Beliefs.BallThrown, () => ballThrown.Value);
@@ -247,7 +247,7 @@ public class GoapAgent : MonoBehaviour
             .Build());
 
         actions.Add(new AgentAction.Builder(ActionType.Digging)
-            .WithCost(0)
+            .WithCost(actionCosts.Digging)
             .WithStrategy(new DiggingStrategy(animations, fun))
             .AddPrecondition(beliefs[Beliefs.DogIsBored])
             .AddEffect(beliefs[Beliefs.DogIsHappy])

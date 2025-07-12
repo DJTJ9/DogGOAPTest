@@ -7,7 +7,7 @@ using UnityEngine.Serialization;
 using UnityEngine.UI;
 using DG.Tweening;
 
-public class DogStatus : MonoBehaviour
+public class DogStatus : MonoBehaviour, IInteractable
 {
     [SerializeField]
     private GameObject goapAgent;
@@ -16,85 +16,73 @@ public class DogStatus : MonoBehaviour
     private GameObject player;
 
     [SerializeField]
-    private string sentence;
+    private float showDuration;
 
     [SerializeField]
-    private float duration;
-    
-    [SerializeField]
-    private GameObject textMeshAsset;
+    private float animationDuration;
 
     [SerializeField]
-    private RawImage bubble;
+    private Image bubble1, bubble2, bubble3, bubble4;
 
-    public AnimationCurve bubbleAppearCurve;
+    public AnimationCurve bubble1AppearCurve, bubble2AppearCurve, bubble3AppearCurve, bubble4AppearCurve;
+
+    [SerializeField]
+    private GameObject bedIcon, moodIcon, waterIcon, foodIcon;
     
-    private GameObject m_TextObject;
-    private CountdownTimer m_waitTimer;
-
-    private IEnumerator Start() {
-        yield return new WaitForSeconds(2);
-        
-        yield return bubble.transform.DOScale(Vector3.one, duration).SetEase(bubbleAppearCurve).WaitForCompletion();
-        
-        Debug.Log("Tween finished!");
-        
-        //yield return bubble.transform.DOScale(Vector3.one, duration).WaitForCompletion();
-
-        //yield return bubble.transform.DOScale(Vector3.one, duration).WaitForCompletion();
-    
-    }
-
-    private void Awake() {
-        bubble.gameObject.SetActive(true);
-        
-        m_waitTimer = new CountdownTimer(duration);
-
-        m_waitTimer.OnTimerStop += () => {
-            bubble.gameObject.SetActive(false);
-        };
-    }
+    // private IEnumerator Start() {
+    //     yield return new WaitForSeconds(2);
+    //     
+    //     yield return bubble1.transform.DOScale(Vector3.one, animationDuration).SetEase(bubble1AppearCurve).WaitForCompletion();
+    //     yield return bubble2.transform.DOScale(Vector3.one, animationDuration).SetEase(bubble2AppearCurve).WaitForCompletion();
+    //     yield return bubble3.transform.DOScale(Vector3.one, animationDuration).SetEase(bubble3AppearCurve).WaitForCompletion();
+    //     yield return bubble4.transform.DOScale(Vector3.one, animationDuration).SetEase(bubble4AppearCurve).WaitForCompletion();
+    //     
+    //     yield return new WaitForSeconds(showDuration);
+    //     
+    //     yield return bubble1.transform.DOScale(Vector3.zero, animationDuration).WaitForCompletion();
+    //     yield return bubble2.transform.DOScale(Vector3.zero, animationDuration).WaitForCompletion();
+    //     yield return bubble3.transform.DOScale(Vector3.zero, animationDuration).WaitForCompletion();
+    //     yield return bubble4.transform.DOScale(Vector3.zero, animationDuration).WaitForCompletion();
+    //     
+    //     Debug.Log("Tween finished!");
+    // }
 
     private void LateUpdate() {
-    bubble.transform.LookAt(player.transform);
+    bubble1.transform.LookAt(player.transform);
+    bubble2.transform.LookAt(player.transform);
+    bubble3.transform.LookAt(player.transform);
+    bubble4.transform.LookAt(player.transform);
+    bedIcon.transform.LookAt(player.transform);
+    moodIcon.transform.LookAt(player.transform);
+    waterIcon.transform.LookAt(player.transform);
+    foodIcon.transform.LookAt(player.transform);
     }
 
-    
-    public void CreateTextObject(string text, GameObject parent)
-    {
-        Vector3 pos = GetBoundsOffset(parent);
-        m_TextObject = Instantiate(textMeshAsset, parent.transform, true);
-        m_TextObject.GetComponent<TMPro.TextMeshPro>().text = text;
-
-        m_TextObject.transform.localPosition = pos;
-        m_TextObject.transform.rotation = GetTextLookRotation();
+    private IEnumerator ShowStatus() {
+        yield return bubble1.transform.DOScale(Vector3.one, animationDuration).SetEase(bubble1AppearCurve).WaitForCompletion();
+        yield return bubble2.transform.DOScale(Vector3.one, animationDuration).SetEase(bubble2AppearCurve).WaitForCompletion();
+        yield return bubble3.transform.DOScale(Vector3.one, animationDuration).SetEase(bubble3AppearCurve).WaitForCompletion();
+        yield return bubble4.transform.DOScale(Vector3.one, animationDuration).SetEase(bubble4AppearCurve);
+        yield return bedIcon.transform.DOScale(new Vector3(0.5f, 0.5f, 0.5f), animationDuration).SetEase(bubble4AppearCurve);
+        yield return moodIcon.transform.DOScale(new Vector3(0.35f, 0.35f, 0.35f), animationDuration).SetEase(bubble4AppearCurve);
+        yield return waterIcon.transform.DOScale(new Vector3(0.4f, 0.4f, 0.4f), animationDuration).SetEase(bubble4AppearCurve);
+        yield return foodIcon.transform.DOScale(new Vector3(0.4f, 0.4f, 0.4f), animationDuration).SetEase(bubble4AppearCurve);
+        
+        yield return new WaitForSeconds(showDuration);
+        
+        yield return foodIcon.transform.DOScale(Vector3.zero, animationDuration);
+        yield return waterIcon.transform.DOScale(Vector3.zero, animationDuration);
+        yield return moodIcon.transform.DOScale(Vector3.zero, animationDuration);
+        yield return bedIcon.transform.DOScale(Vector3.zero, animationDuration);
+        yield return bubble4.transform.DOScale(Vector3.zero, animationDuration).WaitForCompletion();
+        yield return bubble3.transform.DOScale(Vector3.zero, animationDuration).WaitForCompletion();
+        yield return bubble2.transform.DOScale(Vector3.zero, animationDuration).WaitForCompletion();
+        yield return bubble1.transform.DOScale(Vector3.zero, animationDuration).WaitForCompletion();
+        
+        Debug.Log("Tween finished!");
     }
 
-    private Vector3 GetBoundsOffset(GameObject gameObject)
-    {
-        MeshFilter parentMesh = gameObject.GetComponent<MeshFilter>();
-        if (parentMesh != null)
-        {
-            return GetBoundsOffset(parentMesh.mesh.bounds);
-        }
-        Collider parentCollider = gameObject.GetComponent<Collider>();
-        if (parentCollider != null)
-        {
-            return GetBoundsOffset(parentCollider.bounds);
-        }
-        return Vector3.zero;
-    }
-
-    private Vector3 GetBoundsOffset(Bounds bounds)
-    {
-        return new Vector3(0.0f, bounds.max.y + 0.05f);
-    }
-
-    private Quaternion GetTextLookRotation()
-    {
-        Vector3 cameraForward = Camera.main.transform.forward;
-        cameraForward.y = 0.0f;
-        cameraForward.Normalize();
-        return Quaternion.LookRotation(cameraForward);
+    public void Interact() {
+        StartCoroutine(ShowStatus());
     }
 }
