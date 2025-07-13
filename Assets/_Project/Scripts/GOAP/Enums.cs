@@ -32,6 +32,11 @@ public enum Beliefs {
     FetchBall,
     DropBall,
     
+    //Global Beliefs
+    FoodIsAvailable,
+    WaterIsAvailable,
+    RestingSpotIsAvailable,
+    
     //Location Beliefs
     DogAtRestingPosition,
     DogAtFoodBowl,

@@ -24,7 +24,7 @@ MonoBehaviour:
   keepStaminaUpDefaultPriority: 10
   KeepBoredomLow: 11
   keepBoredomLowDefaultPriority: 11
-  FetchBallAndReturnIt: 10
+  FetchBallAndReturnIt: 50
   fetchBallAndReturnItDefaultPriority: 10
   StayAlive: 100
   stayAliveDefaultPriority: 100

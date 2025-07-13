@@ -43,5 +43,9 @@ namespace ScriptableValues
         {
             Value = !currentValue;
         }
+        
+        public static implicit operator bool(ScriptableBoolValue valueRef) {
+            return valueRef.Value;
+        }
     }
 }

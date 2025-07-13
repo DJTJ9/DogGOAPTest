@@ -44,6 +44,7 @@ public abstract class AnimationController : MonoBehaviour {
     
     
     [HideInInspector] public int speedHash = Animator.StringToHash("Movement_f");
+    [HideInInspector] public int deathBoolHash = Animator.StringToHash("Death_b");
 
     
     void Awake() {

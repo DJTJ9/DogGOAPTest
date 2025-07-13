@@ -12,23 +12,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bbac5caca3e74480b8407af7bcb9a349, type: 3}
   m_Name: Action Costs
   m_EditorClassIdentifier: 
-  Sleep: 1
-  sleepDefaultCosts: 1
-  minSleepCosts: 1
-  maxSleepCosts: 5
-  Rest: 1
-  restDefaultCosts: 1
-  minRestCosts: 1
-  maxRestCosts: 5
-  Attention: 1
-  attentionDefaultCosts: 1
-  minAttentionCosts: 5
-  maxAttentionCosts: 5
-  Rage: 1
-  rageDefaultCosts: 1
-  minRageCosts: 1
-  maxRageCosts: 5
-  Digging: 0
-  diggingDefaultCosts: 0
-  minDiggingCosts: 0
-  maxDiggingCosts: 0
+  Sleep: 10
+  sleepDefaultCosts: 10
+  Rest: 10
+  restDefaultCosts: 10
+  SeekAttention: 10
+  seekAttentionDefaultCosts: 10
+  Rage: 10
+  rageDefaultCosts: 10
+  Digging: 10
+  diggingDefaultCosts: 10
+  dog: {fileID: 11400000, guid: ea751cadb9bd44f4a9405c5ae4453288, type: 2}

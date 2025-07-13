@@ -62,5 +62,9 @@ namespace ScriptableValues
         {
             Value *= factor;
         }
+        
+        public static implicit operator float(ScriptableFloatValue valueRef) {
+            return valueRef.Value;
+        }
     }
 }

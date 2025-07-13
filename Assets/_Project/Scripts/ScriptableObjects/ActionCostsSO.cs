@@ -10,54 +10,56 @@ namespace ScriptableValues
         [FoldoutGroup("Current Values", expanded: true)]
         public float Sleep;
         [FoldoutGroup("Settings", expanded: false), SerializeField, Title("Sleep")]
-        private float sleepDefaultCosts;
-        [FoldoutGroup("Settings"), SerializeField]
-        public float minSleepCosts;
-        [FoldoutGroup("Settings"), SerializeField]
-        public float maxSleepCosts;
+        public float sleepDefaultCosts;
         
         [FoldoutGroup("Current Values")]
         public float Rest;
         [FoldoutGroup("Settings"), SerializeField, Title("Rest")]
-        private float restDefaultCosts;
-        [FoldoutGroup("Settings"), SerializeField]
-        public float minRestCosts;
-        [FoldoutGroup("Settings"), SerializeField]
-        public float maxRestCosts;
+        public float restDefaultCosts;
         
         [FoldoutGroup("Current Values")]
-        public float Attention;
+        public float SeekAttention;
         [FoldoutGroup("Settings"), SerializeField, Title("Attention")]
-        private float attentionDefaultCosts;
-        [FoldoutGroup("Settings"), SerializeField]
-        public float minAttentionCosts;
-        [FoldoutGroup("Settings"), SerializeField]
-        public float maxAttentionCosts;
+        public float seekAttentionDefaultCosts;
         
         [FoldoutGroup("Current Values")]
         public float Rage;
         [FoldoutGroup("Settings"), SerializeField, Title("Rage")]
-        private float rageDefaultCosts;
-        [FoldoutGroup("Settings"), SerializeField]
-        public float minRageCosts;
-        [FoldoutGroup("Settings"), SerializeField]
-        public float maxRageCosts;
+        public float rageDefaultCosts;
 
         [FoldoutGroup("Current Values")]
         public float Digging;
         [FoldoutGroup("Settings"), SerializeField, Title("Digging")]
-        private float diggingDefaultCosts;
-        [FoldoutGroup("Settings"), SerializeField]
-        public float minDiggingCosts;
-        [FoldoutGroup("Settings"), SerializeField]
-        public float maxDiggingCosts;
+        public float diggingDefaultCosts;
+
+        public DogSO dog;
 
         private void OnEnable() {
             Sleep = sleepDefaultCosts;
             Rest = restDefaultCosts;
-            Attention = attentionDefaultCosts;
+            SeekAttention = seekAttentionDefaultCosts;
             Rage = rageDefaultCosts;
             Digging = diggingDefaultCosts;
+        }
+
+        public void UpdateCosts() {
+            Sleep = CalculateGoodBehaviourActionCost(sleepDefaultCosts, dog.Stamina, dog.Aggression);
+            Rest = CalculateBadBehaviourActionCost(restDefaultCosts, dog.Stamina, dog.Aggression);
+            SeekAttention = CalculateGoodBehaviourActionCost(seekAttentionDefaultCosts, dog.Fun, dog.Aggression);
+            Rage = CalculateBadBehaviourActionCost(rageDefaultCosts, dog.Fun, dog.Aggression);
+            Digging = CalculateBadBehaviourActionCost(diggingDefaultCosts, dog.Fun, dog.Aggression);       
+        }
+        
+        private float CalculateGoodBehaviourActionCost(float defaultCost, float currentStatValue, float currentAggression){
+            float actionCost = defaultCost - (currentStatValue / 10f) + (currentAggression / 10);
+            // actionCost = Random.Range(actionCost - 5, actionCost + 5); 
+            return actionCost;       
+        }
+
+        private float CalculateBadBehaviourActionCost(float defaultCost, float currentStatValue, float currentAggression) {
+            float actionCost = defaultCost + (currentStatValue / 10f) - (currentAggression / 10);
+            // actionCost = Random.Range(actionCost - 5, actionCost + 5); 
+            return actionCost;  
         }
     }
 }

@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4cf74fb343924ca499e388730eec3207, type: 3}
   m_Name: FoodAvailable
   m_EditorClassIdentifier: 
-  currentValue: 0
-  defaultValue: 0
+  currentValue: 1
+  defaultValue: 1

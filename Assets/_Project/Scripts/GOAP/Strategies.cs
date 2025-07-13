@@ -33,15 +33,13 @@ public class AttackStrategy : IActionStrategy
     readonly CountdownTimer waitTimer;
     readonly AnimationController animations;
 
-    public AttackStrategy(AnimationController animations, ScriptableFloatValue boredom, float funFactor = 100) {
+    public AttackStrategy(AnimationController animations, DogSO dog, float funFactor = 100) {
         this.animations = animations;
         attackAnimationTimer = new CountdownTimer(2.2f);
 
-        attackAnimationTimer.OnTimerStart += () => {
-            boredom.Value += funFactor;
-            Complete = false;
-        };
-        attackAnimationTimer.OnTimerStop += () => { };
+        attackAnimationTimer.OnTimerStart += () => { Complete = false; };
+        attackAnimationTimer.OnTimerStop += () => dog.Fun += funFactor;
+
 
         waitTimer = new CountdownTimer(3f);
         waitTimer.OnTimerStart += () => Complete = false;
@@ -75,7 +73,7 @@ public class MoveStrategy : IActionStrategy
     public bool CanPerform => !Complete;
     public bool Complete   => agent.remainingDistance <= agent.stoppingDistance && !agent.pathPending;
 
-    public MoveStrategy(NavMeshAgent agent, Func<Vector3> destination, float stoppingDistance = 2f) {
+    public MoveStrategy(NavMeshAgent agent, Func<Vector3> destination, float stoppingDistance = 2.1f) {
         this.agent = agent;
         this.destination = destination;
         this.stoppingDistance = stoppingDistance;
@@ -133,13 +131,14 @@ public class DiggingStrategy : IActionStrategy
 
     public bool Complete { get; private set; }
 
-    public DiggingStrategy(AnimationController animations, ScriptableFloatValue fun, float funFactor = 100) {
+    public DiggingStrategy(AnimationController animations, DogSO dog, float funFactor = 100, float aggressionLost = 25f) {
         this.animations = animations;
 
         digAnimationTimer = new CountdownTimer(7f);
         digAnimationTimer.OnTimerStart += () => { Complete = false; };
         digAnimationTimer.OnTimerStop += () => {
-            fun.Value += funFactor;
+            dog.Fun += funFactor;
+            dog.Aggression -= aggressionLost;
             Complete = true;
         };
     }
@@ -164,11 +163,11 @@ public class IdleStrategy : IActionStrategy
 
     readonly CountdownTimer timer;
 
-    public IdleStrategy(float duration, ScriptableFloatValue stamina, float refill = 2) {
+    public IdleStrategy(float duration, DogSO dog, float refill = 2) {
         timer = new CountdownTimer(duration);
         timer.OnTimerStart += () => Complete = false;
         timer.OnTimerStop += () => {
-            stamina.Value += refill;
+            dog.Stamina += refill;
             Complete = true;
         };
     }
@@ -186,15 +185,16 @@ public class SleepAndWaitStrategy : IActionStrategy
     readonly CountdownTimer waitTimer;
     readonly AnimationController animations;
 
-    public SleepAndWaitStrategy(AnimationController animations, ScriptableFloatValue stamina, float refill = 100) {
+    public SleepAndWaitStrategy(AnimationController animations, DogSO dog, float staminaRefill = 100, float healthRefill = 25f, float aggressionLost = 25f) {
         this.animations = animations;
 
         sleepAnimationTimer = new CountdownTimer(10f);
         sleepAnimationTimer.OnTimerStart += () => { Complete = false; };
         sleepAnimationTimer.OnTimerStop += () => {
-            stamina.Value += refill;
+            dog.Stamina += staminaRefill;
+            dog.Health += healthRefill;
+            dog.Aggression -= aggressionLost;
             animations.SetAnimatorBool("Sleep_b", false);
-            // animations.Locomotion();
         };
         waitTimer = new CountdownTimer(14f);
         waitTimer.OnTimerStart += () => Complete = false;
@@ -232,18 +232,19 @@ public class EatStrategy : IActionStrategy
     readonly float minFoodYPos = -0.08f;
     readonly float maxFoodYPos = 0f;
 
-    public EatStrategy(AnimationController animations, Transform food, ScriptableFloatValue hunger, ScriptableBoolValue foodAvailable, float saturation = 100f) {
+    public EatStrategy(AnimationController animations, Transform food, DogSO dog, float saturation = 100f, float aggressionLost = 10f) {
         this.animations = animations;
 
-        if (food.position.y <= minFoodYPos) {
-            foodAvailable.Value = false;
-            Complete = true;
-        }
+        // if (food.position.y <= minFoodYPos) {
+        //     dog.FoodAvailable = false;
+        //     Complete = true;
+        // }
 
         eatAnimationTimer = new CountdownTimer(12.4f);
         eatAnimationTimer.OnTimerStart += () => { Complete = false; };
         eatAnimationTimer.OnTimerStop += () => {
-            hunger.Value += saturation;
+            dog.Satiety += saturation;
+            dog.Aggression -= aggressionLost;
             Complete = true;
         };
 
@@ -287,13 +288,13 @@ public class DrinkStrategy : IActionStrategy
     readonly float minFoodYPos = -0.04f;
     readonly float maxFoodYPos = 0f;
 
-    public DrinkStrategy(AnimationController animations, Transform water, ScriptableFloatValue thirst, float hydration = 100f) {
+    public DrinkStrategy(AnimationController animations, Transform water, DogSO dog, float hydration = 100f) {
         this.animations = animations;
 
         drinkAnimationTimer = new CountdownTimer(11f);
         drinkAnimationTimer.OnTimerStart += () => { Complete = false; };
         drinkAnimationTimer.OnTimerStop += () => {
-            thirst.Value += hydration;
+            dog.Hydration += hydration;
             Complete = true;
         };
 
@@ -497,7 +498,7 @@ public class SeekAttentionStrategy : IActionStrategy
     readonly NavMeshAgent navMeshAgent;
     readonly AnimationController animations;
 
-    public SeekAttentionStrategy(NavMeshAgent navMeshAgent, AnimationController animations, Transform playerPos, ScriptableFloatValue boredom, float fun = 100) {
+    public SeekAttentionStrategy(NavMeshAgent navMeshAgent, AnimationController animations, Transform playerPos, DogSO dog, float fun = 100) {
         this.navMeshAgent = navMeshAgent;
         this.animations = animations;
 
@@ -507,7 +508,7 @@ public class SeekAttentionStrategy : IActionStrategy
             Complete = false;
         };
         begAnimationTimer.OnTimerStop += () => {
-            boredom.Value += fun;
+            dog.Fun += fun;
             Complete = true;
         };
     }
@@ -540,7 +541,7 @@ public class PickUpBallStrategy : IActionStrategy
 
     private CountdownTimer pickupAnimationTimer;
 
-    public PickUpBallStrategy(NavMeshAgent agent, AnimationController animations, GameObject ball, Transform objectGrabPoint, ScriptableBoolValue returnBall, float pickupRange = 2f) {
+    public PickUpBallStrategy(NavMeshAgent agent, AnimationController animations, GameObject ball, Transform objectGrabPoint, DogSO dog, float pickupRange = 2f) {
         this.agent = agent;
         this.animations = animations;
         this.ball = ball;
@@ -558,7 +559,7 @@ public class PickUpBallStrategy : IActionStrategy
                 grabbableObject.Grab(objectGrabPoint);
             }
 
-            returnBall.Value = false;
+            dog.ReturnBall = false;
             Complete = true;
         };
     }
@@ -592,8 +593,7 @@ public class DropBallStrategy : IActionStrategy
 
     private CountdownTimer dropAnimationTimer;
 
-    public DropBallStrategy(NavMeshAgent agent,           AnimationController animations, GameObject          ball,
-        Transform                        objectGrabPoint, ScriptableBoolValue returnBall, ScriptableBoolValue ballReturned, float dropRange = 2f) {
+    public DropBallStrategy(NavMeshAgent agent, AnimationController animations, GameObject ball, Transform objectGrabPoint, DogSO dog, float dropRange = 2f) {
         this.agent = agent;
         this.animations = animations;
         this.ball = ball;
@@ -611,8 +611,8 @@ public class DropBallStrategy : IActionStrategy
                 grabbableObject.Grab(objectGrabPoint);
             }
 
-            returnBall.Value = true;
-            ballReturned.Value = true;
+            dog.ReturnBall = true;
+            dog.BallReturned = true;
             Complete = true;
         };
     }
