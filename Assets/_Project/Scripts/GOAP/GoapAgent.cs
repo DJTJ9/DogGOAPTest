@@ -346,13 +346,6 @@ public class GoapAgent : MonoBehaviour
         SetupGoals();
         actionCosts.UpdateCosts();
         
-        dog.Health = Mathf.Clamp(dog.Health, 0f, 100f);
-        dog.Aggression = Mathf.Clamp(dog.Aggression, 0f, 100f);
-        dog.Satiety = Mathf.Clamp(dog.Satiety - statManager.SatietyLost, 0f, 100f);
-        dog.Fun = Mathf.Clamp(dog.Fun - statManager.FunLost, 0f, 100f);
-        dog.Stamina = Mathf.Clamp(dog.Stamina - statManager.StaminaLost, 0f, 100f);
-        dog.Hydration = Mathf.Clamp(dog.Hydration - statManager.HydrationLost, 0f, 100f);
-
         if (dog.Stamina <= 0) {
             dog.Health -= 1f;
             dog.Aggression += 1f;
@@ -365,6 +358,14 @@ public class GoapAgent : MonoBehaviour
             dog.Health -= 1f;
             dog.Aggression += 1f;
         }
+        
+        dog.Health = Mathf.Clamp(dog.Health, 0f, 100f);
+        dog.Aggression = Mathf.Clamp(dog.Aggression, 0f, 100f);
+        dog.Satiety = Mathf.Clamp(dog.Satiety - statManager.SatietyLost, 0f, 100f);
+        dog.Fun = Mathf.Clamp(dog.Fun - statManager.FunLost, 0f, 100f);
+        dog.Stamina = Mathf.Clamp(dog.Stamina - statManager.StaminaLost, 0f, 100f);
+        dog.Hydration = Mathf.Clamp(dog.Hydration - statManager.HydrationLost, 0f, 100f);
+
         
         animations.SetAnimatorBool("Death_b", dog.Health <= 0);
     }
@@ -466,7 +467,7 @@ public class GoapAgent : MonoBehaviour
 
         // Position und Größe der Box
         int width = 200;
-        int height = 155;
+        int height = 220;
         int padding = 10;
         Rect rect = new Rect(Screen.width - width - padding, padding, width, height);
 
@@ -475,6 +476,8 @@ public class GoapAgent : MonoBehaviour
 
         GUILayout.BeginArea(rect);
         GUILayout.Label($"<b>Dog Stats:</b>", style);
+        GUILayout.Label($"Health:    {dog.Health:F1}", style);
+        GUILayout.Label($"Aggression:{dog.Aggression:F1}", style);
         GUILayout.Label($"Stamina:   {dog.Stamina:F1}", style);
         GUILayout.Label($"Satiety:   {dog.Satiety:F1}", style);
         GUILayout.Label($"Hydration: {dog.Hydration:F1}", style);

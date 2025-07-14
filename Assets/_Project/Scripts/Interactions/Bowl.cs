@@ -1,11 +1,11 @@
 ﻿using System;
+using ScriptableValues;
 using UnityEngine;
 
 public class Bowl : MonoBehaviour, IInteractable
 {
     [SerializeField]
     private Transform fillAmount;
-
     [SerializeField]
     private float minYPosition = -0.08f;
     [SerializeField]
