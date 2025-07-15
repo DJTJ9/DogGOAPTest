@@ -51,13 +51,13 @@ namespace ScriptableValues
         }
         
         private float CalculateGoodBehaviourActionCost(float defaultCost, float currentStatValue, float currentAggression){
-            float actionCost = defaultCost - (currentStatValue / 10f) + (currentAggression / 10);
+            float actionCost = defaultCost - (currentStatValue / 10f) + (currentAggression / 10) + Random.Range(-1, 1);
             // actionCost = Random.Range(actionCost - 5, actionCost + 5); 
             return actionCost;       
         }
 
         private float CalculateBadBehaviourActionCost(float defaultCost, float currentStatValue, float currentAggression) {
-            float actionCost = defaultCost + (currentStatValue / 10f) - (currentAggression / 10);
+            float actionCost = defaultCost + (currentStatValue / 10f) - (currentAggression / 10) + Random.Range(-1, 1);
             // actionCost = Random.Range(actionCost - 5, actionCost + 5); 
             return actionCost;  
         }

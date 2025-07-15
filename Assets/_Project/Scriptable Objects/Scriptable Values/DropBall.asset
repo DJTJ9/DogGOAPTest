@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4cf74fb343924ca499e388730eec3207, type: 3}
-  m_Name: BallReturned
+  m_Name: DropBall
   m_EditorClassIdentifier: 
-  currentValue: 1
+  currentValue: 0
   defaultValue: 0

@@ -41,6 +41,9 @@ public class DogSO : ScriptableObject
     public ScriptableBoolValue ReturnBall;
     
     [TabGroup("Conditions"), InlineEditor(Expanded = true)]
+    public ScriptableBoolValue DropBall;
+    
+    [TabGroup("Conditions"), InlineEditor(Expanded = true)]
     public ScriptableBoolValue BallReturned;
     
     [TabGroup("Conditions"), InlineEditor(Expanded = true)]
@@ -83,6 +86,9 @@ public class DogSO : ScriptableObject
     private bool defaultReturnBall;
     
     [FoldoutGroup("Conditions Settings", expanded: false), SerializeField]
+    private bool defaultDropBall;
+    
+    [FoldoutGroup("Conditions Settings", expanded: false), SerializeField]
     private bool defaultBallReturned;
     
     [FoldoutGroup("Conditions Settings", expanded: false), SerializeField]
@@ -118,6 +124,7 @@ public class DogSO : ScriptableObject
         BallInHand.Value = defaultBallInHand;
         BallThrown.Value = defaultBallThrown;
         ReturnBall.Value = defaultReturnBall;
+        DropBall.Value = defaultDropBall;
         BallReturned.Value = defaultBallReturned;
         DogCalled.Value = defaultDogCalled;
         FoodAvailable.Value = defaultFoodAvailable;

@@ -111,14 +111,16 @@ public class GoapAgent : MonoBehaviour
         factory.AddBelief(Beliefs.DogIsThirsty, () => dog.Hydration < 30);
         factory.AddBelief(Beliefs.DogIsNotThirsty, () => dog.Hydration >= 70);
         factory.AddBelief(Beliefs.DogIsHappy, () => dog.Fun >= 30);
-        factory.AddBelief(Beliefs.DogIsBored, () => dog.Fun < 70);
+        factory.AddBelief(Beliefs.DogIsBored, () => dog.Fun < 30);
         ;
         factory.AddBelief(Beliefs.BallInHand, () => dog.BallInHand);
+        factory.AddBelief(Beliefs.DogAtPlayerWithBall, () => false);
+        factory.AddBelief(Beliefs.WaitingForBall, () => false);
         factory.AddBelief(Beliefs.FetchBall, () => dog.FetchBall);
         factory.AddBelief(Beliefs.BallThrown, () => dog.BallThrown);
         factory.AddBelief(Beliefs.ReturnBall, () => dog.ReturnBall);
         factory.AddBelief(Beliefs.BallReturned, () => dog.BallReturned);
-        factory.AddBelief(Beliefs.DropBall, () => false);
+        factory.AddBelief(Beliefs.DropBall, () => true);
         
         factory.AddBelief(Beliefs.FoodIsAvailable, () => dog.FoodAvailable);
         factory.AddBelief(Beliefs.WaterIsAvailable, () => dog.WaterAvailable.Value);
@@ -129,7 +131,7 @@ public class GoapAgent : MonoBehaviour
         factory.AddLocationBelief(Beliefs.DogAtWaterBowl, 2.2f, waterBowl);
         factory.AddLocationBelief(Beliefs.DogAtRageVictim, 2.2f, rageVictim);
         factory.AddLocationBelief(Beliefs.DogAtBall, 2.2f, ball.transform.position);
-        factory.AddLocationBelief(Beliefs.DogAtPlayer, 4f, playerTransform.position);
+        factory.AddLocationBelief(Beliefs.DogAtPlayer, 5f, playerTransform.position);
         
         factory.AddBelief(Beliefs.AttackingRageVictim, () => false);
         factory.AddBelief(Beliefs.Attacking, () => false);
@@ -233,31 +235,33 @@ public class GoapAgent : MonoBehaviour
 
         #region FetchBall
         
-        actions.Add(new AgentAction.Builder(ActionType.MoveToPlayerWithBall)
-            .WithStrategy(new MoveStrategy(navMeshAgent, () => playerTransform.position, 3f))
-            .AddPrecondition(beliefs[Beliefs.BallInHand])
-            .AddEffect(beliefs[Beliefs.DogAtPlayer])
-            .Build());
-
-        actions.Add(new AgentAction.Builder(ActionType.WaitForBallThrow)
-            .AddPrecondition(beliefs[Beliefs.DogAtPlayer])
-            .AddEffect(beliefs[Beliefs.FetchBall])
-            .Build());
+        // actions.Add(new AgentAction.Builder(ActionType.MoveToPlayerWithBall)
+        //     .WithStrategy(new MoveStrategy(navMeshAgent, () => playerTransform.position, 3f))
+        //     .AddPrecondition(beliefs[Beliefs.BallInHand])
+        //     .AddEffect(beliefs[Beliefs.DogAtPlayerWithBall])
+        //     .Build());
+        //
+        // actions.Add(new AgentAction.Builder(ActionType.WaitForBallThrow)
+        //     .WithStrategy(new WaitForBallThrow(navMeshAgent, dog, animations))
+        //     .AddPrecondition(beliefs[Beliefs.DogAtPlayer])
+        //     .AddPrecondition(beliefs[Beliefs.DogAtPlayerWithBall])
+        //     .AddEffect(beliefs[Beliefs.WaitingForBall])
+        //     .Build());
         
         actions.Add(new AgentAction.Builder(ActionType.MoveToBall)
-            .WithStrategy(new MoveStrategy(navMeshAgent, () => ball.transform.position))
-            .AddPrecondition(beliefs[Beliefs.FetchBall])
-            .AddEffect(beliefs[Beliefs.BallThrown])
+            .WithStrategy(new MoveStrategy(navMeshAgent, () => ball.transform.position, 3f, dog.FetchBall))
+            .AddPrecondition(beliefs[Beliefs.BallThrown])
+            .AddEffect(beliefs[Beliefs.FetchBall])
             .Build());
         
         actions.Add(new AgentAction.Builder(ActionType.PickUpBall)
             .WithStrategy(new PickUpBallStrategy(navMeshAgent, animations, ball, objectGrabPointPosition, dog))
-            .AddPrecondition(beliefs[Beliefs.BallThrown])
+            .AddPrecondition(beliefs[Beliefs.FetchBall])
             .AddEffect(beliefs[Beliefs.ReturnBall])
             .Build());
         
         actions.Add(new AgentAction.Builder(ActionType.ReturnToPlayer)
-            .WithStrategy(new MoveStrategy(navMeshAgent, () => playerTransform.position))
+            .WithStrategy(new MoveStrategy(navMeshAgent, () => playerTransform.position, 3f, dog.DropBall))
             .AddPrecondition(beliefs[Beliefs.ReturnBall])
             .AddEffect(beliefs[Beliefs.DropBall])
             .Build());

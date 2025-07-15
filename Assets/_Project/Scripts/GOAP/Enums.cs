@@ -48,6 +48,8 @@ public enum Beliefs {
     //Sensor Beliefs
     PlayerInRange,
     PlayerInAttackRange,
+    DogAtPlayerWithBall,
+    WaitingForBall
 }
 
 public enum ActionType
