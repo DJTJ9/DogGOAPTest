@@ -18,14 +18,20 @@ public class PlayerController : MonoBehaviour
 
     [Header("Settings")] [SerializeField] private float lookSensitivity = 0.15f;
 
-    [Header("Scriptable Values")] [SerializeField]
+    [Header("Scriptable Values"), SerializeField]
     private ScriptableBoolValue ballInHand;
-
-    [SerializeField] private ScriptableBoolValue ballThrown;
-    [SerializeField] private ScriptableBoolValue ballReturned;
-    [SerializeField] private ScriptableBoolValue dogCalled;
     
-    [SerializeField] private DogStatus dogStatus;
+    [SerializeField] 
+    private ScriptableBoolValue ballThrown;
+    
+    [SerializeField] 
+    private ScriptableBoolValue ballReturned;
+    
+    [SerializeField] 
+    private ScriptableBoolValue dogCalled;
+    //
+    // [SerializeField] 
+    // private DogStatus dogStatus;
 
 
     // [SerializeField] BlackboardData blackboardData;
@@ -122,7 +128,7 @@ public class PlayerController : MonoBehaviour
         throwInputAction = playerInput.actions["Throw"];
         throwInputAction.started += OnThrowInput;
 
-        callDogInputAction = playerInput.actions["Call_Dog"];
+        callDogInputAction = playerInput.actions["Call Dog"];
         callDogInputAction.started += OnCallDogInput;
 
         applicationQuitInputAction = playerInput.actions["Quit"];

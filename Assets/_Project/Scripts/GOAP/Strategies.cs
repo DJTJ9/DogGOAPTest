@@ -536,6 +536,31 @@ public class SeekAttentionStrategy : IActionStrategy
     }
 }
 
+public class WaitForBallThrow : IActionStrategy
+{
+    public bool CanPerform => true;
+    public bool Complete   { get; private set; }
+    
+    readonly NavMeshAgent agent;
+    readonly AnimationController animations;
+
+    public WaitForBallThrow(NavMeshAgent agent, DogSO dog, AnimationController animations) {
+        if (dog.BallThrown.Value) Complete = true;
+        
+        this.agent = agent;
+        this.animations = animations;
+        
+        
+        
+    }
+    
+    public void Start() {}
+    
+    public void Update(float deltaTime) {}
+    
+    public void Stop() {}
+}
+
 public class PickUpBallStrategy : IActionStrategy
 {
     public bool CanPerform => true;
@@ -567,7 +592,7 @@ public class PickUpBallStrategy : IActionStrategy
                 grabbableObject.Grab(objectGrabPoint);
             }
 
-            dog.ReturnBall = false;
+            dog.ReturnBall.Value = false;
             Complete = true;
         };
     }
@@ -619,8 +644,8 @@ public class DropBallStrategy : IActionStrategy
                 grabbableObject.Grab(objectGrabPoint);
             }
 
-            dog.ReturnBall = true;
-            dog.BallReturned = true;
+            dog.ReturnBall.Value = true;
+            dog.BallReturned.Value = true;
             Complete = true;
         };
     }

@@ -13,17 +13,18 @@ MonoBehaviour:
   m_Name: Dog
   m_EditorClassIdentifier: 
   Health: 100
-  Aggression: 90
-  Stamina: 24
-  Satiety: 50
-  Hydration: 25
-  Fun: 88
+  Aggression: 0
+  Stamina: 100
+  Satiety: 80
+  Hydration: 60
+  Fun: 40
   StatManager: {fileID: 11400000, guid: dc99d76271051df439d8051053ea5fab, type: 2}
-  BallInHand: 0
-  BallThrown: 0
-  ReturnBall: 0
-  BallReturned: 0
-  DogCalled: 0
+  BallInHand: {fileID: 11400000, guid: e218d8f69f18b5f41ace3a5559f9df96, type: 2}
+  FetchBall: {fileID: 11400000, guid: 8acafbc92962b9b45ae4e215aa2eba1f, type: 2}
+  BallThrown: {fileID: 11400000, guid: 574a9b9a3d4591746a2c8492e7efe9fa, type: 2}
+  ReturnBall: {fileID: 11400000, guid: 8cabe366c12ebde48b3561a14bbac25e, type: 2}
+  BallReturned: {fileID: 11400000, guid: 7f739333dcb45464f8e036f88c2e6778, type: 2}
+  DogCalled: {fileID: 11400000, guid: f9cf31e3964376645945924f753329db, type: 2}
   FoodAvailable: {fileID: 11400000, guid: 803a13c8ae8b6c841b5342a8d40846f3, type: 2}
   WaterAvailable: {fileID: 11400000, guid: c1f8ca8f16cd7934087ca09b96aad924, type: 2}
   RestingSpotAvailable: {fileID: 11400000, guid: 1a47d530a043fd1489a4e8203bf87c50, type: 2}

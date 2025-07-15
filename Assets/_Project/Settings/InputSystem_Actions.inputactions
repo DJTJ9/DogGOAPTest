@@ -96,7 +96,7 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Call_Dog",
+                    "name": "Call Dog",
                     "type": "Button",
                     "id": "5f3c0e43-3680-49b1-a598-c503029f1bc6",
                     "expectedControlType": "",
@@ -523,11 +523,11 @@
                 {
                     "name": "",
                     "id": "9de8f311-9ce8-4894-820c-d167e3a3250c",
-                    "path": "<Keyboard>/r",
+                    "path": "<Keyboard>/q",
                     "interactions": "",
                     "processors": "",
                     "groups": ";Keyboard&Mouse",
-                    "action": "Call_Dog",
+                    "action": "Call Dog",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },

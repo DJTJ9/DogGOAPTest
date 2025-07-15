@@ -70,5 +70,7 @@ public enum ActionType
     MoveToBall,
     ReturnToPlayer,
     MoveToRestArea,
-    Digging
+    Digging,
+    MoveToPlayerWithBall,
+    WaitForBallThrow
 }

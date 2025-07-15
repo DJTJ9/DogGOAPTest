@@ -28,28 +28,31 @@ public class DogSO : ScriptableObject
     [TabGroup("Stat Manager")]
     public StatManager StatManager;
     
-    [TabGroup("Conditions")]
-    public bool BallInHand;
+    [TabGroup("Conditions"), InlineEditor(Expanded = true)]
+    public ScriptableBoolValue BallInHand;
     
-    [TabGroup("Conditions")]
-    public bool BallThrown;
+    [TabGroup("Conditions"), InlineEditor(Expanded = true)]
+    public ScriptableBoolValue FetchBall;
     
-    [TabGroup("Conditions")]
-    public bool ReturnBall;
+    [TabGroup("Conditions"), InlineEditor(Expanded = true)]
+    public ScriptableBoolValue BallThrown;
     
-    [TabGroup("Conditions")]
-    public bool BallReturned;
+    [TabGroup("Conditions"), InlineEditor(Expanded = true)]
+    public ScriptableBoolValue ReturnBall;
     
-    [TabGroup("Conditions")]
-    public bool DogCalled;
+    [TabGroup("Conditions"), InlineEditor(Expanded = true)]
+    public ScriptableBoolValue BallReturned;
     
-    [TabGroup("Conditions"), InlineEditor(Expanded = false)]
+    [TabGroup("Conditions"), InlineEditor(Expanded = true)]
+    public ScriptableBoolValue DogCalled;
+    
+    [TabGroup("Conditions"), InlineEditor(Expanded = true)]
     public ScriptableBoolValue FoodAvailable;
     
-    [TabGroup("Conditions"), InlineEditor(Expanded = false)]
+    [TabGroup("Conditions"), InlineEditor(Expanded = true)]
     public ScriptableBoolValue WaterAvailable;
     
-    [TabGroup("Conditions"), InlineEditor(Expanded = false)]
+    [TabGroup("Conditions"), InlineEditor(Expanded = true)]
     public ScriptableBoolValue RestingSpotAvailable;
     
     [FoldoutGroup("Stats Settings", expanded: false), SerializeField]
@@ -112,11 +115,11 @@ public class DogSO : ScriptableObject
         Satiety = defaultHunger;
         Hydration = defaultThirst;
         Fun = defaultBoredom;
-        BallInHand = defaultBallInHand;
-        BallThrown = defaultBallThrown;
-        ReturnBall = defaultReturnBall;
-        BallReturned = defaultBallReturned;
-        DogCalled = defaultDogCalled;
+        BallInHand.Value = defaultBallInHand;
+        BallThrown.Value = defaultBallThrown;
+        ReturnBall.Value = defaultReturnBall;
+        BallReturned.Value = defaultBallReturned;
+        DogCalled.Value = defaultDogCalled;
         FoodAvailable.Value = defaultFoodAvailable;
         WaterAvailable.Value = defaultWaterAvailable;
         RestingSpotAvailable.Value = defaultRestingSpotAvailable;
