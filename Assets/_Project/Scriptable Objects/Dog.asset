@@ -12,12 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e8e5514dffb34874841d134ee94c6d9a, type: 3}
   m_Name: Dog
   m_EditorClassIdentifier: 
-  Health: -2
-  Aggression: 32
-  Stamina: 15
-  Satiety: 0
-  Hydration: 0
-  Fun: 0
+  Health: 100
+  Aggression: 90
+  Stamina: 24
+  Satiety: 50
+  Hydration: 25
+  Fun: 88
   StatManager: {fileID: 11400000, guid: dc99d76271051df439d8051053ea5fab, type: 2}
   BallInHand: 0
   BallThrown: 0

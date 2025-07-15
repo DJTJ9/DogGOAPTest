@@ -95,6 +95,7 @@ public class MoveStrategy : IActionStrategy
 public class WanderStrategy : IActionStrategy
 {
     private readonly NavMeshAgent agent;
+    private readonly CountdownTimer wanderTimer;
     private readonly float wanderRadius;
     private const float stoppingDistance = 2f;
 
@@ -106,6 +107,11 @@ public class WanderStrategy : IActionStrategy
     public WanderStrategy(NavMeshAgent agent, float wanderRadius) {
         this.agent = agent;
         this.wanderRadius = wanderRadius;
+        agent.stoppingDistance = stoppingDistance;
+        
+        wanderTimer = new CountdownTimer(5f);
+        wanderTimer.OnTimerStart += () => { };
+        wanderTimer.OnTimerStop += agent.ResetPath;
     }
 
     public void Start() {
@@ -501,6 +507,8 @@ public class SeekAttentionStrategy : IActionStrategy
     public SeekAttentionStrategy(NavMeshAgent navMeshAgent, AnimationController animations, Transform playerPos, DogSO dog, float fun = 100) {
         this.navMeshAgent = navMeshAgent;
         this.animations = animations;
+        
+        navMeshAgent.stoppingDistance = 2.1f;
 
         begAnimationTimer = new CountdownTimer(14f);
         begAnimationTimer.OnTimerStart += () => {

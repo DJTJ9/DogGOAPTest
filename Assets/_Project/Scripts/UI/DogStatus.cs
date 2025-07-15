@@ -65,16 +65,16 @@ public class DogStatus : MonoBehaviour
 
         yield return new WaitForSeconds(showDuration);
 
+        yield return bubble1.transform.DOScale(Vector3.zero, animationDuration).WaitForCompletion();
+        yield return bubble2.transform.DOScale(Vector3.zero, animationDuration).WaitForCompletion();
+        yield return bubble3.transform.DOScale(Vector3.zero, animationDuration).WaitForCompletion();
+        yield return bubble4.transform.DOScale(Vector3.zero, animationDuration);
         yield return heartIcon.transform.DOScale(Vector3.zero, animationDuration);       
         yield return foodIcon.transform.DOScale(Vector3.zero, animationDuration);
         yield return waterIcon.transform.DOScale(Vector3.zero, animationDuration);
         yield return moodIcon.transform.DOScale(Vector3.zero, animationDuration);
         yield return bedIcon.transform.DOScale(Vector3.zero, animationDuration);
         yield return ballIcon.transform.DOScale(Vector3.zero, animationDuration);
-        yield return bubble4.transform.DOScale(Vector3.zero, animationDuration).WaitForCompletion();
-        yield return bubble3.transform.DOScale(Vector3.zero, animationDuration).WaitForCompletion();
-        yield return bubble2.transform.DOScale(Vector3.zero, animationDuration).WaitForCompletion();
-        yield return bubble1.transform.DOScale(Vector3.zero, animationDuration).WaitForCompletion();
         
         healthBar.SetActive(true);       
         Debug.Log("Tween finished!");
