@@ -16,14 +16,14 @@ MonoBehaviour:
   idleDefaultPriority: 1
   Wander: 5
   wanderDefaultPriority: 5
-  KeepThirstLevelUp: 10
-  keepThirstLevelUpDefaultPriority: 10
-  KeepHungerLevelUp: 10
-  keepHungerLevelUpDefaultPriority: 10
+  KeepThirstLevelUp: 11
+  keepThirstLevelUpDefaultPriority: 11
+  KeepHungerLevelUp: 11
+  keepHungerLevelUpDefaultPriority: 11
   KeepStaminaUp: 10
   keepStaminaUpDefaultPriority: 10
-  KeepBoredomLow: 11
-  keepBoredomLowDefaultPriority: 11
+  KeepBoredomLow: 10
+  keepBoredomLowDefaultPriority: 10
   FetchBallAndReturnIt: 100
   fetchBallAndReturnItDefaultPriority: 100
   StayAlive: 100

@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: StatManager
   m_EditorClassIdentifier: 
   StaminaLost: 0
-  SatietyLost: 0
-  HydrationLost: 0
+  SatietyLost: 5
+  HydrationLost: 5
   FunLost: 0

@@ -2276,6 +2276,7 @@ MonoBehaviour:
   fillAmount: {fileID: 1041714514}
   minYPosition: -0.08
   maxYPosition: 0
+  foodAvailable: {fileID: 11400000, guid: c1f8ca8f16cd7934087ca09b96aad924, type: 2}
 --- !u!1001 &1295756003
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3783,8 +3784,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fillAmount: {fileID: 1662145857}
-  minYPosition: -0.08
+  minYPosition: -0.14
   maxYPosition: 0
+  foodAvailable: {fileID: 11400000, guid: 803a13c8ae8b6c841b5342a8d40846f3, type: 2}
 --- !u!1001 &2069741506
 PrefabInstance:
   m_ObjectHideFlags: 0

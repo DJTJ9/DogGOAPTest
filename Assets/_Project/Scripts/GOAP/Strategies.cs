@@ -232,8 +232,6 @@ public class EatStrategy : IActionStrategy
     readonly AnimationController animations;
 
     readonly float eatAmount = -0.02f;
-    readonly float minFoodYPos = -0.08f;
-    readonly float maxFoodYPos = 0f;
 
     public EatStrategy(AnimationController animations, Transform food, DogSO dog, float saturation = 100f, float aggressionLost = 10f) {
         this.animations = animations;
@@ -254,9 +252,7 @@ public class EatStrategy : IActionStrategy
         foodDropTimer = new CountdownTimer(5f);
         foodDropTimer.OnTimerStart += () => Complete = false;
         foodDropTimer.OnTimerStop += () => {
-            Vector3 newPosition = food.position + new Vector3(0f, eatAmount, 0f);
-            newPosition.y = Mathf.Clamp(newPosition.y, minFoodYPos, maxFoodYPos);
-            food.position = newPosition;
+            food.position += new Vector3(0f, eatAmount, 0f);
         };
     }
 
@@ -287,9 +283,8 @@ public class DrinkStrategy : IActionStrategy
     readonly CountdownTimer drinkAnimationTimer;
     readonly CountdownTimer waterDropTimer;
     readonly AnimationController animations;
-    readonly float drinkAmount = -0.01f;
-    readonly float minFoodYPos = -0.04f;
-    readonly float maxFoodYPos = 0f;
+    readonly float drinkAmount = -0.02f;
+
 
     public DrinkStrategy(AnimationController animations, Transform water, DogSO dog, float hydration = 100f) {
         this.animations = animations;
@@ -303,9 +298,7 @@ public class DrinkStrategy : IActionStrategy
 
         waterDropTimer = new CountdownTimer(4f);
         waterDropTimer.OnTimerStop += () => {
-            Vector3 newPosition = water.position + new Vector3(0f, drinkAmount, 0f);
-            newPosition.y = Mathf.Clamp(newPosition.y, minFoodYPos, maxFoodYPos);
-            water.position = newPosition;
+            water.position += new Vector3(0f,  drinkAmount, 0f);
         };
     }
 
