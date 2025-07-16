@@ -12,12 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e8e5514dffb34874841d134ee94c6d9a, type: 3}
   m_Name: Dog
   m_EditorClassIdentifier: 
-  Health: 69
-  Aggression: 100
+  Health: 100
+  Aggression: 84.21
   Stamina: 100
-  Satiety: 0
-  Hydration: 0
-  Fun: 40
+  Satiety: 80
+  Hydration: 60
+  Fun: 0
   StatManager: {fileID: 11400000, guid: dc99d76271051df439d8051053ea5fab, type: 2}
   BallInHand: {fileID: 11400000, guid: e218d8f69f18b5f41ace3a5559f9df96, type: 2}
   FetchBall: {fileID: 11400000, guid: 8acafbc92962b9b45ae4e215aa2eba1f, type: 2}
@@ -30,7 +30,7 @@ MonoBehaviour:
   WaterAvailable: {fileID: 11400000, guid: c1f8ca8f16cd7934087ca09b96aad924, type: 2}
   RestingSpotAvailable: {fileID: 11400000, guid: 1a47d530a043fd1489a4e8203bf87c50, type: 2}
   defaultHealth: 100
-  defaultAggression: 0
+  defaultAggression: 84.21
   defaultStamina: 100
   defaultHunger: 80
   defaultThirst: 60

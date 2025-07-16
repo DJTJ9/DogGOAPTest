@@ -73,7 +73,6 @@ public class MoveStrategy : IActionStrategy
         this.destination = destination;
         this.stoppingDistance = stoppingDistance;
         value = boolean;
-
     }
 
     public void Start() {
@@ -85,6 +84,7 @@ public class MoveStrategy : IActionStrategy
         if (value != null) {
             value.Value = true;
         }
+
         agent.transform.LookAt(destination());
         agent.ResetPath();
     }
@@ -129,16 +129,27 @@ public class DiggingStrategy : IActionStrategy
 {
     private readonly AnimationController animations;
     private readonly CountdownTimer digAnimationTimer;
+    private readonly Transform dogTransform;
 
     public bool CanPerform => !Complete;
 
     public bool Complete { get; private set; }
 
-    public DiggingStrategy(AnimationController animations, DogSO dog, float funFactor = 100, float aggressionLost = 25f) {
+    public DiggingStrategy(AnimationController animations, DogSO dog, Transform dogTransform, float funFactor = 100, float aggressionLost = 25f) {
         this.animations = animations;
+        this.dogTransform = dogTransform;
 
         digAnimationTimer = new CountdownTimer(7f);
-        digAnimationTimer.OnTimerStart += () => { Complete = false; };
+        digAnimationTimer.OnTimerStart += () => {
+            Complete = false;
+            // Einfacher Raycast nach unten, um zu prüfen was direkt unter dem Hund ist
+            if (Physics.Raycast(dogTransform.position, Vector3.down, out RaycastHit hit)) {
+                // Prüfe, ob das getroffene Objekt ein IDiggable ist
+                if (hit.transform.TryGetComponent(out IDiggable item)) {
+                    item.PopUp();
+                }
+            }
+        };
         digAnimationTimer.OnTimerStop += () => {
             dog.Fun += funFactor;
             dog.Aggression -= aggressionLost;
@@ -155,6 +166,28 @@ public class DiggingStrategy : IActionStrategy
     public void Stop() {
         digAnimationTimer.Stop();
         Complete = true;
+    }
+
+    public void OnDrawGizmos() {
+        if (dogTransform == null) return;
+
+        // SphereCast-Parameter visualisieren
+        Vector3 origin = dogTransform.position;
+        Vector3 direction = Vector3.forward;
+        float radius = 1f;
+        float distance = 1f;
+
+        // Startpunkt des SphereCasts
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawWireSphere(origin, radius);
+
+        // Richtung des SphereCasts
+        Gizmos.color = Color.red;
+        Gizmos.DrawRay(origin, direction * distance);
+
+        // Endpunkt des SphereCasts
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawWireSphere(origin + direction * distance, radius);
     }
 }
 
@@ -231,7 +264,7 @@ public class EatStrategy : IActionStrategy
     readonly CountdownTimer foodDropTimer;
     readonly AnimationController animations;
 
-    readonly float eatAmount = -0.02f;
+    readonly float eatAmount = -0.03f;
 
     public EatStrategy(AnimationController animations, Transform food, DogSO dog, float saturation = 100f, float aggressionLost = 10f) {
         this.animations = animations;
@@ -251,9 +284,7 @@ public class EatStrategy : IActionStrategy
 
         foodDropTimer = new CountdownTimer(5f);
         foodDropTimer.OnTimerStart += () => Complete = false;
-        foodDropTimer.OnTimerStop += () => {
-            food.position += new Vector3(0f, eatAmount, 0f);
-        };
+        foodDropTimer.OnTimerStop += () => { food.position += new Vector3(0f, eatAmount, 0f); };
     }
 
     public void Start() {
@@ -297,9 +328,7 @@ public class DrinkStrategy : IActionStrategy
         };
 
         waterDropTimer = new CountdownTimer(4f);
-        waterDropTimer.OnTimerStop += () => {
-            water.position += new Vector3(0f,  drinkAmount, 0f);
-        };
+        waterDropTimer.OnTimerStop += () => { water.position += new Vector3(0f, drinkAmount, 0f); };
     }
 
     public void Start() {
@@ -654,7 +683,7 @@ public class PickUpBallStrategy : IActionStrategy
             pickUpTimer.Tick(deltaTime);
         }
         else currentState = PickUpState.MovingToBall;
-        }
+    }
 
     public void Stop() {
         pickUpAnimationTimer.Stop();
@@ -699,6 +728,7 @@ public class DropBallStrategy : IActionStrategy
             if (ball.TryGetComponent(out ShakeBall ballShake)) {
                 ballShake.Shake();
             }
+
             Complete = false;
         };
         dropAnimationTimer.OnTimerStop += () => {

@@ -53,6 +53,9 @@ public class GoapAgent : MonoBehaviour
     private Transform objectGrabPointPosition;
 
     [FoldoutGroup("Known Locations"), SerializeField]
+    private Transform diggingRayCastPosition;
+
+    [FoldoutGroup("Known Locations"), SerializeField]
     private GameObject ball;
 
     [FoldoutGroup("Health Bar", expanded: false), SerializeField]
@@ -227,8 +230,8 @@ public class GoapAgent : MonoBehaviour
             .Build());
 
         actions.Add(new AgentAction.Builder(ActionType.Digging)
-            .WithCost(actionCosts.Digging)
-            .WithStrategy(new DiggingStrategy(animations, dog))
+            .WithCost(1f)
+            .WithStrategy(new DiggingStrategy(animations, dog, diggingRayCastPosition))
             .AddPrecondition(beliefs[Beliefs.DogIsBored])
             .AddEffect(beliefs[Beliefs.DogIsHappy])
             .Build());
