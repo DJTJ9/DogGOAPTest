@@ -587,6 +587,15 @@ public class PickUpBallStrategy : IActionStrategy
     private readonly CountdownTimer pickUpAnimationTimer;
     private readonly CountdownTimer pickUpTimer;
 
+    private enum PickUpState
+    {
+        MovingToBall,
+        PickingUpBall,
+        Completed
+    }
+
+    private PickUpState currentState;
+
     public PickUpBallStrategy(NavMeshAgent agent, AnimationController animations, GameObject ball, Transform objectGrabPoint, DogSO dog, float pickupRange = 2f) {
         this.agent = agent;
         this.animations = animations;
@@ -594,18 +603,19 @@ public class PickUpBallStrategy : IActionStrategy
         this.objectGrabPoint = objectGrabPoint;
         this.pickupRange = pickupRange;
 
-        pickUpAnimationTimer = new CountdownTimer(2.4f);
-        pickUpTimer = new CountdownTimer(1.2f);
-        
+        pickUpAnimationTimer = new CountdownTimer(12f);
+        pickUpTimer = new CountdownTimer(5.7f);
+
         pickUpAnimationTimer.OnTimerStart += () => {
             animations.StartDogAction(AnimationActionType.Eat);
             Complete = false;
         };
         pickUpAnimationTimer.OnTimerStop += () => {
             dog.ReturnBall.Value = true;
+            currentState = PickUpState.Completed;
             Complete = true;
         };
-        
+
         pickUpTimer.OnTimerStop += () => {
             if (ball.TryGetComponent(out GrabbableObject grabbableObject)) {
                 grabbableObject.Grab(objectGrabPoint);
@@ -614,20 +624,49 @@ public class PickUpBallStrategy : IActionStrategy
     }
 
     public void Start() {
-        pickUpAnimationTimer.Start();
-        pickUpTimer.Start();
-        // agent.stoppingDistance = pickupRange - 0.2f;
-        // agent.SetDestination(ball.transform.position);
+        Complete = false;
+        currentState = PickUpState.MovingToBall;
+        agent.stoppingDistance = pickupRange - 0.5f;
+        agent.SetDestination(ball.transform.position);
     }
 
     public void Update(float deltaTime) {
-        pickUpAnimationTimer.Tick(deltaTime);
-        pickUpTimer.Tick(deltaTime);
+        switch (currentState) {
+            case PickUpState.MovingToBall:
+                MoveToBall();
+                break;
+            case PickUpState.PickingUpBall:
+                PickUpBall(deltaTime);
+                break;
+            case PickUpState.Completed:
+                // Bereits abgeschlossen
+                break;
+        }
     }
+
+    private void MoveToBall() {
+        // Überprüfe, ob Ziel erreicht wurde
+        if (Vector3.Distance(agent.transform.position, ball.transform.position) <= pickupRange && !agent.pathPending) {
+            agent.transform.LookAt(ball.transform);
+            currentState = PickUpState.PickingUpBall;
+            pickUpAnimationTimer.Start();
+            pickUpTimer.Start();
+        }
+        else agent.SetDestination(ball.transform.position);
+    }
+
+    private void PickUpBall(float deltaTime) {
+        if (Vector3.Distance(agent.transform.position, ball.transform.position) <= pickupRange) {
+            pickUpAnimationTimer.Tick(deltaTime);
+            pickUpTimer.Tick(deltaTime);
+        }
+        else currentState = PickUpState.MovingToBall;
+        }
 
     public void Stop() {
         pickUpAnimationTimer.Stop();
         pickUpTimer.Stop();
+        agent.ResetPath();
         Complete = true;
     }
 }
@@ -637,22 +676,36 @@ public class DropBallStrategy : IActionStrategy
     public bool CanPerform => true;
     public bool Complete   { get; private set; }
 
-    private readonly NavMeshAgent agent;
+    private NavMeshAgent agent;
     private readonly AnimationController animations;
-    private readonly GameObject ball;
+    private readonly DogSO dog;
+    private readonly Transform playerTransform;
     private readonly float dropRange;
 
-    private  readonly CountdownTimer dropAnimationTimer;
+    private readonly CountdownTimer dropAnimationTimer;
 
-    public DropBallStrategy(NavMeshAgent agent, AnimationController animations, GameObject ball, Transform objectGrabPoint, DogSO dog, float dropRange = 2f) {
+    private enum DropState
+    {
+        MovingToPlayer,
+        DroppingBall,
+        Completed
+    }
+
+    private DropState currentState;
+
+    public DropBallStrategy(NavMeshAgent agent, AnimationController animations, DogSO dog, Transform playerTransform, GameObject ball, float dropRange = 5f) {
         this.agent = agent;
         this.animations = animations;
-        this.ball = ball;
+        this.dog = dog;
+        this.playerTransform = playerTransform;
         this.dropRange = dropRange;
 
-        dropAnimationTimer = new CountdownTimer(2.4f);
+        dropAnimationTimer = new CountdownTimer(10f);
         dropAnimationTimer.OnTimerStart += () => {
-            animations.StartDogAction(AnimationActionType.Eat);
+            animations.StartDogAction(AnimationActionType.ShakeToy);
+            if (ball.TryGetComponent(out ShakeBall ballShake)) {
+                ballShake.Shake();
+            }
             Complete = false;
         };
         dropAnimationTimer.OnTimerStop += () => {
@@ -660,25 +713,52 @@ public class DropBallStrategy : IActionStrategy
                 grabbableObject.Drop();
             }
 
-            dog.ReturnBall.Value = true;
+            agent.speed = 2.5f;
+            dog.ReturnBall.Value = false;
             dog.BallReturned.Value = true;
+            currentState = DropState.Completed;
             Complete = true;
         };
     }
 
     public void Start() {
-        dropAnimationTimer.Start();
+        Complete = false;
+        currentState = DropState.MovingToPlayer;
         agent.stoppingDistance = dropRange - 0.2f;
-        agent.SetDestination(ball.transform.position);
+        agent.SetDestination(playerTransform.position);
     }
 
     public void Update(float deltaTime) {
+        switch (currentState) {
+            case DropState.MovingToPlayer:
+                MoveToPlayer();
+                break;
+            case DropState.DroppingBall:
+                DropBall(deltaTime);
+                break;
+            case DropState.Completed:
+                // Bereits abgeschlossen
+                break;
+        }
+    }
+
+    private void MoveToPlayer() {
+        // Überprüfe, ob Ziel erreicht wurde
+        if (Vector3.Distance(agent.transform.position, playerTransform.position) <= dropRange && !agent.pathPending) {
+            agent.speed = 0f;
+            currentState = DropState.DroppingBall;
+            dropAnimationTimer.Start();
+        }
+    }
+
+    private void DropBall(float deltaTime) {
         dropAnimationTimer.Tick(deltaTime);
     }
 
     public void Stop() {
         dropAnimationTimer.Stop();
-        // animations.Locomotion();
+        agent.ResetPath();
+        dog.ReturnBall.Value = false;
         Complete = true;
     }
 }

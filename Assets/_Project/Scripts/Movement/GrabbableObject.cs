@@ -8,7 +8,7 @@ public class GrabbableObject : MonoBehaviour
     private Rigidbody objectRigidbody;
     private Transform objectGrabPoint;
 
-    private float lerpSpeed = 1000f;
+    private float lerpSpeed = 100f;
 
     private void Awake() {
         objectRigidbody = GetComponent<Rigidbody>();
