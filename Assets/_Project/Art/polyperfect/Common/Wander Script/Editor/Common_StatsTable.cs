@@ -31,7 +31,7 @@ namespace Polyperfect.Common
 
 
         // Add menu named "My Window" to the Window menu
-        [MenuItem("PolyPerfect/Stats Table")]
+        [MenuItem("Window/PolyPerfect/Stats Table")]
         static void Init()
         {
             // Get existing open window or if none, make a new one:

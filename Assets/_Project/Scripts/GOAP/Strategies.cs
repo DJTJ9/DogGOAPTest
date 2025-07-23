@@ -31,21 +31,23 @@ public class AttackStrategy : IActionStrategy
 
     readonly CountdownTimer attackAnimationTimer;
     readonly AnimationController animations;
+    private readonly float hitDamage = 25f;
 
-    public AttackStrategy(AnimationController animations, DogSO dog, float funFactor = 100) {
+    public AttackStrategy(AnimationController animations, DogSO dog, Obstacle obstacle, float funFactor = 100) {
         this.animations = animations;
         attackAnimationTimer = new CountdownTimer(7f);
 
         attackAnimationTimer.OnTimerStart += () => { Complete = false; };
         attackAnimationTimer.OnTimerStop += () => {
             dog.Fun += funFactor;
+            obstacle.TakeDamage(hitDamage);
             Complete = true;
         };
     }
 
     public void Start() {
         attackAnimationTimer.Start();
-        animations.StartDogAction(AnimationActionType.Bark);
+        animations.StartDogAction(AnimationActionType.Shake);
     }
 
     public void Update(float deltaTime) {
@@ -129,50 +131,58 @@ public class DiggingStrategy : IActionStrategy
 {
     private readonly AnimationController animations;
     private readonly CountdownTimer digAnimationTimer;
-    private readonly Transform dogTransform;
+    private readonly CountdownTimer itemPopUpTimer;
+    private readonly Transform rayCastTransform;
+    private readonly LayerMask itemsLayer;
 
     public bool CanPerform => !Complete;
 
     public bool Complete { get; private set; }
 
-    public DiggingStrategy(AnimationController animations, DogSO dog, Transform dogTransform, float funFactor = 100, float aggressionLost = 25f) {
+    public DiggingStrategy(AnimationController animations, DogSO dog, Transform rayCastTransform, float funFactor = 100, float aggressionLost = 25f) {
         this.animations = animations;
-        this.dogTransform = dogTransform;
+        this.rayCastTransform = rayCastTransform;
+        itemsLayer = LayerMask.GetMask("Items");
+
 
         digAnimationTimer = new CountdownTimer(7f);
+        itemPopUpTimer = new CountdownTimer(4.5f);
         digAnimationTimer.OnTimerStart += () => {
             Complete = false;
-            // Einfacher Raycast nach unten, um zu prüfen was direkt unter dem Hund ist
-            if (Physics.Raycast(dogTransform.position, Vector3.down, out RaycastHit hit)) {
-                // Prüfe, ob das getroffene Objekt ein IDiggable ist
-                if (hit.transform.TryGetComponent(out IDiggable item)) {
-                    item.PopUp();
-                }
-            }
         };
         digAnimationTimer.OnTimerStop += () => {
             dog.Fun += funFactor;
             dog.Aggression -= aggressionLost;
             Complete = true;
         };
+        itemPopUpTimer.OnTimerStop += () => {
+            if (Physics.Raycast(rayCastTransform.position, Vector3.down, out RaycastHit hit, 3f, itemsLayer)) {
+                // Prüfe, ob das getroffene Objekt ein IDiggable ist
+                if (hit.transform.TryGetComponent(out IDiggable item)) {
+                    item.PopUp();
+                }
+            }
+        };
     }
 
     public void Start() {
         digAnimationTimer.Start();
+        itemPopUpTimer.Start();
         animations.StartCoroutine(animations.DogActions(AnimationActionType.Dig));
         animations.SpawnDirtWhileDigging();
     }
 
     public void Stop() {
         digAnimationTimer.Stop();
+        itemPopUpTimer.Stop();
         Complete = true;
     }
 
     public void OnDrawGizmos() {
-        if (dogTransform == null) return;
+        if (rayCastTransform == null) return;
 
         // SphereCast-Parameter visualisieren
-        Vector3 origin = dogTransform.position;
+        Vector3 origin = rayCastTransform.position;
         Vector3 direction = Vector3.forward;
         float radius = 1f;
         float distance = 1f;
@@ -225,16 +235,23 @@ public class SleepAndWaitStrategy : IActionStrategy
         this.animations = animations;
 
         sleepAnimationTimer = new CountdownTimer(10f);
-        sleepAnimationTimer.OnTimerStart += () => { Complete = false; };
+        sleepAnimationTimer.OnTimerStart += () => {
+            Complete = false;
+            dog.RestingSpotAvailable.Value = false;
+        };
         sleepAnimationTimer.OnTimerStop += () => {
             dog.Stamina += staminaRefill;
             dog.Health += healthRefill;
             dog.Aggression -= aggressionLost;
+            
             animations.SetAnimatorBool("Sleep_b", false);
         };
         waitTimer = new CountdownTimer(14f);
         waitTimer.OnTimerStart += () => Complete = false;
-        waitTimer.OnTimerStop += () => Complete = true;
+        waitTimer.OnTimerStop += () => {
+            dog.RestingSpotAvailable.Value = true;
+            Complete = true;
+        };
     }
 
     public void Start() {
@@ -250,6 +267,56 @@ public class SleepAndWaitStrategy : IActionStrategy
 
     public void Stop() {
         sleepAnimationTimer.Stop();
+        waitTimer.Stop();
+        Complete = true;
+    }
+}
+
+public class RestAndWaitStrategy : IActionStrategy
+{
+    public bool CanPerform => true;
+    public bool Complete   { get; private set; }
+
+    readonly CountdownTimer restAnimationTimer;
+    readonly CountdownTimer waitTimer;
+    readonly AnimationController animations;
+
+    public RestAndWaitStrategy(AnimationController animations, DogSO dog, float staminaRefill = 50, float healthRefill = 10f, float aggressionLost = 15f) {
+        this.animations = animations;
+
+        restAnimationTimer = new CountdownTimer(10f);
+        restAnimationTimer.OnTimerStart += () => {
+            Complete = false;
+            dog.RestingSpotAvailable.Value = false;
+        };
+        restAnimationTimer.OnTimerStop += () => {
+            dog.Stamina += staminaRefill;
+            dog.Health += healthRefill;
+            dog.Aggression -= aggressionLost;
+            
+            animations.SetAnimatorBool("Sit_b", false);
+        };
+        waitTimer = new CountdownTimer(14f);
+        waitTimer.OnTimerStart += () => Complete = false;
+        waitTimer.OnTimerStop += () => {
+            dog.RestingSpotAvailable.Value = true;
+            Complete = true;
+        };
+    }
+
+    public void Start() {
+        animations.SetAnimatorBool("Sit_b", true);
+        restAnimationTimer.Start();
+        waitTimer.Start();
+    }
+
+    public void Update(float deltaTime) {
+        restAnimationTimer.Tick(deltaTime);
+        waitTimer.Tick(deltaTime);
+    }
+
+    public void Stop() {
+        restAnimationTimer.Stop();
         waitTimer.Stop();
         Complete = true;
     }
@@ -522,20 +589,24 @@ public class SeekAttentionStrategy : IActionStrategy
     readonly CountdownTimer begAnimationTimer;
     readonly NavMeshAgent navMeshAgent;
     readonly AnimationController animations;
+    readonly Transform playerPos;
 
     public SeekAttentionStrategy(NavMeshAgent navMeshAgent, AnimationController animations, Transform playerPos, DogSO dog, float fun = 100) {
         this.navMeshAgent = navMeshAgent;
         this.animations = animations;
+        this.playerPos = playerPos;
 
         navMeshAgent.stoppingDistance = 2.1f;
 
         begAnimationTimer = new CountdownTimer(14f);
         begAnimationTimer.OnTimerStart += () => {
             navMeshAgent.transform.LookAt(playerPos);
+            dog.SeekingAttention = true;
             Complete = false;
         };
         begAnimationTimer.OnTimerStop += () => {
             dog.Fun += fun;
+            dog.SeekingAttention = false;
             Complete = true;
         };
     }
@@ -546,6 +617,7 @@ public class SeekAttentionStrategy : IActionStrategy
     }
 
     public void Update(float deltaTime) {
+        navMeshAgent.transform.LookAt(playerPos);
         begAnimationTimer.Tick(deltaTime);
     }
 
@@ -602,6 +674,7 @@ public class PickUpBallStrategy : IActionStrategy
 
     private readonly NavMeshAgent agent;
     private readonly AnimationController animations;
+    private readonly DogSO dog;
     private readonly GameObject ball;
     private readonly Transform objectGrabPoint;
     private readonly float pickupRange;
@@ -621,6 +694,7 @@ public class PickUpBallStrategy : IActionStrategy
     public PickUpBallStrategy(NavMeshAgent agent, AnimationController animations, GameObject ball, Transform objectGrabPoint, DogSO dog, float pickupRange = 2f) {
         this.agent = agent;
         this.animations = animations;
+        this.dog = dog;
         this.ball = ball;
         this.objectGrabPoint = objectGrabPoint;
         this.pickupRange = pickupRange;
@@ -642,6 +716,7 @@ public class PickUpBallStrategy : IActionStrategy
             if (ball.TryGetComponent(out GrabbableObject grabbableObject)) {
                 grabbableObject.Grab(objectGrabPoint);
             }
+            currentState = PickUpState.Completed;
         };
     }
 
@@ -661,13 +736,12 @@ public class PickUpBallStrategy : IActionStrategy
                 PickUpBall(deltaTime);
                 break;
             case PickUpState.Completed:
-                // Bereits abgeschlossen
+                Complete = true;
                 break;
         }
     }
 
     private void MoveToBall() {
-        // Überprüfe, ob Ziel erreicht wurde
         if (Vector3.Distance(agent.transform.position, ball.transform.position) <= pickupRange && !agent.pathPending) {
             agent.transform.LookAt(ball.transform);
             currentState = PickUpState.PickingUpBall;
@@ -678,9 +752,12 @@ public class PickUpBallStrategy : IActionStrategy
     }
 
     private void PickUpBall(float deltaTime) {
+        if (!dog.ballAvailable) Complete = true;
         if (Vector3.Distance(agent.transform.position, ball.transform.position) <= pickupRange) {
             pickUpAnimationTimer.Tick(deltaTime);
             pickUpTimer.Tick(deltaTime);
+            dog.ballInMouth = true;
+            dog.ballAvailable.Value = false;
         }
         else currentState = PickUpState.MovingToBall;
     }
@@ -703,6 +780,7 @@ public class DropBallStrategy : IActionStrategy
     private readonly DogSO dog;
     private readonly Transform playerTransform;
     private readonly float dropRange;
+    private readonly ScriptableBoolValue ballAvailable;
 
     private readonly CountdownTimer dropAnimationTimer;
 
@@ -721,6 +799,7 @@ public class DropBallStrategy : IActionStrategy
         this.dog = dog;
         this.playerTransform = playerTransform;
         this.dropRange = dropRange;
+        ballAvailable = dog.ballAvailable;
 
         dropAnimationTimer = new CountdownTimer(10f);
         dropAnimationTimer.OnTimerStart += () => {
@@ -734,9 +813,12 @@ public class DropBallStrategy : IActionStrategy
         dropAnimationTimer.OnTimerStop += () => {
             if (ball.TryGetComponent(out GrabbableObject grabbableObject)) {
                 grabbableObject.Drop();
+                dog.ballInMouth = false;
+                ballAvailable.Value = true;
             }
 
             agent.speed = 2.5f;
+            dog.Fun += 100f;
             dog.ReturnBall.Value = false;
             dog.BallReturned.Value = true;
             currentState = DropState.Completed;
@@ -745,6 +827,7 @@ public class DropBallStrategy : IActionStrategy
     }
 
     public void Start() {
+        if (!dog.ballAvailable) Complete = true;
         Complete = false;
         currentState = DropState.MovingToPlayer;
         agent.stoppingDistance = dropRange - 0.2f;
@@ -766,7 +849,8 @@ public class DropBallStrategy : IActionStrategy
     }
 
     private void MoveToPlayer() {
-        // Überprüfe, ob Ziel erreicht wurde
+        if (!dog.ballInMouth) Complete = true;
+        
         if (Vector3.Distance(agent.transform.position, playerTransform.position) <= dropRange && !agent.pathPending) {
             agent.speed = 0f;
             currentState = DropState.DroppingBall;
@@ -775,12 +859,14 @@ public class DropBallStrategy : IActionStrategy
     }
 
     private void DropBall(float deltaTime) {
-        dropAnimationTimer.Tick(deltaTime);
+        if (!dog.ballInMouth) Complete = true;
+        else dropAnimationTimer.Tick(deltaTime);
     }
 
     public void Stop() {
         dropAnimationTimer.Stop();
         agent.ResetPath();
+        agent.speed = 2.5f;
         dog.ReturnBall.Value = false;
         Complete = true;
     }

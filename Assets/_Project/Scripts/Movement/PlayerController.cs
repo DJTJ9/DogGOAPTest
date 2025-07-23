@@ -120,6 +120,7 @@ public class PlayerController : MonoBehaviour
 
         interactionInputAction = playerInput.actions["Interact"];
         interactionInputAction.started += OnInteractInput;
+        interactionInputAction.started += OnDemolishInput;
         interactionInputAction.started += OnGrabInput;
 
         dropInputAction = playerInput.actions["Drop"];
@@ -162,6 +163,17 @@ public class PlayerController : MonoBehaviour
                 if (raycastHit.transform.TryGetComponent(out IInteractable interactable)) {
                     interactable.Interact();
                     Debug.Log($"Player interacted with {interactable.GetType().Name}");
+                }
+            }
+        }
+    }
+    
+    private void OnDemolishInput(InputAction.CallbackContext context) {
+        if (context.phase == InputActionPhase.Started) {
+            if (Physics.Raycast(mainCameraTransform.position, mainCameraTransform.forward, out RaycastHit raycastHit, interactionDistance)) {
+                if (raycastHit.transform.TryGetComponent(out IDamagable damagable)) {
+                    damagable.TakeDamage(20f);
+                    Debug.Log($"Player demolished {damagable.GetType().Name}");
                 }
             }
         }

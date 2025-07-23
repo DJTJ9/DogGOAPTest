@@ -5,7 +5,7 @@ using UnityEngine;
 namespace ScriptableValues
 {
     [ManageableData, InlineEditor(Expanded = true)]
-    [CreateAssetMenu(fileName = "Dog Params", menuName = "Scriptable Objects/Dog Parameters")]
+    [CreateAssetMenu(fileName = "Dog Settings", menuName = "Scriptable Objects/Dog Settings")]
     public class DogParamsSO : ScriptableObject
     {
         [FoldoutGroup("Movement Settings", expanded: false)]

@@ -12,6 +12,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Bone
       objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: b63d77ea6bdc6bc44917af8a4f02b6f2, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: b63d77ea6bdc6bc44917af8a4f02b6f2, type: 3}
       propertyPath: m_RootOrder
       value: 0
@@ -72,7 +76,7 @@ PrefabInstance:
       addedObject: {fileID: 7192171956180193624}
     - targetCorrespondingSourceObject: {fileID: 100000, guid: b63d77ea6bdc6bc44917af8a4f02b6f2, type: 3}
       insertIndex: -1
-      addedObject: {fileID: -2111698022181849696}
+      addedObject: {fileID: 7656778912639240660}
   m_SourcePrefab: {fileID: 100100000, guid: b63d77ea6bdc6bc44917af8a4f02b6f2, type: 3}
 --- !u!1 &6275421410448564868 stripped
 GameObject:
@@ -89,10 +93,10 @@ MeshCollider:
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 128
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 375
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0
@@ -113,8 +117,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c5955cc4a0944c11a251eaf0677657e6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!65 &-2111698022181849696
-BoxCollider:
+--- !u!135 &7656778912639240660
+SphereCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -128,9 +132,9 @@ BoxCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1, y: 0.05, z: 1}
+  m_Radius: 0.3
   m_Center: {x: -0.0006650388, y: -0.00008828286, z: 0.0063329563}

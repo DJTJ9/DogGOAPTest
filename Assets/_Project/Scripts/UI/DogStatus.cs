@@ -40,8 +40,8 @@ public class DogStatus : MonoBehaviour
 
     private void LateUpdate() {
         canvas.transform.LookAt(cam.transform.position); // transform.position + cam.transform.forward
-        Vector3 currentRotation = canvas.transform.eulerAngles;
-        canvas.transform.eulerAngles = new Vector3(currentRotation.x, currentRotation.y + 180f, currentRotation.z);
+        // Vector3 currentRotation = canvas.transform.eulerAngles;
+        // canvas.transform.eulerAngles = new Vector3(currentRotation.x, currentRotation.y, currentRotation.z);
     }
 
     public IEnumerator ShowStatus() {

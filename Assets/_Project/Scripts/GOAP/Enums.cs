@@ -41,7 +41,7 @@ public enum Beliefs {
     DogAtRestingPosition,
     DogAtFoodBowl,
     DogAtWaterBowl,
-    DogAtRageVictim,
+    DogAtObstacle1,
     DogAtBall,
     DogAtPlayer,
     
@@ -49,7 +49,9 @@ public enum Beliefs {
     PlayerInRange,
     PlayerInAttackRange,
     DogAtPlayerWithBall,
-    WaitingForBall
+    WaitingForBall,
+    DogAtObstacle2,
+    DogAtObstacle3
 }
 
 public enum ActionType
@@ -63,8 +65,8 @@ public enum ActionType
     Drink,
     Sleep,
     Rest,
-    MoveToRageVictim,
-    AttackRageVictim,
+    MoveToObstacle1,
+    AttackObstacle1,
     SeekAttention,
     PickUpBall,
     DropBall,
@@ -74,5 +76,9 @@ public enum ActionType
     MoveToRestArea,
     Digging,
     MoveToPlayerWithBall,
-    WaitForBallThrow
+    WaitForBallThrow,
+    MoveToObstacle2,
+    AttackObstacle2,
+    MoveToObstacle3,
+    AttackObstacle3
 }

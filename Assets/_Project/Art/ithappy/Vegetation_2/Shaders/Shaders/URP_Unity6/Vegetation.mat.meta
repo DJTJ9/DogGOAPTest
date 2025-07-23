@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: a3415800c8885554db35cb16889051db
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 255131
+  packageName: Vegetation 2 - Low Poly 3D Models Pack
+  packageVersion: 2.1
+  assetPath: Assets/ithappy/Vegetation_2/Shaders/Shaders/URP_Unity6/Vegetation.mat
+  uploadId: 771322

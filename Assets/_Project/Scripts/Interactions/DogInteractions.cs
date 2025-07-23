@@ -1,17 +1,22 @@
 ﻿using UnityEngine;
 
-namespace _Project.Scripts.Interactions
+public class DogInteractions : MonoBehaviour, IInteractable
 {
-    public class DogInteractions : MonoBehaviour, IInteractable
-    {
-        private DogStatus dogStatus;
-        
-        private void Start() {
-            dogStatus = GetComponent<DogStatus>();
+    [SerializeField]
+    private DogSO dog;
+    
+    private DogStatus dogStatus;
+
+    private void Start() {
+        dogStatus = GetComponent<DogStatus>();
+    }
+
+    public void Interact() {
+        if (dog.SeekingAttention) {
+            dog.Fun += 25f;
+            dog.Aggression -= 25f;
+            dog.Satiety += 20f;
         }
-        
-        public void Interact() {
-            StartCoroutine(dogStatus.ShowStatus());
-        }
+        else StartCoroutine(dogStatus.ShowStatus());
     }
 }

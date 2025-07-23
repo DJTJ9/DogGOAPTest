@@ -30,7 +30,7 @@ namespace ScriptableValues
         [FoldoutGroup("Current Values")]
         public float Digging;
         [FoldoutGroup("Settings"), SerializeField, Title("Digging")]
-        public float diggingDefaultCosts;
+        private float diggingDefaultCosts;
 
         public DogSO dog;
 

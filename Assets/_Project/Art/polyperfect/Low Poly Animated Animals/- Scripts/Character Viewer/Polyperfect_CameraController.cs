@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-namespace Polyperfect.Animals
+namespace Polyperfect.People
 {
     public class Polyperfect_CameraController : MonoBehaviour
     {
