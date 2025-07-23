@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 33857884469369772}
   - component: {fileID: 23019430021055472}
   - component: {fileID: 114689447726362688}
-  m_Layer: 12
+  m_Layer: 0
   m_Name: Ground
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -26,12 +26,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1026965256934996}
+  serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -11.7, y: 22.42, z: -20.90508}
   m_LocalScale: {x: 231.25212, y: 0.5, z: 32.296818}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 4289062719471492}
-  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &33857884469369772
 MeshFilter:
@@ -52,11 +53,15 @@ MeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 2
   m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
   m_RenderingLayerMask: 4294967295
   m_RendererPriority: 0
   m_Materials:
@@ -94,15 +99,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eb6e52f37bca2404fac00b69fd8d21f8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  initialization: 1
-  simulationType: 4
-  objectType: 0
-  demolitionType: 0
+  init: 1
+  simTp: 4
+  objTp: 0
+  dmlTp: 0
   physics:
     mt: 4
-    material: {fileID: 0}
-    massBy: 0
-    mass: 0
+    ma: {fileID: 0}
+    mb: 0
+    ms: 0
     ct: 0
     pc: 1
     ine: 0
@@ -110,16 +115,16 @@ MonoBehaviour:
     si: 6
     st: 0.005
     dm: 0.8
-    rigidBody: {fileID: 0}
-    meshCollider: {fileID: 0}
-    clusterColliders: []
-    ignoreList: 
+    rb: {fileID: 0}
+    mc: {fileID: 0}
+    cc: []
+    ign: 
     exclude: 0
     solidity: 1
     destructible: 0
-  activation:
-    loc: 0
+  act:
     off: 0
+    loc: 0
     vel: 0
     dmg: 0
     act: 0
@@ -130,7 +135,7 @@ MonoBehaviour:
     l: 0
     lay: 0
     cnt: {fileID: 0}
-  limitations:
+  lim:
     col: 1
     sol: 0.1
     tag: Untagged
@@ -142,7 +147,8 @@ MonoBehaviour:
     bound:
       m_Center: {x: 0, y: 0, z: 0}
       m_Extent: {x: 0, y: 0, z: 0}
-  meshDemolition:
+  mshDemol:
+    engTp: 0
     am: 15
     var: 50
     dpf: 0.5
@@ -150,14 +156,18 @@ MonoBehaviour:
     sd: 1
     use: 0
     cld: 1
-    cls: 0
     sim: 4
+    cnv: 0
     inp: 9
     prp:
+      rem: 1
+      dec: 0
+      slc: 0
+      cmb: 1
+      cap: 1
+      ptr: 0
       col: 0
       szF: 0
-      dec: 0
-      rem: 1
       l: 1
       lay: 0
       t: 1
@@ -169,20 +179,21 @@ MonoBehaviour:
       skp: 0
     sht: {fileID: 0}
     rotStart: {x: 0, y: 0, z: 0, w: 1}
-  clusterDemolition:
-    connectivity: 0
-    minimumArea: 0
-    minimumSize: 0
-    percentage: 0
+  clsDemol:
+    cnt: 0
+    sim: 0
+    mAr: 0
+    mSz: 0
+    pct: 0
     seed: 0
     type: 0
     ratio: 15
     units: 1
-    shardArea: 100
-    shardDemolition: 0
-    minAmount: 3
-    maxAmount: 6
-    demolishable: 1
+    sAr: 100
+    sDm: 0
+    mnAm: 3
+    mxAm: 6
+    cDm: 1
     collapse:
       type: 1
       start: 0
@@ -217,20 +228,20 @@ MonoBehaviour:
     cn: 0
     nd: 0
     am: 0
-  referenceDemolition:
-    reference: {fileID: 0}
-    randomList: []
-    action: 0
-    addRigid: 1
-    inheritScale: 1
-    inheritMaterials: 0
+  refDemol:
+    rfs: {fileID: 0}
+    rnd: []
+    act: 0
+    add: 1
+    scl: 1
+    mat: 0
   materials:
     iMat: {fileID: 0}
     oMat: {fileID: 0}
     mScl: 0.1
     uvE: 0
     uvC: {x: 0, y: 0}
-    cE: 0
+    uvR: {x: 0.75, y: 0.75}
     cC: {r: 0, g: 0, b: 0, a: 0}
   damage:
     en: 0
@@ -243,11 +254,11 @@ MonoBehaviour:
     onDemolition: 1
     onActivation: 0
     byOffset: 0
+    fadeType: 0
+    fadeTime: 5
     lifeType: 4
     lifeTime: 10
     lifeVariation: 3
-    fadeType: 0
-    fadeTime: 5
     sizeFilter: 0
     shardAmount: 5
   reset:
@@ -259,14 +270,13 @@ MonoBehaviour:
     mesh: 4
     fragments: 0
   initialized: 0
-  rfMeshes: []
   fragments: []
-  cacheRotation: {x: 0, y: 0, z: 0, w: 0}
-  transForm: {fileID: 0}
-  rootChild: {fileID: 0}
-  rootParent: {fileID: 0}
-  meshFilter: {fileID: 0}
-  meshRenderer: {fileID: 0}
+  chRot: {x: 0, y: 0, z: 0, w: 0}
+  tsf: {fileID: 0}
+  rtC: {fileID: 0}
+  rtP: {fileID: 0}
+  mFlt: {fileID: 0}
+  mRnd: {fileID: 0}
   skr: {fileID: 0}
   rest: {fileID: 0}
   sound: {fileID: 0}
@@ -280,7 +290,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4579783213449530}
   - component: {fileID: 108437905071086688}
-  m_Layer: 12
+  m_Layer: 0
   m_Name: Light
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -294,12 +304,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1384259510792060}
+  serializedVersion: 2
   m_LocalRotation: {x: 0.40821788, y: -0.23456968, z: 0.10938163, w: 0.8754261}
   m_LocalPosition: {x: -15.2336445, y: 25.73637, z: -40.18}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 4289062719471492}
-  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
 --- !u!108 &108437905071086688
 Light:
@@ -309,9 +320,8 @@ Light:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1384259510792060}
   m_Enabled: 1
-  serializedVersion: 10
+  serializedVersion: 11
   m_Type: 1
-  m_Shape: 0
   m_Color: {r: 1, g: 0.95686275, b: 0.8392157, a: 1}
   m_Intensity: 0.45
   m_Range: 10
@@ -361,8 +371,12 @@ Light:
   m_BoundingSphereOverride: {x: 0, y: 0, z: 0, w: 0}
   m_UseBoundingSphereOverride: 0
   m_UseViewFrustumForShadowCasterCull: 1
+  m_ForceVisible: 0
   m_ShadowRadius: 0
   m_ShadowAngle: 0
+  m_LightUnit: 1
+  m_LuxAtDistance: 1
+  m_EnableSpotReflector: 1
 --- !u!1 &1788529760603158
 GameObject:
   m_ObjectHideFlags: 0
@@ -373,7 +387,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4295906035236998}
   - component: {fileID: 108900794246007694}
-  m_Layer: 12
+  m_Layer: 0
   m_Name: Light (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -387,12 +401,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1788529760603158}
+  serializedVersion: 2
   m_LocalRotation: {x: 0.36599845, y: 0.45315284, z: -0.2113086, w: 0.7848862}
   m_LocalPosition: {x: -15.2336445, y: 25.73637, z: -40.18}
   m_LocalScale: {x: 1, y: 1.0000001, z: 0.99999994}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 4289062719471492}
-  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 50.000004, y: 60.000004, z: 0}
 --- !u!108 &108900794246007694
 Light:
@@ -402,9 +417,8 @@ Light:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1788529760603158}
   m_Enabled: 1
-  serializedVersion: 10
+  serializedVersion: 11
   m_Type: 1
-  m_Shape: 0
   m_Color: {r: 0.6273585, g: 0.8935312, b: 1, a: 1}
   m_Intensity: 0.1
   m_Range: 10
@@ -454,8 +468,12 @@ Light:
   m_BoundingSphereOverride: {x: 0, y: 0, z: 0, w: 0}
   m_UseBoundingSphereOverride: 0
   m_UseViewFrustumForShadowCasterCull: 1
+  m_ForceVisible: 0
   m_ShadowRadius: 0
   m_ShadowAngle: 0
+  m_LightUnit: 1
+  m_LuxAtDistance: 1
+  m_EnableSpotReflector: 1
 --- !u!1 &1809097364243088
 GameObject:
   m_ObjectHideFlags: 0
@@ -467,7 +485,7 @@ GameObject:
   - component: {fileID: 4352528364258364}
   - component: {fileID: 20430601057287236}
   - component: {fileID: 81292995858265196}
-  m_Layer: 12
+  m_Layer: 0
   m_Name: Camera
   m_TagString: MainCamera
   m_Icon: {fileID: 0}
@@ -481,12 +499,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1809097364243088}
+  serializedVersion: 2
   m_LocalRotation: {x: 0.099795856, y: -0, z: -0, w: 0.995008}
   m_LocalPosition: {x: -15.2336445, y: 35.18, z: -43.55}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 4289062719471492}
-  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 11.455001, y: 0, z: 0}
 --- !u!20 &20430601057287236
 Camera:
@@ -502,9 +521,17 @@ Camera:
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
+  m_Iso: 200
+  m_ShutterSpeed: 0.005
+  m_Aperture: 16
+  m_FocusDistance: 10
+  m_FocalLength: 50
+  m_BladeCount: 5
+  m_Curvature: {x: 2, y: 11}
+  m_BarrelClipping: 0.25
+  m_Anamorphism: 0
   m_SensorSize: {x: 36, y: 24}
   m_LensShift: {x: 0, y: 0}
-  m_FocalLength: 50
   m_NormalizedViewPortRect:
     serializedVersion: 2
     x: 0
@@ -548,7 +575,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4289062719471492}
-  m_Layer: 12
+  m_Layer: 0
   m_Name: Scene_pf
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -562,14 +589,15 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1910325183980152}
+  serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 15.2336445, y: -22.73637, z: 20.90508}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 4352528364258364}
   - {fileID: 4259816824953554}
   - {fileID: 4579783213449530}
   - {fileID: 4295906035236998}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

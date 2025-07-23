@@ -3,7 +3,7 @@ using System;
 
 namespace ScriptableValues
 {
-    [CreateAssetMenu(fileName = "Int Value", menuName = "ScriptableValues/Int")]
+    [CreateAssetMenu(fileName = "Int Value", menuName = "Scriptable Values/Int")]
     public class ScriptableIntValue : ScriptableObject
     {
         [SerializeField] private int currentValue;

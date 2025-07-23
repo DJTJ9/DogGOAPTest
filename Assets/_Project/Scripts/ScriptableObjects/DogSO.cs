@@ -50,10 +50,16 @@ public class DogSO : ScriptableObject
     public ScriptableBoolValue DogCalled;
     
     [TabGroup("Conditions"), InlineEditor(Expanded = true)]
-    public ScriptableBoolValue FoodAvailable;
+    public ScriptableBoolValue FoodBowl1Available;
     
     [TabGroup("Conditions"), InlineEditor(Expanded = true)]
-    public ScriptableBoolValue WaterAvailable;
+    public ScriptableBoolValue FoodBowl2Available;
+    
+    [TabGroup("Conditions"), InlineEditor(Expanded = true)]
+    public ScriptableBoolValue WaterBowl1Available;
+    
+    [TabGroup("Conditions"), InlineEditor(Expanded = true)]
+    public ScriptableBoolValue WaterBowl2Available;
     
     [TabGroup("Conditions"), InlineEditor(Expanded = true)]
     public ScriptableBoolValue RestingSpotAvailable;
@@ -101,7 +107,22 @@ public class DogSO : ScriptableObject
     public float RageObstacle3Costs;
     
     [TabGroup("Action Costs")]
+    public float RageObstacle4Costs;
+    
+    [TabGroup("Action Costs")]
     public float DiggingCosts;
+    
+    [TabGroup("Action Costs")]
+    public float EatAtBowl1Costs;
+    
+    [TabGroup("Action Costs")]
+    public float EatAtBowl2Costs;
+    
+    [TabGroup("Action Costs")]
+    public float DrinkAtBowl1Costs;
+    
+    [TabGroup("Action Costs")]
+    public float DrinkAtBowl2Costs;
     
     [FoldoutGroup("Action Costs Settings", expanded: false), SerializeField]
     private float defaultSleepCosts;
@@ -122,7 +143,22 @@ public class DogSO : ScriptableObject
     private float defaultObstacle3RageCosts;
     
     [FoldoutGroup("Action Costs Settings"), SerializeField]
+    private float defaultObstacle4RageCosts;
+    
+    [FoldoutGroup("Action Costs Settings"), SerializeField]
     private float defaultDiggingCosts;
+    
+    [FoldoutGroup("Action Costs Settings"), SerializeField]
+    private float defaultEatAtBowl1Costs;
+    
+    [FoldoutGroup("Action Costs Settings"), SerializeField]
+    private float defaultEatAtBowl2Costs;
+    
+    [FoldoutGroup("Action Costs Settings"), SerializeField]
+    private float defaultDrinkAtBowl1Costs;
+    
+    [FoldoutGroup("Action Costs Settings"), SerializeField]
+    private float defaultDrinkAtBowl2Costs;
     
     [TabGroup("Goal Priorities")]
     public float IdlePrio;
@@ -167,7 +203,7 @@ public class DogSO : ScriptableObject
     private float defaultFetchBallAndReturnItPrio;
     
     [TabGroup("Settings"), InlineEditor(Expanded = true), SerializeField]
-    public DogParamsSO Settings;
+    public DogSettingsSO Settings;
     
     [HideInInspector]
     public bool SeekingAttention;
@@ -190,8 +226,13 @@ public class DogSO : ScriptableObject
         SeekAttentionCosts = defaultSeekAttentionCosts;
         RageObstacle1Costs = defaultObstacle1RageCosts;
         RageObstacle2Costs = defaultObstacle2RageCosts;
-        RageObstacle3Costs = defaultObstacle3RageCosts;       
+        RageObstacle3Costs = defaultObstacle3RageCosts;
+        RageObstacle4Costs = defaultObstacle4RageCosts;
         DiggingCosts = defaultDiggingCosts;
+        EatAtBowl1Costs = defaultEatAtBowl1Costs;
+        EatAtBowl2Costs = defaultEatAtBowl2Costs;
+        DrinkAtBowl1Costs = defaultDrinkAtBowl1Costs;
+        DrinkAtBowl2Costs = defaultDrinkAtBowl2Costs;
         
         // Goal priorities settings
         IdlePrio = defaultIdlePrio;
@@ -207,19 +248,20 @@ public class DogSO : ScriptableObject
         UpdateStats();
         UpdateActionCosts();
         UpdatePriorities();
+        GetRandomFoodAndWaterLocation();
     }
 
     private void UpdateStats() {
         if (Stamina <= 0) {
-            Health -= 1f;
+            Health -= 0.1f;
             Aggression += 1f;
         }
         if (Satiety <= 0) {
-            Health -= 1f;
+            Health -= 0.1f;
             Aggression += 1f;
         }
         if (Hydration <= 0) {
-            Health -= 1f;
+            Health -= 0.1f;
             Aggression += 1f;
         }
         
@@ -237,8 +279,9 @@ public class DogSO : ScriptableObject
         SeekAttentionCosts = CalculateGoodBehaviourActionCost(defaultSeekAttentionCosts, Fun, Aggression);
         RageObstacle1Costs = CalculateBadBehaviourActionCost(defaultObstacle1RageCosts, Fun, Aggression);
         RageObstacle2Costs = CalculateBadBehaviourActionCost(defaultObstacle2RageCosts, Fun, Aggression);
-        RageObstacle3Costs = CalculateBadBehaviourActionCost(defaultObstacle3RageCosts, Fun, Aggression);       
-        DiggingCosts = CalculateBadBehaviourActionCost(defaultDiggingCosts, Fun, Aggression);       
+        RageObstacle3Costs = CalculateBadBehaviourActionCost(defaultObstacle3RageCosts, Fun, Aggression);
+        RageObstacle4Costs = CalculateBadBehaviourActionCost(defaultObstacle4RageCosts, Fun, Aggression);
+        DiggingCosts = CalculateBadBehaviourActionCost(defaultDiggingCosts, Fun, Aggression);      
     }
         
     private float CalculateGoodBehaviourActionCost(float defaultCost, float currentStatValue, float currentAggression){
@@ -262,5 +305,12 @@ public class DogSO : ScriptableObject
     private float CalculatePriorities(float defaultPriority, float currentStatValue) {
         float goalPriority = defaultPriority - (currentStatValue / 10f);
         return goalPriority;
+    }
+
+    private void GetRandomFoodAndWaterLocation() {
+        EatAtBowl1Costs = UnityEngine.Random.Range(0f, 20f);
+        EatAtBowl2Costs = UnityEngine.Random.Range(0f, 20f);
+        DrinkAtBowl1Costs = UnityEngine.Random.Range(0f, 20f);
+        DrinkAtBowl2Costs = UnityEngine.Random.Range(0f, 20f);
     }
 }

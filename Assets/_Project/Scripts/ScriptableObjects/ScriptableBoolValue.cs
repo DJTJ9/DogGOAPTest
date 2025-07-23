@@ -3,7 +3,7 @@ using System;
 
 namespace ScriptableValues
 {
-    [CreateAssetMenu(fileName = "Bool Value", menuName = "ScriptableValues/Bool")]
+    [CreateAssetMenu(fileName = "Bool Value", menuName = "Scriptable Values/Bool")]
     public class ScriptableBoolValue : ScriptableObject
     {
         [SerializeField] private bool currentValue;

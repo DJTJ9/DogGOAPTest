@@ -15,4 +15,4 @@ MonoBehaviour:
   StaminaLost: 1
   SatietyLost: 1
   HydrationLost: 1
-  FunLost: 10
+  FunLost: 1

@@ -33,14 +33,14 @@ public enum Beliefs {
     DropBall,
     
     //Global Beliefs
-    FoodIsAvailable,
-    WaterIsAvailable,
+    FoodBowl1IsAvailable,
+    WaterBowl1IsAvailable,
     RestingSpotIsAvailable,
     
     //Location Beliefs
     DogAtRestingPosition,
-    DogAtFoodBowl,
-    DogAtWaterBowl,
+    DogAtFoodBowl1,
+    DogAtWaterBowl1,
     DogAtObstacle1,
     DogAtBall,
     DogAtPlayer,
@@ -51,7 +51,12 @@ public enum Beliefs {
     DogAtPlayerWithBall,
     WaitingForBall,
     DogAtObstacle2,
-    DogAtObstacle3
+    DogAtObstacle3,
+    DogAtFoodBowl2,
+    DogAtWaterBowl2,
+    FoodBowl2IsAvailable,
+    WaterBowl2IsAvailable,
+    DogAtObstacle4
 }
 
 public enum ActionType
@@ -59,10 +64,10 @@ public enum ActionType
     Relax,
     WanderAround,
     FetchBall,
-    MoveToEatingPosition,
-    Eat,
-    MoveToDrinkingPosition,
-    Drink,
+    MoveToFoodBowl1,
+    EatAtBowl1,
+    MoveToWaterBowl1,
+    DrinkAtBowl1,
     Sleep,
     Rest,
     MoveToObstacle1,
@@ -80,5 +85,11 @@ public enum ActionType
     MoveToObstacle2,
     AttackObstacle2,
     MoveToObstacle3,
-    AttackObstacle3
+    AttackObstacle3,
+    MoveToFoodBowl2,
+    MoveToObstacle4,
+    AttackObstacle4,
+    MoveToWaterBowl2,
+    EatAtBowl2,
+    DrinkAtBowl2
 }

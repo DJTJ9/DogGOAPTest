@@ -13,10 +13,13 @@ MonoBehaviour:
   m_Name: Known Locations
   m_EditorClassIdentifier: 
   RestingPosition: {fileID: 0}
-  FoodBowl: {fileID: 0}
-  WaterBowl: {fileID: 0}
+  FoodBowl1: {fileID: 0}
+  FoodBowl2: {fileID: 0}
+  WaterBowl1: {fileID: 0}
+  WaterBowl2: {fileID: 0}
   Obstacle1: {fileID: 0}
   Obstacle2: {fileID: 0}
   Obstacle3: {fileID: 0}
+  Obstacle4: {fileID: 0}
   PlayerTransform: {fileID: 0}
   Ball: {fileID: 0}

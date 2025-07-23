@@ -4,7 +4,7 @@ using Sirenix.OdinInspector;
 
 namespace ScriptableValues
 {
-    [CreateAssetMenu(fileName = "Float Value", menuName = "ScriptableValues/Float")]
+    [CreateAssetMenu(fileName = "Float Value", menuName = "Scriptable Values/Float")]
     public class ScriptableFloatValue : ScriptableObject
     {
         [SerializeField, ProgressBar(0, 100)] private float currentValue;

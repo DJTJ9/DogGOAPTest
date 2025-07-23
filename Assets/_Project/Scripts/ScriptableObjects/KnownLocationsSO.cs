@@ -9,10 +9,16 @@ public class KnownLocationsSO : ScriptableObject
     public Transform RestingPosition;
 
     [FoldoutGroup("Known Locations"), SerializeField]
-    public Transform FoodBowl;
+    public Transform FoodBowl1;
+    
+    [FoldoutGroup("Known Locations"), SerializeField]
+    public Transform FoodBowl2;
 
     [FoldoutGroup("Known Locations"), SerializeField]
-    public Transform WaterBowl;
+    public Transform WaterBowl1;
+    
+    [FoldoutGroup("Known Locations"), SerializeField]
+    public Transform WaterBowl2;
 
     [FoldoutGroup("Known Locations"), SerializeField]
     public Transform Obstacle1;
@@ -22,6 +28,9 @@ public class KnownLocationsSO : ScriptableObject
     
     [FoldoutGroup("Known Locations"), SerializeField]
     public Transform Obstacle3;
+    
+    [FoldoutGroup("Known Locations"), SerializeField]
+    public Transform Obstacle4;
 
     [FoldoutGroup("Known Locations"), SerializeField]
     public Transform PlayerTransform;

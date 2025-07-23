@@ -3,7 +3,7 @@ using System;
 
 namespace ScriptableValues
 {
-    [CreateAssetMenu(fileName = "Vector3 Value", menuName = "ScriptableValues/Vector3")]
+    [CreateAssetMenu(fileName = "Vector3 Value", menuName = "Scriptable Values/Vector3")]
     public class ScriptableVector3Value : ScriptableObject
     {
         [SerializeField] private Vector3 currentValue;

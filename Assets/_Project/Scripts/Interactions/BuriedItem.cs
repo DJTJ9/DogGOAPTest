@@ -7,8 +7,9 @@ namespace _Project.Scripts.Interactions
     public class BuriedItem : MonoBehaviour, IDiggable
     {
         public void PopUp() {
-            transform.DOMoveY(transform.position.y + 1f, 0.5f).WaitForCompletion();
-            // transform.DOShakePosition(5f);
+            if (transform.position.y < 0f) {
+                transform.DOMoveY(transform.position.y + 1f, 0.5f).WaitForCompletion();
+            }
         }
     }
 }

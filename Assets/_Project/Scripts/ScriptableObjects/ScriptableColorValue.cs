@@ -3,7 +3,7 @@ using System;
 
 namespace ScriptableValues
 {
-    [CreateAssetMenu(fileName = "Color Value", menuName = "ScriptableValues/Color")]
+    [CreateAssetMenu(fileName = "Color Value", menuName = "Scriptable Values/Color")]
     public class ScriptableColorValue : ScriptableObject
     {
         [SerializeField] private Color currentValue;

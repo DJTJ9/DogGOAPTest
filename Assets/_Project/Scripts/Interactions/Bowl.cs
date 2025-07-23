@@ -14,10 +14,10 @@ public class Bowl : MonoBehaviour, IInteractable
     private float maxYPosition = 0f;
     
     [SerializeField]
-    private ScriptableBoolValue foodAvailable;
+    private ScriptableBoolValue foodOrWaterAvailable;
 
     private void Update() {
-        foodAvailable.Value = !(fillAmount.position.y <= minYPosition);
+        foodOrWaterAvailable.Value = !(fillAmount.position.y <= minYPosition);
     }
 
     public void Interact() {

@@ -16,12 +16,13 @@
         [SerializeField]
         private GameObject canvas;
         
-        [SerializeField]
+        // [SerializeField]
         private Camera cam;
         
         private RayfireRigid rigidComponent;
 
         private void Awake() {
+            cam = Camera.main;
             rigidComponent = GetComponent<RayfireRigid>();
         }
         

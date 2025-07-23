@@ -13,10 +13,10 @@ MonoBehaviour:
   m_Name: Golden Retrieve
   m_EditorClassIdentifier: 
   Health: 100
-  Aggression: 0
-  Stamina: 75
-  Satiety: 75
-  Hydration: 75
+  Aggression: 45
+  Stamina: 54
+  Satiety: 14
+  Hydration: 30
   Fun: 0
   StatManager: {fileID: 11400000, guid: dc99d76271051df439d8051053ea5fab, type: 2}
   BallInHand: {fileID: 11400000, guid: e218d8f69f18b5f41ace3a5559f9df96, type: 2}
@@ -26,31 +26,47 @@ MonoBehaviour:
   DropBall: {fileID: 11400000, guid: 810e767e36dcbf44e8f9554c48869278, type: 2}
   BallReturned: {fileID: 11400000, guid: 7f739333dcb45464f8e036f88c2e6778, type: 2}
   DogCalled: {fileID: 11400000, guid: f9cf31e3964376645945924f753329db, type: 2}
-  FoodAvailable: {fileID: 11400000, guid: 803a13c8ae8b6c841b5342a8d40846f3, type: 2}
-  WaterAvailable: {fileID: 11400000, guid: c1f8ca8f16cd7934087ca09b96aad924, type: 2}
+  FoodBowl1Available: {fileID: 11400000, guid: 803a13c8ae8b6c841b5342a8d40846f3, type: 2}
+  FoodBowl2Available: {fileID: 11400000, guid: a3b46f1949e83e84b946f1125cdcedd1, type: 2}
+  WaterBowl1Available: {fileID: 11400000, guid: 9be3ec88b6bf7504da730a36a8e692d0, type: 2}
+  WaterBowl2Available: {fileID: 11400000, guid: 2297d2f64ce750d45a00a8d41078989b, type: 2}
   RestingSpotAvailable: {fileID: 11400000, guid: 1a47d530a043fd1489a4e8203bf87c50, type: 2}
   ballAvailable: {fileID: 11400000, guid: 879a36c51d462174aaa998505f95f090, type: 2}
   defaultHealth: 100
-  defaultAggression: 0
+  defaultAggression: 80
   defaultStamina: 100
   defaultHunger: 100
   defaultThirst: 100
   defaultFun: 30
-  SleepCosts: 7.498186
-  RestCosts: 22.061455
-  SeekAttentionCosts: 15.851931
-  RageCosts: -0.041141868
-  DiggingCosts: 15.051988
+  SleepCosts: 14.78053
+  RestCosts: 16.795372
+  SeekAttentionCosts: 20.33698
+  RageObstacle1Costs: -4.340717
+  RageObstacle2Costs: -4.4690585
+  RageObstacle3Costs: -3.9036286
+  RageObstacle4Costs: -3.8211465
+  DiggingCosts: 11.117602
+  EatAtBowl1Costs: 16.700287
+  EatAtBowl2Costs: 12.25738
+  DrinkAtBowl1Costs: 8.796302
+  DrinkAtBowl2Costs: 11.703583
   defaultSleepCosts: 15
   defaultRestCosts: 15
   defaultSeekAttentionCosts: 15
-  defaultRageCosts: 0
+  defaultObstacle1RageCosts: 0
+  defaultObstacle2RageCosts: 0
+  defaultObstacle3RageCosts: 0
+  defaultObstacle4RageCosts: 0
   defaultDiggingCosts: 15
+  defaultEatAtBowl1Costs: 0
+  defaultEatAtBowl2Costs: 0
+  defaultDrinkAtBowl1Costs: 0
+  defaultDrinkAtBowl2Costs: 0
   IdlePrio: 1
   WanderPrio: 2
-  KeepStaminaUpPrio: 7.5
-  KeepHydrationLevelUpPrio: 7.5
-  KeepSatietyLevelUpPrio: 7.5
+  KeepStaminaUpPrio: 9.6
+  KeepHydrationLevelUpPrio: 13.6
+  KeepSatietyLevelUpPrio: 12
   KeepFunUpPrio: 15
   FetchBallAndReturnItPrio: 100
   defaultIdlePrio: 1

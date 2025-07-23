@@ -70,7 +70,7 @@ public class MoveStrategy : IActionStrategy
     public bool CanPerform => !Complete;
     public bool Complete   => agent.remainingDistance <= agent.stoppingDistance && !agent.pathPending;
 
-    public MoveStrategy(NavMeshAgent agent, Func<Vector3> destination, float stoppingDistance = 2.1f, ScriptableBoolValue boolean = null) {
+    public MoveStrategy(NavMeshAgent agent, Func<Vector3> destination, float stoppingDistance = 2.15f, ScriptableBoolValue boolean = null) {
         this.agent = agent;
         this.destination = destination;
         this.stoppingDistance = stoppingDistance;
