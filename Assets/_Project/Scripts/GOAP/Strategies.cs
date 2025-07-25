@@ -793,7 +793,7 @@ public class DropBallStrategy : IActionStrategy
 
     private DropState currentState;
 
-    public DropBallStrategy(NavMeshAgent agent, AnimationController animations, DogSO dog, Transform playerTransform, GameObject ball, float dropRange = 5f) {
+    public DropBallStrategy(NavMeshAgent agent, AnimationController animations, DogSO dog, Transform playerTransform, GameObject ball, Transform objectGrabPoint, float dropRange = 5f) {
         this.agent = agent;
         this.animations = animations;
         this.dog = dog;
@@ -805,7 +805,7 @@ public class DropBallStrategy : IActionStrategy
         dropAnimationTimer.OnTimerStart += () => {
             animations.StartDogAction(AnimationActionType.ShakeToy);
             if (ball.TryGetComponent(out ShakeBall ballShake)) {
-                ballShake.Shake();
+                ballShake.Shake(objectGrabPoint);
             }
 
             Complete = false;

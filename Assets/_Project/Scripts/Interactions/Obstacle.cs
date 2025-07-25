@@ -1,5 +1,4 @@
-﻿    using System;
-    using RayFire;
+﻿    using RayFire;
     using UnityEngine;
     using UnityEngine.UI;
 
@@ -16,7 +15,6 @@
         [SerializeField]
         private GameObject canvas;
         
-        // [SerializeField]
         private Camera cam;
         
         private RayfireRigid rigidComponent;
@@ -37,8 +35,6 @@
         
         private void LateUpdate() {
             canvas.transform.LookAt(cam.transform.position); // transform.position + cam.transform.forward
-            // Vector3 currentRotation = canvas.transform.eulerAngles;
-            // canvas.transform.eulerAngles = new Vector3(currentRotation.x, currentRotation.y, currentRotation.z);
         }
 
         public void TakeDamage(float damage) {

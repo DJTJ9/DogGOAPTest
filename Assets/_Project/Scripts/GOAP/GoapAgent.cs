@@ -83,6 +83,7 @@ public class GoapAgent : MonoBehaviour
         healthBarSlider.value = dog.Health;
 
         UpdateActionPlan();
+        HandleDeath();
     }
 
     [Button("Update Beliefs"), FoldoutGroup("Buttons"), PropertyOrder(-10)]
@@ -305,7 +306,7 @@ public class GoapAgent : MonoBehaviour
             .Build());
 
         actions.Add(new AgentAction.Builder(ActionType.DropBall)
-            .WithStrategy(new DropBallStrategy(navMeshAgent, animations, dog, knownLocations.PlayerTransform, knownLocations.Ball))
+            .WithStrategy(new DropBallStrategy(navMeshAgent, animations, dog, knownLocations.PlayerTransform, knownLocations.Ball, objectGrabPointPosition))
             .AddPrecondition(beliefs[Beliefs.ReturnBall])
             .AddEffect(beliefs[Beliefs.BallReturned])
             .Build());
@@ -356,13 +357,13 @@ public class GoapAgent : MonoBehaviour
         //     .WithDesiredEffect(beliefs[Beliefs.Attacking])
         //     .Build());
         
-        // if (thirst.Value < 10 || hunger.Value < 10) {
-        //     goals.Add(new AgentGoal.Builder(GoalType.StayAlive)
-        //         .WithPriority(goalPriorities.StayAlive)
-        //         .WithDesiredEffect(beliefs[Beliefs.DogIsNotThirsty])
-        //         .WithDesiredEffect(beliefs[Beliefs.DogIsFed])
-        //         .Build());
-        // }
+        if (dog.Satiety < 10 || dog.Hydration < 10) {
+            goals.Add(new AgentGoal.Builder(GoalType.StayAlive)
+                .WithPriority(dog.StayAlive)
+                .WithDesiredEffect(beliefs[Beliefs.DogIsNotThirsty])
+                .WithDesiredEffect(beliefs[Beliefs.DogIsNotHungry])
+                .Build());
+        }
     }
 
     void SetupTimers() {
@@ -378,12 +379,19 @@ public class GoapAgent : MonoBehaviour
         dog.UpdateDogBehaviour();
         SetupAndUpdateActions();
         SetupAndUpdateGoals();
-        
-        animations.SetAnimatorBool("Death_b", dog.Health <= 0);
     }
 
-    // bool InRangeOf(Vector3 pos, float range) => Vector3.Distance(transform.position, pos) < range;
-
+    void HandleDeath() {
+        if (dog.Health <= 0) {
+            animations.SetAnimatorBool("Death_b", true);
+            navMeshAgent.speed = 0f;
+        }
+        else {
+            animations.SetAnimatorBool("Death_b", false);
+            navMeshAgent.speed = 2.5f;
+        }
+    }
+    
     void HandleTargetChanged() {
         Debug.Log("Target changed, clearing current action and goal");
         // Force the planner to re-evaluate the plan

@@ -7,27 +7,40 @@ using UnityEngine.Serialization;
 
 public class PlayerController : MonoBehaviour
 {
-    [Header("Movement")] [SerializeField] private RigidbodyMovement rigidbodyMovement;
-    [SerializeField] private CameraRotator cameraRotator;
+    [Header("Movement")]
+    [SerializeField]
+    private RigidbodyMovement rigidbodyMovement;
 
-    [Header("Interact")] [SerializeField] private Transform mainCameraTransform;
-    [SerializeField] private Transform objectGrabPoint;
+    [SerializeField]
+    private CameraRotator cameraRotator;
+
+    [Header("Interact")]
+    [SerializeField]
+    private Transform mainCameraTransform;
+
+    [SerializeField]
+    private Transform objectGrabPoint;
+
     private GrabbableObject grabbableObject;
 
-    [Header("Input")] [SerializeField] private PlayerInput playerInput;
+    [Header("Input")]
+    [SerializeField]
+    private PlayerInput playerInput;
 
-    [Header("Settings")] [SerializeField] private float lookSensitivity = 0.15f;
+    [Header("Settings")]
+    [SerializeField]
+    private float lookSensitivity = 0.15f;
 
     [Header("Scriptable Values"), SerializeField]
     private ScriptableBoolValue ballInHand;
-    
-    [SerializeField] 
+
+    [SerializeField]
     private ScriptableBoolValue ballThrown;
-    
-    [SerializeField] 
+
+    [SerializeField]
     private ScriptableBoolValue ballReturned;
-    
-    [SerializeField] 
+
+    [SerializeField]
     private ScriptableBoolValue dogCalled;
     //
     // [SerializeField] 
@@ -70,7 +83,7 @@ public class PlayerController : MonoBehaviour
     /// Rotates the rigidbody horizontally if cursor lock mode is locked.
     /// </summary>
     private void Update() {
-        if (Mouse.current.leftButton.wasPressedThisFrame) Cursor.lockState = CursorLockMode.Locked;
+        if (Mouse.current.rightButton.wasPressedThisFrame) Cursor.lockState = CursorLockMode.Locked;
         if (Keyboard.current.escapeKey.wasPressedThisFrame) Cursor.lockState = CursorLockMode.None;
 
 
@@ -167,7 +180,7 @@ public class PlayerController : MonoBehaviour
             }
         }
     }
-    
+
     private void OnDemolishInput(InputAction.CallbackContext context) {
         if (context.phase == InputActionPhase.Started) {
             if (Physics.Raycast(mainCameraTransform.position, mainCameraTransform.forward, out RaycastHit raycastHit, interactionDistance)) {
@@ -178,7 +191,7 @@ public class PlayerController : MonoBehaviour
             }
         }
     }
-    
+
     private void OnGrabInput(InputAction.CallbackContext context) {
         if (context.phase == InputActionPhase.Started)
             if (grabbableObject == null) {
@@ -186,6 +199,7 @@ public class PlayerController : MonoBehaviour
                         out RaycastHit raycastHit, interactionDistance)) {
                     if (raycastHit.transform.TryGetComponent(out GrabbableObject grabbableObj)) {
                         grabbableObj.Grab(objectGrabPoint);
+                        grabbableObj.objectPossessed = true;
                         grabbableObject = grabbableObj;
                         ballThrown.Value = false;
                         ballInHand.Value = true;
@@ -198,6 +212,7 @@ public class PlayerController : MonoBehaviour
     private void OnDropInput(InputAction.CallbackContext context) {
         if (context.phase == InputActionPhase.Started) {
             grabbableObject.Drop();
+            grabbableObject.objectPossessed = false;
             grabbableObject = null;
             ballInHand.Value = false;
             ballReturned.Value = true;
@@ -206,9 +221,10 @@ public class PlayerController : MonoBehaviour
 
     private void OnThrowInput(InputAction.CallbackContext context) {
         if (grabbableObject == null) return;
-        
+
         if (context.phase == InputActionPhase.Started) {
             grabbableObject.Throw(mainCameraTransform.forward);
+            grabbableObject.objectPossessed = false;
             grabbableObject = null;
             ballThrown.Value = true;
             ballInHand.Value = false;

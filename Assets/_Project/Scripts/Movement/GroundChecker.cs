@@ -6,7 +6,7 @@ public class GroundChecker : MonoBehaviour {
     [Header("Settings")]
     public LayerMask GroundCheckLayerMask;
     public Vector3 GroundCheckPosition;
-    public Vector3 GroundCheckSize;
+    public Vector3 GroundCheckSize = new Vector3(0.7f, 0.2f, 0.7f);
 
     [field: SerializeField]
     public bool isGrounded { get; private set; }

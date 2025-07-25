@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using UnityEngine;
-using ImprovedTimers;
-using Unity.VisualScripting;
-using UnityEngine.Serialization;
 using UnityEngine.UI;
 using DG.Tweening;
 
@@ -40,8 +36,6 @@ public class DogStatus : MonoBehaviour
 
     private void LateUpdate() {
         canvas.transform.LookAt(cam.transform.position); // transform.position + cam.transform.forward
-        // Vector3 currentRotation = canvas.transform.eulerAngles;
-        // canvas.transform.eulerAngles = new Vector3(currentRotation.x, currentRotation.y, currentRotation.z);
     }
 
     public IEnumerator ShowStatus() {
@@ -79,8 +73,4 @@ public class DogStatus : MonoBehaviour
         healthBar.SetActive(true);       
         Debug.Log("Tween finished!");
     }
-
-    // public void Interact() {
-    //     StartCoroutine(ShowStatus());
-    // }
 }

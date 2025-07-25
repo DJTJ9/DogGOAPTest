@@ -181,6 +181,9 @@ public class DogSO : ScriptableObject
     [TabGroup("Goal Priorities")]
     public float FetchBallAndReturnItPrio;
     
+    [TabGroup("Goal Priorities")]
+    public float StayAlive;
+    
     [FoldoutGroup("Goal Priorities Settings", expanded: false), SerializeField]
     private float defaultIdlePrio;
     
@@ -201,6 +204,9 @@ public class DogSO : ScriptableObject
     
     [FoldoutGroup("Goal Priorities Settings"), SerializeField]
     private float defaultFetchBallAndReturnItPrio;
+    
+    [FoldoutGroup("Goal Priorities Settings"), SerializeField]
+    private float defaultStayAlive;
     
     [TabGroup("Settings"), InlineEditor(Expanded = true), SerializeField]
     public DogSettingsSO Settings;
@@ -242,6 +248,7 @@ public class DogSO : ScriptableObject
         KeepSatietyLevelUpPrio = defaultKeepSatietyLevelUpPrio;
         KeepFunUpPrio = defaultKeepFunUpPrio;
         FetchBallAndReturnItPrio = defaultFetchBallAndReturnItPrio;
+        StayAlive = defaultStayAlive;
     }
 
     public void UpdateDogBehaviour() {

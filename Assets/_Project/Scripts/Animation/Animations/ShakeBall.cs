@@ -10,8 +10,8 @@ public class ShakeBall : MonoBehaviour
     [SerializeField]
     private float shakeDuration = 6f;
 
-    [SerializeField]
-    private Transform objectGrabPoint;
+    // [SerializeField]
+    // private Transform objectGrabPoint;
 
     [SerializeField]
     private Transform ballTransform; // Das Transform, das geschüttelt werden soll
@@ -20,21 +20,26 @@ public class ShakeBall : MonoBehaviour
     private AnimationCurve shakeCurve;
 
     private Vector3 originalPosition;
+    
+    private bool isShaking;
 
     private void Awake() {
-        // Falls ballTransform nicht in Inspector gesetzt wurde, versuchen wir es zu finden
-        if (ballTransform == null) {
-            // Suchen nach einem Kind-GameObject mit dem Tag "Ball" oder ähnlichem
-            // oder verwende objectGrabPoint selbst als Fallback
-            ballTransform = objectGrabPoint;
-        }
+        // // Falls ballTransform nicht in Inspector gesetzt wurde, versuchen wir es zu finden
+        // if (ballTransform == null) {
+        //     // Suchen nach einem Kind-GameObject mit dem Tag "Ball" oder ähnlichem
+        //     // oder verwende objectGrabPoint selbst als Fallback
+        //     ballTransform = objectGrabPoint;
+        // }
     }
 
-    public void Shake() {
-        StartCoroutine(ShakeCoroutine());
+    public void Shake(Transform objectGrabPoint) {
+        StartCoroutine(ShakeCoroutine(objectGrabPoint));
     }
 
-    private IEnumerator ShakeCoroutine() {
+    private IEnumerator ShakeCoroutine(Transform objectGrabPoint) {
+        if (isShaking) yield break;
+        isShaking = true;
+        
         // Warte 2 Sekunden bevor die Animation startet
         yield return new WaitForSeconds(1f);
 
@@ -52,6 +57,8 @@ public class ShakeBall : MonoBehaviour
         Tween shakeTween = ballTransform.DOShakePosition(shakeDuration, shakeStrength).SetEase(shakeCurve);
         // Warte bis die Animation abgeschlossen ist
         yield return shakeTween.WaitForCompletion();
+        
+        isShaking = false;
         //
         // Tween moveBack = ballTransform.DOMove(originalPosition, 0.2f);
         // yield return moveBack.WaitForCompletion();
