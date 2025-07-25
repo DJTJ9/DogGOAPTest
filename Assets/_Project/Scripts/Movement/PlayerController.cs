@@ -232,6 +232,13 @@ public class PlayerController : MonoBehaviour
     }
 
     private void OnCallDogInput(InputAction.CallbackContext context) {
+        if (context.phase == InputActionPhase.Started) {
+            if (Physics.Raycast(mainCameraTransform.position, mainCameraTransform.forward, out RaycastHit raycastHit, 15f)) {
+                if (raycastHit.transform.TryGetComponent(out ICommandable commandable)) {
+                    commandable.ExecuteCommand();
+                }
+            }
+        }
         dogCalled.Value = !dogCalled.Value;
     }
 

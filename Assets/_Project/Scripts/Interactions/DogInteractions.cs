@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class DogInteractions : MonoBehaviour, IInteractable
+public class DogInteractions : MonoBehaviour, IInteractable, ICommandable
 {
     [SerializeField]
     private DogSO dog;
@@ -18,5 +18,9 @@ public class DogInteractions : MonoBehaviour, IInteractable
             dog.Satiety += 20f;
         }
         else StartCoroutine(dogStatus.ShowStatus());
+    }
+
+    public void ExecuteCommand() {
+        dog.DogCalled = !dog.DogCalled;
     }
 }

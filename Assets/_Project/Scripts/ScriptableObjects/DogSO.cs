@@ -46,8 +46,8 @@ public class DogSO : ScriptableObject
     [TabGroup("Conditions"), InlineEditor(Expanded = true)]
     public ScriptableBoolValue BallReturned;
     
-    [TabGroup("Conditions"), InlineEditor(Expanded = true)]
-    public ScriptableBoolValue DogCalled;
+    [TabGroup("Conditions")]
+    public bool DogCalled;
     
     [TabGroup("Conditions"), InlineEditor(Expanded = true)]
     public ScriptableBoolValue FoodBowl1Available;

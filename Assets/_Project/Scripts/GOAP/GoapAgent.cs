@@ -111,6 +111,8 @@ public class GoapAgent : MonoBehaviour
         factory.AddBelief(Beliefs.ReturnBall, () => dog.ReturnBall);
         factory.AddBelief(Beliefs.BallReturned, () => dog.BallReturned);
         factory.AddBelief(Beliefs.DropBall, () => true);
+        factory.AddBelief(Beliefs.DogCalled, () => !dog.DogCalled);
+        factory.AddBelief(Beliefs.FollowCommand, () => false);
         
         factory.AddBelief(Beliefs.FoodBowl1IsAvailable, () => dog.FoodBowl1Available);
         factory.AddBelief(Beliefs.FoodBowl2IsAvailable, () => dog.FoodBowl2Available);
@@ -299,6 +301,12 @@ public class GoapAgent : MonoBehaviour
             .AddEffect(beliefs[Beliefs.DogIsHappy])
             .Build());
 
+        actions.Add(new AgentAction.Builder(ActionType.ComeToPlayer)
+            .WithStrategy(new MoveStrategy(navMeshAgent, () => knownLocations.PlayerTransform.position, 3.0f))
+            .AddPrecondition(beliefs[Beliefs.DogCalled])
+            .AddEffect(beliefs[Beliefs.FollowCommand])
+            .Build());
+        
         actions.Add(new AgentAction.Builder(ActionType.PickUpBall)
             .WithStrategy(new PickUpBallStrategy(navMeshAgent, animations, knownLocations.Ball, objectGrabPointPosition, dog))
             .AddPrecondition(beliefs[Beliefs.BallThrown])
@@ -341,10 +349,9 @@ public class GoapAgent : MonoBehaviour
             .WithDesiredEffect(beliefs[Beliefs.DogIsRested])
             .Build());
 
-
         goals.Add(new AgentGoal.Builder(GoalType.KeepBoredomLow)
             .WithPriority(dog.KeepFunUpPrio)
-            .WithDesiredEffect(beliefs[Beliefs.DogIsHappy])
+            .WithDesiredEffect(beliefs[Beliefs.BallReturned])
             .Build());
 
         goals.Add(new AgentGoal.Builder(GoalType.FetchBallAndReturnIt)
@@ -352,10 +359,10 @@ public class GoapAgent : MonoBehaviour
             .WithDesiredEffect(beliefs[Beliefs.BallReturned])
             .Build());
 
-        // goals.Add(new AgentGoal.Builder(GoalType.Attack)
-        //     .WithPriority(3)
-        //     .WithDesiredEffect(beliefs[Beliefs.Attacking])
-        //     .Build());
+        goals.Add(new AgentGoal.Builder(GoalType.FollowCommand)
+            .WithPriority(200)
+            .WithDesiredEffect(beliefs[Beliefs.FollowCommand])
+            .Build());
         
         if (dog.Satiety < 10 || dog.Hydration < 10) {
             goals.Add(new AgentGoal.Builder(GoalType.StayAlive)

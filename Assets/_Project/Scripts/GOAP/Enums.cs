@@ -8,7 +8,8 @@
     Attack,
     KeepBoredomLow,
     FetchBallAndReturnIt,
-    StayAlive
+    StayAlive,
+    FollowCommand
 }
 
 public enum Beliefs {
@@ -56,7 +57,9 @@ public enum Beliefs {
     DogAtWaterBowl2,
     FoodBowl2IsAvailable,
     WaterBowl2IsAvailable,
-    DogAtObstacle4
+    DogAtObstacle4,
+    DogCalled,
+    FollowCommand
 }
 
 public enum ActionType
@@ -91,5 +94,6 @@ public enum ActionType
     AttackObstacle4,
     MoveToWaterBowl2,
     EatAtBowl2,
-    DrinkAtBowl2
+    DrinkAtBowl2,
+    ComeToPlayer
 }
