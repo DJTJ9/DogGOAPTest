@@ -15,6 +15,7 @@ MonoBehaviour:
   sceneDatas_byGuid:
     keys:
     - 99c9720ab356a0642a771bea13969a05
+    - 4d2b1fcf8f2e55a449a6189fdb311a88
     values:
     - goDatas_byGlobalId:
         keys:
@@ -174,6 +175,18 @@ MonoBehaviour:
           iconNameOrGuid: 
         - colorIndex: 3
           iconNameOrGuid: 
+        - colorIndex: 3
+          iconNameOrGuid: 
+        - colorIndex: 3
+          iconNameOrGuid: 
+    - goDatas_byGlobalId:
+        keys:
+        - globalObjectIdString: GlobalObjectId_V1-2-4d2b1fcf8f2e55a449a6189fdb311a88-2165897127812276694-1173193305
+        - globalObjectIdString: GlobalObjectId_V1-2-4d2b1fcf8f2e55a449a6189fdb311a88-7256540064770274728-29103242
+        - globalObjectIdString: GlobalObjectId_V1-2-4d2b1fcf8f2e55a449a6189fdb311a88-897602532-0
+        values:
+        - colorIndex: 4
+          iconNameOrGuid: AvatarMask On Icon
         - colorIndex: 3
           iconNameOrGuid: 
         - colorIndex: 3

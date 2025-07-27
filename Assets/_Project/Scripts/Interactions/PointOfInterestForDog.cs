@@ -1,4 +1,6 @@
-﻿public class PointOfInterestForDog : MonoBehaviour
+﻿using UnityEngine;
+
+public class PointOfInterestForDog : MonoBehaviour
 {
     
 }

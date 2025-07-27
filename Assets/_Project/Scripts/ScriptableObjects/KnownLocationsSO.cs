@@ -5,8 +5,11 @@ using Sirenix.OdinInspector;
 [CreateAssetMenu(fileName = "Known Locations", menuName = "Scriptable Objects/Known Locations")]
 public class KnownLocationsSO : ScriptableObject
 {
-    [FoldoutGroup("Known Locations", expanded: true), SerializeField]
-    public Transform RestingPosition;
+    [FoldoutGroup("Known Locations"), SerializeField]
+    public Transform PlayerTransform;
+
+    [FoldoutGroup("Known Locations"), SerializeField]
+    public GameObject Ball;
 
     [FoldoutGroup("Known Locations"), SerializeField]
     public Transform FoodBowl1;
@@ -20,6 +23,9 @@ public class KnownLocationsSO : ScriptableObject
     [FoldoutGroup("Known Locations"), SerializeField]
     public Transform WaterBowl2;
 
+    [FoldoutGroup("Known Locations", expanded: true), SerializeField]
+    public Transform RestingPosition;
+    
     [FoldoutGroup("Known Locations"), SerializeField]
     public Transform Obstacle1;
     
@@ -31,10 +37,4 @@ public class KnownLocationsSO : ScriptableObject
     
     [FoldoutGroup("Known Locations"), SerializeField]
     public Transform Obstacle4;
-
-    [FoldoutGroup("Known Locations"), SerializeField]
-    public Transform PlayerTransform;
-
-    [FoldoutGroup("Known Locations"), SerializeField]
-    public GameObject Ball;
 }

@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1e330bb137894be18352d2ec24d3f243, type: 3}
   m_Name: Dog Settings
   m_EditorClassIdentifier: 
-  stoppingDistance: 2
-  playerInRangeDistance: 5
-  wanderRadius: 20
-  pickUpDistance: 2
-  restingDuration: 5
+  stoppingDistance: 2.1
+  playerInRangeDistance: 3
+  wanderRadius: 10
+  pickUpDistance: 2.1
+  restingDuration: 10

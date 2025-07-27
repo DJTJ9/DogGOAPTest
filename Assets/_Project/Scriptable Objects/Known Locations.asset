@@ -12,14 +12,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3151b620401a4d6385cae858101a152e, type: 3}
   m_Name: Known Locations
   m_EditorClassIdentifier: 
-  RestingPosition: {fileID: 0}
+  PlayerTransform: {fileID: 0}
+  Ball: {fileID: 0}
   FoodBowl1: {fileID: 0}
   FoodBowl2: {fileID: 0}
   WaterBowl1: {fileID: 0}
   WaterBowl2: {fileID: 0}
+  RestingPosition: {fileID: 0}
   Obstacle1: {fileID: 0}
   Obstacle2: {fileID: 0}
   Obstacle3: {fileID: 0}
   Obstacle4: {fileID: 0}
-  PlayerTransform: {fileID: 0}
-  Ball: {fileID: 0}

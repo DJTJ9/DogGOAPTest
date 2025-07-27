@@ -12,11 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e8e5514dffb34874841d134ee94c6d9a, type: 3}
   m_Name: Husky
   m_EditorClassIdentifier: 
-  Health: 95.900215
-  Aggression: 85
-  Stamina: 32
-  Satiety: 49
-  Hydration: 21
+  Health: 100
+  Aggression: 0
+  Stamina: 34
+  Satiety: 15
+  Hydration: 77
   Fun: 0
   StatManager: {fileID: 11400000, guid: dc99d76271051df439d8051053ea5fab, type: 2}
   BallInHand: {fileID: 11400000, guid: e218d8f69f18b5f41ace3a5559f9df96, type: 2}
@@ -38,18 +38,18 @@ MonoBehaviour:
   defaultHunger: 80
   defaultThirst: 30
   defaultFun: 0
-  SleepCosts: 20.18125
-  RestCosts: 10.632199
-  SeekAttentionCosts: 22.517136
-  RageObstacle1Costs: -8.1612015
-  RageObstacle2Costs: -9.326249
-  RageObstacle3Costs: -8.137051
-  RageObstacle4Costs: -7.6715927
-  DiggingCosts: 6.789037
-  EatAtBowl1Costs: 1.3877869
-  EatAtBowl2Costs: 5.1090136
-  DrinkAtBowl1Costs: 7.0361605
-  DrinkAtBowl2Costs: 15.149614
+  SleepCosts: 11.092825
+  RestCosts: 18.34972
+  SeekAttentionCosts: 14.239122
+  RageObstacle1Costs: 0.7508104
+  RageObstacle2Costs: -0.2218746
+  RageObstacle3Costs: 0.64696646
+  RageObstacle4Costs: -0.11707437
+  DiggingCosts: 14.463516
+  EatAtBowl1Costs: 18.492527
+  EatAtBowl2Costs: 19.511158
+  DrinkAtBowl1Costs: 6.5231504
+  DrinkAtBowl2Costs: 3.1012487
   defaultSleepCosts: 15
   defaultRestCosts: 15
   defaultSeekAttentionCosts: 15
@@ -64,9 +64,9 @@ MonoBehaviour:
   defaultDrinkAtBowl2Costs: 0
   IdlePrio: 1
   WanderPrio: 2
-  KeepStaminaUpPrio: 11.8
-  KeepHydrationLevelUpPrio: 10.1
-  KeepSatietyLevelUpPrio: 12.9
+  KeepStaminaUpPrio: 11.6
+  KeepHydrationLevelUpPrio: 13.5
+  KeepSatietyLevelUpPrio: 7.3
   KeepFunUpPrio: 15
   FetchBallAndReturnItPrio: 50
   StayAlive: 100
