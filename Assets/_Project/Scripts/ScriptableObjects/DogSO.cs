@@ -25,6 +25,9 @@ public class DogSO : ScriptableObject
     [TabGroup("Stats")]
     public float Fun;
     
+    [TabGroup("Stats")]
+    public int Dominance;
+    
     [TabGroup("Stat Manager")]
     public StatManager StatManager;
     
@@ -85,8 +88,11 @@ public class DogSO : ScriptableObject
     [FoldoutGroup("Stats Settings", expanded: false), SerializeField]
     private float defaultFun;
     
-    // [TabGroup("Action Costs"), FoldoutGroup("GOAP Settings", expanded: false), InlineEditor, SerializeField]
-    // private ActionCostsSO actionCosts;
+    [FoldoutGroup("Stats Settings", expanded: false), SerializeField]
+    private int defaultDominance;
+    
+    [FoldoutGroup("Stats Settings", expanded: false), SerializeField]
+    private bool defaultDogCalled;
 
     [TabGroup("Action Costs")]
     public float SleepCosts;
@@ -225,6 +231,10 @@ public class DogSO : ScriptableObject
         Satiety = defaultHunger;
         Hydration = defaultThirst;
         Fun = defaultFun;
+        Dominance = defaultDominance;
+        
+        // Conditions settings
+        DogCalled = defaultDogCalled;
 
         // Action costs settings
         SleepCosts = defaultSleepCosts;

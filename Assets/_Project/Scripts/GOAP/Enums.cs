@@ -59,7 +59,8 @@ public enum Beliefs {
     WaterBowl2IsAvailable,
     DogAtObstacle4,
     DogCalled,
-    FollowCommand
+    FollowCommand,
+    FollowPlayer
 }
 
 public enum ActionType
@@ -95,5 +96,6 @@ public enum ActionType
     MoveToWaterBowl2,
     EatAtBowl2,
     DrinkAtBowl2,
-    ComeToPlayer
+    ComeToPlayer,
+    WaitForAction
 }

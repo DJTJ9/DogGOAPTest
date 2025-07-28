@@ -133,7 +133,7 @@ public class PlayerController : MonoBehaviour
 
         interactionInputAction = playerInput.actions["Interact"];
         interactionInputAction.started += OnInteractInput;
-        interactionInputAction.started += OnDemolishInput;
+        interactionInputAction.started += OnRepairInput;
         interactionInputAction.started += OnGrabInput;
 
         dropInputAction = playerInput.actions["Drop"];
@@ -181,11 +181,11 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    private void OnDemolishInput(InputAction.CallbackContext context) {
+    private void OnRepairInput(InputAction.CallbackContext context) {
         if (context.phase == InputActionPhase.Started) {
             if (Physics.Raycast(mainCameraTransform.position, mainCameraTransform.forward, out RaycastHit raycastHit, interactionDistance)) {
                 if (raycastHit.transform.TryGetComponent(out IDamagable damagable)) {
-                    damagable.TakeDamage(20f);
+                    damagable.TakeDamage(-20f);
                     Debug.Log($"Player demolished {damagable.GetType().Name}");
                 }
             }

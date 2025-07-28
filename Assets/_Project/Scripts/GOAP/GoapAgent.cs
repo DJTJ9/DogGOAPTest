@@ -30,6 +30,12 @@ public class GoapAgent : MonoBehaviour
     
     [FoldoutGroup("Transforms"), SerializeField]
     private Transform diggingRayCastPosition;
+    
+    [FoldoutGroup("Transforms"), SerializeField]
+    private Transform lookAtTarget;
+    
+    [FoldoutGroup("Colliders"), SerializeField]
+    private SphereCollider lookAtTrigger;
 
     [FoldoutGroup("Health Bar", expanded: false), SerializeField]
     private Slider healthBarSlider;
@@ -75,6 +81,7 @@ public class GoapAgent : MonoBehaviour
         SetupBeliefs();
         SetupAndUpdateActions();
         SetupAndUpdateGoals();
+        SetDominance(dog.Dominance);
     }
     
     void Update() {
@@ -100,7 +107,7 @@ public class GoapAgent : MonoBehaviour
         factory.AddBelief(Beliefs.DogIsNotHungry, () => dog.Satiety >= 70);
         factory.AddBelief(Beliefs.DogIsThirsty, () => dog.Hydration < 30);
         factory.AddBelief(Beliefs.DogIsNotThirsty, () => dog.Hydration >= 70);
-        factory.AddBelief(Beliefs.DogIsHappy, () => dog.Fun >= 30);
+        factory.AddBelief(Beliefs.DogIsHappy, () => dog.Fun >= 70);
         factory.AddBelief(Beliefs.DogIsBored, () => dog.Fun < 30);
         ;
         factory.AddBelief(Beliefs.BallInHand, () => dog.BallInHand);
@@ -110,8 +117,9 @@ public class GoapAgent : MonoBehaviour
         factory.AddBelief(Beliefs.BallThrown, () => dog.BallThrown);
         factory.AddBelief(Beliefs.ReturnBall, () => dog.ReturnBall);
         factory.AddBelief(Beliefs.BallReturned, () => dog.BallReturned);
-        factory.AddBelief(Beliefs.DropBall, () => true);
-        factory.AddBelief(Beliefs.DogCalled, () => !dog.DogCalled);
+        factory.AddBelief(Beliefs.DropBall, () => false);
+        factory.AddBelief(Beliefs.DogCalled, () => dog.DogCalled);
+        factory.AddBelief(Beliefs.FollowPlayer, () => false);
         factory.AddBelief(Beliefs.FollowCommand, () => false);
         
         factory.AddBelief(Beliefs.FoodBowl1IsAvailable, () => dog.FoodBowl1Available);
@@ -121,11 +129,11 @@ public class GoapAgent : MonoBehaviour
         factory.AddBelief(Beliefs.RestingSpotIsAvailable, () => dog.RestingSpotAvailable);
 
         factory.AddLocationBelief(Beliefs.DogAtRestingPosition, 3f, knownLocations.RestingPosition);
-        factory.AddLocationBelief(Beliefs.DogAtFoodBowl1, 2.2f, knownLocations.FoodBowl1);
-        factory.AddLocationBelief(Beliefs.DogAtFoodBowl2, 2.2f, knownLocations.FoodBowl2);
-        factory.AddLocationBelief(Beliefs.DogAtWaterBowl1, 2.2f, knownLocations.WaterBowl1);
-        factory.AddLocationBelief(Beliefs.DogAtWaterBowl2, 2.2f, knownLocations.WaterBowl2);
-        factory.AddLocationBelief(Beliefs.DogAtObstacle1, 2.2f, knownLocations.Obstacle1);
+        factory.AddLocationBelief(Beliefs.DogAtFoodBowl1, 2.3f, knownLocations.FoodBowl1);
+        factory.AddLocationBelief(Beliefs.DogAtFoodBowl2, 2.3f, knownLocations.FoodBowl2);
+        factory.AddLocationBelief(Beliefs.DogAtWaterBowl1, 2.3f, knownLocations.WaterBowl1);
+        factory.AddLocationBelief(Beliefs.DogAtWaterBowl2, 2.3f, knownLocations.WaterBowl2);
+        factory.AddLocationBelief(Beliefs.DogAtObstacle1, 2.3f, knownLocations.Obstacle1);
         factory.AddLocationBelief(Beliefs.DogAtObstacle2, 2.2f, knownLocations.Obstacle2);
         factory.AddLocationBelief(Beliefs.DogAtObstacle3, 2.2f, knownLocations.Obstacle3);
         factory.AddLocationBelief(Beliefs.DogAtObstacle4, 2.2f, knownLocations.Obstacle4);
@@ -162,7 +170,7 @@ public class GoapAgent : MonoBehaviour
 
         actions.Add(new AgentAction.Builder(ActionType.EatAtBowl1)
             .WithCost(dog.EatAtBowl1Costs)
-            .WithStrategy(new EatStrategy(animations, knownLocations.FoodBowl1, dog))
+            .WithStrategy(new EatStrategy(animations, knownLocations.FoodBowl1, dog, lookAtTrigger, lookAtTarget))
             .AddPrecondition(beliefs[Beliefs.FoodBowl1IsAvailable])
             .AddPrecondition(beliefs[Beliefs.DogAtFoodBowl1])
             .AddPrecondition(beliefs[Beliefs.DogIsHungry])
@@ -176,7 +184,7 @@ public class GoapAgent : MonoBehaviour
 
         actions.Add(new AgentAction.Builder(ActionType.EatAtBowl2)
             .WithCost(dog.EatAtBowl2Costs)
-            .WithStrategy(new EatStrategy(animations, knownLocations.FoodBowl2, dog))
+            .WithStrategy(new EatStrategy(animations, knownLocations.FoodBowl2, dog, lookAtTrigger, lookAtTarget))
             .AddPrecondition(beliefs[Beliefs.FoodBowl2IsAvailable])
             .AddPrecondition(beliefs[Beliefs.DogAtFoodBowl2])
             .AddPrecondition(beliefs[Beliefs.DogIsHungry])
@@ -190,7 +198,7 @@ public class GoapAgent : MonoBehaviour
 
         actions.Add(new AgentAction.Builder(ActionType.DrinkAtBowl1)
             .WithCost(dog.DrinkAtBowl1Costs)
-            .WithStrategy(new DrinkStrategy(animations, knownLocations.WaterBowl1, dog))
+            .WithStrategy(new DrinkStrategy(animations, knownLocations.WaterBowl1, dog, lookAtTrigger))
             .AddPrecondition(beliefs[Beliefs.WaterBowl1IsAvailable])
             .AddPrecondition(beliefs[Beliefs.DogAtWaterBowl1])
             .AddPrecondition(beliefs[Beliefs.DogIsThirsty])
@@ -204,7 +212,7 @@ public class GoapAgent : MonoBehaviour
 
         actions.Add(new AgentAction.Builder(ActionType.DrinkAtBowl2)
             .WithCost(dog.DrinkAtBowl2Costs)
-            .WithStrategy(new DrinkStrategy(animations, knownLocations.WaterBowl2, dog))
+            .WithStrategy(new DrinkStrategy(animations, knownLocations.WaterBowl2, dog, lookAtTrigger))
             .AddPrecondition(beliefs[Beliefs.WaterBowl2IsAvailable])
             .AddPrecondition(beliefs[Beliefs.DogAtWaterBowl2])
             .AddPrecondition(beliefs[Beliefs.DogIsThirsty])
@@ -213,7 +221,7 @@ public class GoapAgent : MonoBehaviour
 
         actions.Add(new AgentAction.Builder(ActionType.Sleep)
             .WithCost(dog.SleepCosts)
-            .WithStrategy(new SleepAndWaitStrategy(animations, dog))
+            .WithStrategy(new SleepAndWaitStrategy(animations, dog, lookAtTrigger))
             .AddPrecondition(beliefs[Beliefs.RestingSpotIsAvailable])
             .AddPrecondition(beliefs[Beliefs.DogAtRestingPosition])
             .AddPrecondition(beliefs[Beliefs.DogIsExhausted])
@@ -301,8 +309,15 @@ public class GoapAgent : MonoBehaviour
             .AddEffect(beliefs[Beliefs.DogIsHappy])
             .Build());
 
-        actions.Add(new AgentAction.Builder(ActionType.ComeToPlayer)
-            .WithStrategy(new MoveStrategy(navMeshAgent, () => knownLocations.PlayerTransform.position, 3.0f))
+        // actions.Add(new AgentAction.Builder(ActionType.ComeToPlayer)
+        //     .WithStrategy(new MoveStrategy(navMeshAgent, () => knownLocations.PlayerTransform.position, 6.0f))
+        //     .AddPrecondition(beliefs[Beliefs.DogCalled])
+        //     .AddEffect(beliefs[Beliefs.FollowPlayer])
+        //     .Build());
+
+        actions.Add(new AgentAction.Builder(ActionType.WaitForAction)
+            .WithStrategy(new WaitForActionStrategy(navMeshAgent, animations, dog, knownLocations.PlayerTransform))
+            // .AddPrecondition(beliefs[Beliefs.FollowPlayer])
             .AddPrecondition(beliefs[Beliefs.DogCalled])
             .AddEffect(beliefs[Beliefs.FollowCommand])
             .Build());
@@ -351,7 +366,7 @@ public class GoapAgent : MonoBehaviour
 
         goals.Add(new AgentGoal.Builder(GoalType.KeepBoredomLow)
             .WithPriority(dog.KeepFunUpPrio)
-            .WithDesiredEffect(beliefs[Beliefs.BallReturned])
+            .WithDesiredEffect(beliefs[Beliefs.DogIsHappy])
             .Build());
 
         goals.Add(new AgentGoal.Builder(GoalType.FetchBallAndReturnIt)
@@ -386,6 +401,10 @@ public class GoapAgent : MonoBehaviour
         dog.UpdateDogBehaviour();
         SetupAndUpdateActions();
         SetupAndUpdateGoals();
+    }
+
+    void SetDominance(int dominance) {
+        navMeshAgent.avoidancePriority = dominance;
     }
 
     void HandleDeath() {

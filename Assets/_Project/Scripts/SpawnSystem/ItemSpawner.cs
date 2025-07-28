@@ -25,7 +25,8 @@ public class ItemSpawner : MonoBehaviour
         for (float x = negativeMaxPosition.x; x < positiveMaxPosition.x; x += distanceBetweenItems) {
             for (float z = negativeMaxPosition.z; z < positiveMaxPosition.z; z += distanceBetweenItems) {
                 if (Random.Range(0f, 1f) <= spawnChance) {
-                    Instantiate(items[Random.Range(0, items.Length)], new Vector3(x, -1, z), Quaternion.identity);
+                    Quaternion rotation = Quaternion.Euler(0f, Random.Range(0f, 360f), 0f);
+                    Instantiate(items[Random.Range(0, items.Length)], new Vector3(x, -1, z), rotation);
                 }
             }
         }
