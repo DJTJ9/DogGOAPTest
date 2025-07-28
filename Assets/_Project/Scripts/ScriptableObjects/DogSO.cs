@@ -217,6 +217,9 @@ public class DogSO : ScriptableObject
     [TabGroup("Settings"), InlineEditor(Expanded = true), SerializeField]
     public DogSettingsSO Settings;
     
+    [TabGroup("Settings"), SerializeField]
+    public float StoppingDistance;
+    
     [HideInInspector]
     public bool SeekingAttention;
 

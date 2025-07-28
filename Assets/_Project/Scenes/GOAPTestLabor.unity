@@ -124,6 +124,11 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 3886689881687488122, guid: a694ab454aae5ef4293a0ccfaa1295fc, type: 3}
   m_PrefabInstance: {fileID: 1032782614}
   m_PrefabAsset: {fileID: 0}
+--- !u!195 &30755477 stripped
+NavMeshAgent:
+  m_CorrespondingSourceObject: {fileID: 1833712233885600150, guid: a25416aef927dcd45b69c5ee79f52ebf, type: 3}
+  m_PrefabInstance: {fileID: 3192548455436608554}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &36755696 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3886689881687488122, guid: a694ab454aae5ef4293a0ccfaa1295fc, type: 3}
@@ -2395,6 +2400,11 @@ PrefabInstance:
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 8976700243707436739, guid: c3b97d2acf5cb414fa3a5c81bc9dd2f4, type: 3}
   m_PrefabInstance: {fileID: 332572652}
+  m_PrefabAsset: {fileID: 0}
+--- !u!195 &861513820 stripped
+NavMeshAgent:
+  m_CorrespondingSourceObject: {fileID: 4360781375649307318, guid: f37c12f06583ab645ac17462f1b7fc45, type: 3}
+  m_PrefabInstance: {fileID: 6576405435755374576}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &861859541
 PrefabInstance:
@@ -5126,6 +5136,14 @@ PrefabInstance:
       propertyPath: blackboard
       value: 
       objectReference: {fileID: 360514856}
+    - target: {fileID: 1740293195698403335, guid: a25416aef927dcd45b69c5ee79f52ebf, type: 3}
+      propertyPath: navMeshAgent
+      value: 
+      objectReference: {fileID: 30755477}
+    - target: {fileID: 1833712233885600150, guid: a25416aef927dcd45b69c5ee79f52ebf, type: 3}
+      propertyPath: m_StoppingDistance
+      value: 2.5
+      objectReference: {fileID: 0}
     - target: {fileID: 2501686506929430948, guid: a25416aef927dcd45b69c5ee79f52ebf, type: 3}
       propertyPath: cam
       value: 
@@ -5558,6 +5576,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4360781375649307318, guid: f37c12f06583ab645ac17462f1b7fc45, type: 3}
+      propertyPath: m_StoppingDistance
+      value: 2.5
+      objectReference: {fileID: 0}
     - target: {fileID: 5073809985711907436, guid: f37c12f06583ab645ac17462f1b7fc45, type: 3}
       propertyPath: cam
       value: 
@@ -5574,6 +5596,10 @@ PrefabInstance:
       propertyPath: blackboard
       value: 
       objectReference: {fileID: 360514856}
+    - target: {fileID: 5109348940783141641, guid: f37c12f06583ab645ac17462f1b7fc45, type: 3}
+      propertyPath: navMeshAgent
+      value: 
+      objectReference: {fileID: 861513820}
     - target: {fileID: 5109348940783141641, guid: f37c12f06583ab645ac17462f1b7fc45, type: 3}
       propertyPath: healthBarSlider
       value: 

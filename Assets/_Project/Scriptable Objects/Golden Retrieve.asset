@@ -12,12 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e8e5514dffb34874841d134ee94c6d9a, type: 3}
   m_Name: Golden Retrieve
   m_EditorClassIdentifier: 
-  Health: 96.00006
-  Aggression: 100
-  Stamina: 0
-  Satiety: 78
-  Hydration: 90
-  Fun: 11
+  Health: 100
+  Aggression: 0
+  Stamina: 30
+  Satiety: 30
+  Hydration: 30
+  Fun: 79
   Dominance: 40
   StatManager: {fileID: 11400000, guid: dc99d76271051df439d8051053ea5fab, type: 2}
   BallInHand: {fileID: 11400000, guid: e218d8f69f18b5f41ace3a5559f9df96, type: 2}
@@ -41,18 +41,18 @@ MonoBehaviour:
   defaultFun: 30
   defaultDominance: 40
   defaultDogCalled: 0
-  SleepCosts: 25.428995
-  RestCosts: 5.7177134
-  SeekAttentionCosts: 23.177607
-  RageObstacle1Costs: 5.516386
-  RageObstacle2Costs: -4.335681
-  RageObstacle3Costs: 6.2917814
-  RageObstacle4Costs: 6.409039
-  DiggingCosts: 5.683525
-  EatAtBowl1Costs: 1.0835481
-  EatAtBowl2Costs: 7.0957527
-  DrinkAtBowl1Costs: 10.395528
-  DrinkAtBowl2Costs: 11.636539
+  SleepCosts: 12.5598345
+  RestCosts: 18.129166
+  SeekAttentionCosts: 6.5911674
+  RageObstacle1Costs: 22.687515
+  RageObstacle2Costs: 13.850593
+  RageObstacle3Costs: 22.524786
+  RageObstacle4Costs: 23.809958
+  DiggingCosts: 21.997707
+  EatAtBowl1Costs: 12.385386
+  EatAtBowl2Costs: 15.316682
+  DrinkAtBowl1Costs: 10.259761
+  DrinkAtBowl2Costs: 15.98262
   defaultSleepCosts: 15
   defaultRestCosts: 15
   defaultSeekAttentionCosts: 15
@@ -67,11 +67,11 @@ MonoBehaviour:
   defaultDrinkAtBowl2Costs: 0
   IdlePrio: 1
   WanderPrio: 2
-  KeepStaminaUpPrio: 15
-  KeepHydrationLevelUpPrio: 7.2
-  KeepSatietyLevelUpPrio: 6
-  KeepFunUpPrio: 13.9
-  FetchBallAndReturnItPrio: 48.9
+  KeepStaminaUpPrio: 12
+  KeepHydrationLevelUpPrio: 12
+  KeepSatietyLevelUpPrio: 12
+  KeepFunUpPrio: 7.1
+  FetchBallAndReturnItPrio: 42.1
   StayAlive: 100
   defaultIdlePrio: 1
   defaultWanderPrio: 2
@@ -82,5 +82,6 @@ MonoBehaviour:
   defaultFetchBallAndReturnItPrio: 50
   defaultStayAlive: 100
   Settings: {fileID: 11400000, guid: 1b08550701af21b44aac0e77b049f306, type: 2}
+  StoppingDistance: 2.5
   SeekingAttention: 0
   ballInMouth: 0

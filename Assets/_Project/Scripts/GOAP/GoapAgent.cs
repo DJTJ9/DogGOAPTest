@@ -42,7 +42,7 @@ public class GoapAgent : MonoBehaviour
     
     public HashSet<AgentAction> actions;
     
-    private NavMeshAgent navMeshAgent;
+    public NavMeshAgent navMeshAgent;
     private AnimationController animations;
     private Rigidbody rb;
     private CountdownTimer statsTimer;
@@ -64,7 +64,7 @@ public class GoapAgent : MonoBehaviour
     #endregion
 
     void Awake() {
-        navMeshAgent = GetComponent<NavMeshAgent>();
+        // navMeshAgent = GetComponent<NavMeshAgent>();
         animations = GetComponent<AnimationController>();
         rb = GetComponent<Rigidbody>();
         rb.freezeRotation = true;
@@ -82,6 +82,8 @@ public class GoapAgent : MonoBehaviour
         SetupAndUpdateActions();
         SetupAndUpdateGoals();
         SetDominance(dog.Dominance);
+        
+        navMeshAgent.stoppingDistance = dog.StoppingDistance;
     }
     
     void Update() {
@@ -91,6 +93,7 @@ public class GoapAgent : MonoBehaviour
 
         UpdateActionPlan();
         HandleDeath();
+        navMeshAgent.stoppingDistance = dog.StoppingDistance;
     }
 
     [Button("Update Beliefs"), FoldoutGroup("Buttons"), PropertyOrder(-10)]
@@ -133,10 +136,10 @@ public class GoapAgent : MonoBehaviour
         factory.AddLocationBelief(Beliefs.DogAtFoodBowl2, 2.3f, blackboard.FoodBowl2);
         factory.AddLocationBelief(Beliefs.DogAtWaterBowl1, 2.3f, blackboard.WaterBowl1);
         factory.AddLocationBelief(Beliefs.DogAtWaterBowl2, 2.3f, blackboard.WaterBowl2);
-        factory.AddLocationBelief(Beliefs.DogAtObstacle1, 2.3f, blackboard.Obstacle1);
-        factory.AddLocationBelief(Beliefs.DogAtObstacle2, 2.2f, blackboard.Obstacle2);
-        factory.AddLocationBelief(Beliefs.DogAtObstacle3, 2.2f, blackboard.Obstacle3);
-        factory.AddLocationBelief(Beliefs.DogAtObstacle4, 2.2f, blackboard.Obstacle4);
+        factory.AddLocationBelief(Beliefs.DogAtObstacle1, 4f, blackboard.Obstacle1);
+        factory.AddLocationBelief(Beliefs.DogAtObstacle2, 4f, blackboard.Obstacle2);
+        factory.AddLocationBelief(Beliefs.DogAtObstacle3, 4f, blackboard.Obstacle3);
+        factory.AddLocationBelief(Beliefs.DogAtObstacle4, 4f, blackboard.Obstacle4);
         factory.AddLocationBelief(Beliefs.DogAtBall, 2.2f, blackboard.Ball.transform.position);
         factory.AddLocationBelief(Beliefs.DogAtPlayer, 5f, blackboard.PlayerTransform.position);
         
@@ -154,17 +157,17 @@ public class GoapAgent : MonoBehaviour
             .Build());
 
         actions.Add(new AgentAction.Builder(ActionType.WanderAround)
-            .WithStrategy(new WanderStrategy(navMeshAgent, dog.Settings.wanderRadius))
+            .WithStrategy(new WanderStrategy(navMeshAgent, dog, dog.Settings.wanderRadius))
             .AddEffect(beliefs[Beliefs.IsMoving])
             .Build());
 
         actions.Add(new AgentAction.Builder(ActionType.MoveToRestArea)
-            .WithStrategy(new MoveStrategy(navMeshAgent, () => blackboard.RestingPosition.position, 2.0f))
+            .WithStrategy(new MoveStrategy(navMeshAgent, () => blackboard.RestingPosition.position, dog, 2.0f))
             .AddEffect(beliefs[Beliefs.DogAtRestingPosition])
             .Build());
 
         actions.Add(new AgentAction.Builder(ActionType.MoveToFoodBowl1)
-            .WithStrategy(new MoveStrategy(navMeshAgent, () => blackboard.FoodBowl1.position, dog.Settings.pickUpDistance))
+            .WithStrategy(new MoveStrategy(navMeshAgent, () => blackboard.FoodBowl1.position, dog, dog.Settings.pickUpDistance))
             .AddEffect(beliefs[Beliefs.DogAtFoodBowl1])
             .Build());
 
@@ -178,7 +181,7 @@ public class GoapAgent : MonoBehaviour
             .Build());
         
         actions.Add(new AgentAction.Builder(ActionType.MoveToFoodBowl2)
-            .WithStrategy(new MoveStrategy(navMeshAgent, () => blackboard.FoodBowl2.position, dog.Settings.pickUpDistance))
+            .WithStrategy(new MoveStrategy(navMeshAgent, () => blackboard.FoodBowl2.position, dog, dog.Settings.pickUpDistance))
             .AddEffect(beliefs[Beliefs.DogAtFoodBowl2])
             .Build());
 
@@ -192,7 +195,7 @@ public class GoapAgent : MonoBehaviour
             .Build());
 
         actions.Add(new AgentAction.Builder(ActionType.MoveToWaterBowl1)
-            .WithStrategy(new MoveStrategy(navMeshAgent, () => blackboard.WaterBowl1.position, dog.Settings.pickUpDistance))
+            .WithStrategy(new MoveStrategy(navMeshAgent, () => blackboard.WaterBowl1.position, dog, dog.Settings.pickUpDistance))
             .AddEffect(beliefs[Beliefs.DogAtWaterBowl1])
             .Build());
 
@@ -206,7 +209,7 @@ public class GoapAgent : MonoBehaviour
             .Build());
         
         actions.Add(new AgentAction.Builder(ActionType.MoveToWaterBowl2)
-            .WithStrategy(new MoveStrategy(navMeshAgent, () => blackboard.WaterBowl2.position, dog.Settings.pickUpDistance))
+            .WithStrategy(new MoveStrategy(navMeshAgent, () => blackboard.WaterBowl2.position, dog, dog.Settings.pickUpDistance))
             .AddEffect(beliefs[Beliefs.DogAtWaterBowl2])
             .Build());
 
@@ -238,7 +241,7 @@ public class GoapAgent : MonoBehaviour
             .Build());
 
         actions.Add(new AgentAction.Builder(ActionType.MoveToPlayer)
-            .WithStrategy(new MoveStrategy(navMeshAgent, () => blackboard.PlayerTransform.position, 4f))
+            .WithStrategy(new MoveStrategy(navMeshAgent, () => blackboard.PlayerTransform.position,  dog,4f))
             .AddEffect(beliefs[Beliefs.DogAtPlayer])
             .Build());
 
@@ -251,7 +254,7 @@ public class GoapAgent : MonoBehaviour
             .Build());
 
         actions.Add(new AgentAction.Builder(ActionType.MoveToObstacle1)
-            .WithStrategy(new MoveStrategy(navMeshAgent, () => blackboard.Obstacle1.position, 5.2f))
+            .WithStrategy(new MoveStrategy(navMeshAgent, () => blackboard.Obstacle1.position,  dog,3.5f))
             .AddEffect(beliefs[Beliefs.DogAtObstacle1])
             .Build());
 
@@ -264,7 +267,7 @@ public class GoapAgent : MonoBehaviour
             .Build());
         
         actions.Add(new AgentAction.Builder(ActionType.MoveToObstacle2)
-            .WithStrategy(new MoveStrategy(navMeshAgent, () => blackboard.Obstacle2.position, 5.2f))
+            .WithStrategy(new MoveStrategy(navMeshAgent, () => blackboard.Obstacle2.position,  dog,3.5f))
             .AddEffect(beliefs[Beliefs.DogAtObstacle2])
             .Build());
 
@@ -277,7 +280,7 @@ public class GoapAgent : MonoBehaviour
             .Build());
         
         actions.Add(new AgentAction.Builder(ActionType.MoveToObstacle3)
-            .WithStrategy(new MoveStrategy(navMeshAgent, () => blackboard.Obstacle3.position, 5.2f))
+            .WithStrategy(new MoveStrategy(navMeshAgent, () => blackboard.Obstacle3.position, dog, 3.5f))
             .AddEffect(beliefs[Beliefs.DogAtObstacle3])
             .Build());
 
@@ -290,7 +293,7 @@ public class GoapAgent : MonoBehaviour
             .Build());
         
         actions.Add(new AgentAction.Builder(ActionType.MoveToObstacle4)
-            .WithStrategy(new MoveStrategy(navMeshAgent, () => blackboard.Obstacle4.position, 5.2f))
+            .WithStrategy(new MoveStrategy(navMeshAgent, () => blackboard.Obstacle4.position, dog, 3.5f))
             .AddEffect(beliefs[Beliefs.DogAtObstacle4])
             .Build());
 
