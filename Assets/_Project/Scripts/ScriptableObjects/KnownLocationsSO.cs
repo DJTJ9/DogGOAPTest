@@ -5,7 +5,7 @@ using Sirenix.OdinInspector;
 [CreateAssetMenu(fileName = "Known Locations", menuName = "Scriptable Objects/Known Locations")]
 public class KnownLocationsSO : ScriptableObject
 {
-    [FoldoutGroup("Known Locations"), SerializeField]
+    [FoldoutGroup("Known Locations", expanded: true), SerializeField]
     public Transform PlayerTransform;
 
     [FoldoutGroup("Known Locations"), SerializeField]
@@ -23,7 +23,7 @@ public class KnownLocationsSO : ScriptableObject
     [FoldoutGroup("Known Locations"), SerializeField]
     public Transform WaterBowl2;
 
-    [FoldoutGroup("Known Locations", expanded: true), SerializeField]
+    [FoldoutGroup("Known Locations"), SerializeField]
     public Transform RestingPosition;
     
     [FoldoutGroup("Known Locations"), SerializeField]

@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3151b620401a4d6385cae858101a152e, type: 3}
+  m_Name: Locations
+  m_EditorClassIdentifier: 
+  PlayerTransform: {fileID: 0}
+  Ball: {fileID: 0}
+  FoodBowl1: {fileID: 0}
+  FoodBowl2: {fileID: 0}
+  WaterBowl1: {fileID: 0}
+  WaterBowl2: {fileID: 0}
+  RestingPosition: {fileID: 0}
+  Obstacle1: {fileID: 0}
+  Obstacle2: {fileID: 0}
+  Obstacle3: {fileID: 0}
+  Obstacle4: {fileID: 0}

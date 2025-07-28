@@ -25,5 +25,6 @@ public class Rat : MonoBehaviour, IDiggable
         
         Vector3 targetPosition = transform.position + transform.forward * 50f;
         yield return transform.DOMove(targetPosition, 20f).WaitForCompletion();
+        Destroy(this);
     }
 }
