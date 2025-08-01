@@ -55,6 +55,7 @@ public class GoapAgent : MonoBehaviour
     private ActionPlan actionPlan;
     private AgentAction currentAction;
     private IGoapPlanner gPlanner;
+    private IKHandler ikHandler;
     
     private Obstacle obstacle1;
     private Obstacle obstacle2;
@@ -68,6 +69,7 @@ public class GoapAgent : MonoBehaviour
         animations = GetComponent<AnimationController>();
         rb = GetComponent<Rigidbody>();
         rb.freezeRotation = true;
+        ikHandler = GetComponent<IKHandler>();
         obstacle1 = blackboard.Obstacle1.GetComponent<Obstacle>();
         obstacle2 = blackboard.Obstacle2.GetComponent<Obstacle>();
         obstacle3 = blackboard.Obstacle3.GetComponent<Obstacle>();
@@ -254,52 +256,52 @@ public class GoapAgent : MonoBehaviour
             .Build());
 
         actions.Add(new AgentAction.Builder(ActionType.MoveToObstacle1)
-            .WithStrategy(new MoveStrategy(navMeshAgent, () => blackboard.Obstacle1.position,  dog,3.5f))
+            .WithStrategy(new MoveStrategy(navMeshAgent, () => blackboard.Obstacle1.position,  dog,1.9f))
             .AddEffect(beliefs[Beliefs.DogAtObstacle1])
             .Build());
 
         actions.Add(new AgentAction.Builder(ActionType.AttackObstacle1)
             .WithCost(dog.RageObstacle1Costs + obstacle1.actionCostIncrease)
-            .WithStrategy(new AttackStrategy(animations, dog, obstacle1))
+            .WithStrategy(new AttackStrategy(navMeshAgent, animations, dog, obstacle1))
             .AddPrecondition(beliefs[Beliefs.DogAtObstacle1])
             .AddPrecondition(beliefs[Beliefs.DogIsBored])
             .AddEffect(beliefs[Beliefs.DogIsHappy])
             .Build());
         
         actions.Add(new AgentAction.Builder(ActionType.MoveToObstacle2)
-            .WithStrategy(new MoveStrategy(navMeshAgent, () => blackboard.Obstacle2.position,  dog,3.5f))
+            .WithStrategy(new MoveStrategy(navMeshAgent, () => blackboard.Obstacle2.position,  dog,1.7f))
             .AddEffect(beliefs[Beliefs.DogAtObstacle2])
             .Build());
 
         actions.Add(new AgentAction.Builder(ActionType.AttackObstacle2)
             .WithCost(dog.RageObstacle2Costs + obstacle2.actionCostIncrease)
-            .WithStrategy(new AttackStrategy(animations, dog, obstacle2))
+            .WithStrategy(new AttackStrategy(navMeshAgent, animations, dog, obstacle2))
             .AddPrecondition(beliefs[Beliefs.DogAtObstacle2])
             .AddPrecondition(beliefs[Beliefs.DogIsBored])
             .AddEffect(beliefs[Beliefs.DogIsHappy])
             .Build());
         
         actions.Add(new AgentAction.Builder(ActionType.MoveToObstacle3)
-            .WithStrategy(new MoveStrategy(navMeshAgent, () => blackboard.Obstacle3.position, dog, 3.5f))
+            .WithStrategy(new MoveStrategy(navMeshAgent, () => blackboard.Obstacle3.position, dog, 1.8f))
             .AddEffect(beliefs[Beliefs.DogAtObstacle3])
             .Build());
 
         actions.Add(new AgentAction.Builder(ActionType.AttackObstacle3)
             .WithCost(dog.RageObstacle3Costs + obstacle3.actionCostIncrease)
-            .WithStrategy(new AttackStrategy(animations, dog, obstacle3))
+            .WithStrategy(new AttackStrategy(navMeshAgent, animations, dog, obstacle3))
             .AddPrecondition(beliefs[Beliefs.DogAtObstacle3])
             .AddPrecondition(beliefs[Beliefs.DogIsBored])
             .AddEffect(beliefs[Beliefs.DogIsHappy])
             .Build());
         
         actions.Add(new AgentAction.Builder(ActionType.MoveToObstacle4)
-            .WithStrategy(new MoveStrategy(navMeshAgent, () => blackboard.Obstacle4.position, dog, 3.5f))
+            .WithStrategy(new MoveStrategy(navMeshAgent, () => blackboard.Obstacle4.position, dog, 1.9f))
             .AddEffect(beliefs[Beliefs.DogAtObstacle4])
             .Build());
 
         actions.Add(new AgentAction.Builder(ActionType.AttackObstacle4)
             .WithCost(dog.RageObstacle4Costs + obstacle4.actionCostIncrease)
-            .WithStrategy(new AttackStrategy(animations, dog, obstacle4))
+            .WithStrategy(new AttackStrategy(navMeshAgent, animations, dog, obstacle4))
             .AddPrecondition(beliefs[Beliefs.DogAtObstacle4])
             .AddPrecondition(beliefs[Beliefs.DogIsBored])
             .AddEffect(beliefs[Beliefs.DogIsHappy])

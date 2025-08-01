@@ -12,12 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e8e5514dffb34874841d134ee94c6d9a, type: 3}
   m_Name: Husky
   m_EditorClassIdentifier: 
-  Health: 98.00003
-  Aggression: 100
-  Stamina: 30
-  Satiety: 10
-  Hydration: 80
-  Fun: 43
+  Health: 100
+  Aggression: 80
+  Stamina: 100
+  Satiety: 80
+  Hydration: 30
+  Fun: 0
   Dominance: 60
   StatManager: {fileID: 11400000, guid: dc99d76271051df439d8051053ea5fab, type: 2}
   BallInHand: {fileID: 11400000, guid: e218d8f69f18b5f41ace3a5559f9df96, type: 2}
@@ -41,25 +41,25 @@ MonoBehaviour:
   defaultFun: 0
   defaultDominance: 60
   defaultDogCalled: 0
-  SleepCosts: 22.606422
-  RestCosts: 8.496883
-  SeekAttentionCosts: 20.166105
-  RageObstacle1Costs: 9.851349
-  RageObstacle2Costs: 9.376852
-  RageObstacle3Costs: 9.863473
-  RageObstacle4Costs: 8.723867
-  DiggingCosts: 9.652748
-  EatAtBowl1Costs: 7.418648
-  EatAtBowl2Costs: 12.405576
-  DrinkAtBowl1Costs: 3.275814
-  DrinkAtBowl2Costs: 3.4362721
+  SleepCosts: 13.035825
+  RestCosts: 16.381294
+  SeekAttentionCosts: 22.88655
+  RageObstacle1Costs: -7.796097
+  RageObstacle2Costs: -8.816278
+  RageObstacle3Costs: -7.957034
+  RageObstacle4Costs: -7.8331857
+  DiggingCosts: 7.0951815
+  EatAtBowl1Costs: 4.9166083
+  EatAtBowl2Costs: 10.53501
+  DrinkAtBowl1Costs: 3.9543033
+  DrinkAtBowl2Costs: 14.701111
   defaultSleepCosts: 15
   defaultRestCosts: 15
   defaultSeekAttentionCosts: 15
-  defaultObstacle1RageCosts: 15
-  defaultObstacle2RageCosts: 15
-  defaultObstacle3RageCosts: 15
-  defaultObstacle4RageCosts: 15
+  defaultObstacle1RageCosts: 0
+  defaultObstacle2RageCosts: 0
+  defaultObstacle3RageCosts: 0
+  defaultObstacle4RageCosts: 0
   defaultDiggingCosts: 15
   defaultEatAtBowl1Costs: 0
   defaultEatAtBowl2Costs: 0
@@ -67,11 +67,11 @@ MonoBehaviour:
   defaultDrinkAtBowl2Costs: 0
   IdlePrio: 1
   WanderPrio: 2
-  KeepStaminaUpPrio: 12
-  KeepHydrationLevelUpPrio: 14
-  KeepSatietyLevelUpPrio: 7
-  KeepFunUpPrio: 145.7
-  FetchBallAndReturnItPrio: 45.7
+  KeepStaminaUpPrio: 5
+  KeepHydrationLevelUpPrio: 7
+  KeepSatietyLevelUpPrio: 12
+  KeepFunUpPrio: 150
+  FetchBallAndReturnItPrio: 50
   StayAlive: 100
   defaultIdlePrio: 1
   defaultWanderPrio: 2
@@ -82,6 +82,6 @@ MonoBehaviour:
   defaultFetchBallAndReturnItPrio: 50
   defaultStayAlive: 100
   Settings: {fileID: 11400000, guid: 1b08550701af21b44aac0e77b049f306, type: 2}
-  StoppingDistance: 2.5
+  StoppingDistance: 2
   SeekingAttention: 0
-  ballInMouth: 0
+  ballInMouth: 1

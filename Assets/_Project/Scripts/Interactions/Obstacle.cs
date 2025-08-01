@@ -15,6 +15,9 @@
         [SerializeField]
         private GameObject canvas;
         
+        [SerializeField]
+        private Transform targetPosition;
+        
         private Camera cam;
         
         private RayfireRigid rigidComponent;
@@ -50,5 +53,9 @@
             rigidComponent.objectType = ObjectType.MeshRoot;
             rigidComponent.Initialize();
             rigidComponent.Demolish();
+        }
+
+        public Transform GetTargetPosition() {
+            return targetPosition;
         }
     }

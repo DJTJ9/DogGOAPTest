@@ -15,5 +15,5 @@ MonoBehaviour:
   stoppingDistance: 2.5
   playerInRangeDistance: 3
   wanderRadius: 15
-  pickUpDistance: 2
+  pickUpDistance: 2.15
   restingDuration: 10

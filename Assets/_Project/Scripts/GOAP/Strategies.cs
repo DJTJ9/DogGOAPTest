@@ -5,7 +5,6 @@ using UnityEngine;
 using UnityEngine.AI;
 using System.Collections;
 
-// TODO Migrate Strategies, Beliefs, Actions and Goals to Scriptable Objects and create Node Editor for them
 public interface IActionStrategy
 {
     bool CanPerform { get; }
@@ -29,12 +28,16 @@ public class AttackStrategy : IActionStrategy
     public bool CanPerform => true;
     public bool Complete   { get; private set; }
 
+    readonly NavMeshAgent agent;
     readonly CountdownTimer attackAnimationTimer;
     readonly AnimationController animations;
-    private readonly float hitDamage = 25f;
+    readonly Obstacle obstacle;
+    private readonly float hitDamage = 100f;
 
-    public AttackStrategy(AnimationController animations, DogSO dog, Obstacle obstacle, float funFactor = 100) {
+    public AttackStrategy(NavMeshAgent agent, AnimationController animations, DogSO dog, Obstacle obstacle, float funFactor = 100) {
+        this.agent = agent;
         this.animations = animations;
+        this.obstacle = obstacle;
         attackAnimationTimer = new CountdownTimer(7f);
 
         attackAnimationTimer.OnTimerStart += () => { Complete = false; };
@@ -47,15 +50,18 @@ public class AttackStrategy : IActionStrategy
 
     public void Start() {
         attackAnimationTimer.Start();
-        animations.StartDogAction(AnimationActionType.Shake);
+        animations.StartAttackAction();
     }
 
     public void Update(float deltaTime) {
         attackAnimationTimer.Tick(deltaTime);
-    }
+        agent.transform.LookAt(obstacle.transform);
+        }
 
     public void Stop() {
         attackAnimationTimer.Stop();
+        animations.SetAnimatorBool("AttackReady_b", false);
+        animations.LocoMotion();
         Complete = true;
     }
 }

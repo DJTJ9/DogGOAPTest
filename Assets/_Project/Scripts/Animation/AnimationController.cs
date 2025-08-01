@@ -44,6 +44,7 @@ public abstract class AnimationController : MonoBehaviour {
     
     
     [HideInInspector] public int speedHash = Animator.StringToHash("Movement_f");
+    [HideInInspector] public int locoMotionHash = Animator.StringToHash("Locomotion");
     [HideInInspector] public int deathBoolHash = Animator.StringToHash("Death_b");
 
     
@@ -86,11 +87,28 @@ public abstract class AnimationController : MonoBehaviour {
         animator.SetInteger("ActionType_int", 0);                
         // dogActionEnabled = false;                                
     }
+
+    public IEnumerator AttackAction(int attackType, float readyDuration = 2f) {
+        animator.SetBool("AttackReady_b", true);
+        yield return new WaitForSeconds(readyDuration);        
+        animator.SetInteger("AttackType_int", attackType);
+        yield return new WaitForSeconds(1f);
+        animator.SetInteger("AttackType_int", 0);
+        animator.SetBool("AttackReady_b", false);
+    }
     
     public void SetAnimatorBool(string name, bool value) => animator.SetBool(name, value);
 
     public void StartDogAction(AnimationActionType actionType, float countDown = 1f) {
         StartCoroutine(DogActions(actionType, countDown));
+    }
+
+    public void StartAttackAction() {
+        StartCoroutine(AttackAction(3));
+    }
+
+    public void LocoMotion() {
+        animator.CrossFade(locoMotionHash, k_crossfadeDuration);
     }
 
     public void SpawnDirtWhileDigging() {
