@@ -129,7 +129,7 @@ MonoBehaviour:
   refillSlider: {fileID: 0}
   minYPosition: -0.08
   maxYPosition: 0
-  foodOrWaterAvailable: {fileID: 11400000, guid: 9be3ec88b6bf7504da730a36a8e692d0, type: 2}
+  foodOrWaterAvailable: {fileID: 11400000, guid: 2297d2f64ce750d45a00a8d41078989b, type: 2}
 --- !u!208 &4594107022868071751
 NavMeshObstacle:
   m_ObjectHideFlags: 0
@@ -139,8 +139,8 @@ NavMeshObstacle:
   m_GameObject: {fileID: 2776153189305019602}
   m_Enabled: 1
   serializedVersion: 3
-  m_Shape: 1
-  m_Extents: {x: 0.05, y: 0.00001, z: 0.05}
+  m_Shape: 0
+  m_Extents: {x: 0.06, y: 0.035, z: 0.06}
   m_MoveThreshold: 0.1
   m_Carve: 1
   m_CarveOnlyStationary: 1

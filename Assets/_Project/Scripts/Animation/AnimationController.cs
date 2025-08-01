@@ -1,7 +1,6 @@
 using System.Collections;
 using UnityEngine;
 using ImprovedTimers;
-using VFavorites.Libs;
 
 public enum AnimationActionType
 {

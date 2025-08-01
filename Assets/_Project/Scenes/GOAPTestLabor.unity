@@ -26,7 +26,7 @@ RenderSettings:
   m_AmbientIntensity: 1
   m_AmbientMode: 0
   m_SubtractiveShadowColor: {r: 0.42, g: 0.478, b: 0.627, a: 1}
-  m_SkyboxMaterial: {fileID: 10304, guid: 0000000000000000f000000000000000, type: 0}
+  m_SkyboxMaterial: {fileID: 2100000, guid: 454ad4d053e27f241a2f66c885a27959, type: 2}
   m_HaloStrength: 0.5
   m_FlareStrength: 1
   m_FlareFadeSpeed: 3
@@ -1566,7 +1566,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9d4d7cd8120d4e33af680ebc4ded9bbc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  PlayerTransform: {fileID: 756486693}
+  PlayerTransform: {fileID: 132977576}
   Ball: {fileID: 4861457136371517224}
   FoodBowl1: {fileID: 1987992356}
   FoodBowl2: {fileID: 1186519641}
@@ -4423,7 +4423,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  - {fileID: 2100000, guid: d74cfef085e9ad647a533a920ae0ba01, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -4463,7 +4463,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 15.481632, y: 0, z: 7.538482}
-  m_LocalScale: {x: 3, y: 1, z: 3}
+  m_LocalScale: {x: 6, y: 1, z: 6}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 278530566}
@@ -5935,30 +5935,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: WaterBowl
       objectReference: {fileID: 0}
-    - target: {fileID: 3056156440162924935, guid: d5c27d71bc2bd74429a3c2a12a48dc0d, type: 3}
-      propertyPath: m_Enabled
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 6806995279038293960, guid: d5c27d71bc2bd74429a3c2a12a48dc0d, type: 3}
       propertyPath: refillSlider
       value: 
       objectReference: {fileID: 141861540}
-    - target: {fileID: 6806995279038293960, guid: d5c27d71bc2bd74429a3c2a12a48dc0d, type: 3}
-      propertyPath: foodOrWaterAvailable
-      value: 
-      objectReference: {fileID: 11400000, guid: 2297d2f64ce750d45a00a8d41078989b, type: 2}
-    - target: {fileID: 8143777740880231346, guid: d5c27d71bc2bd74429a3c2a12a48dc0d, type: 3}
-      propertyPath: m_LocalScale.x
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 8143777740880231346, guid: d5c27d71bc2bd74429a3c2a12a48dc0d, type: 3}
-      propertyPath: m_LocalScale.y
-      value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 8143777740880231346, guid: d5c27d71bc2bd74429a3c2a12a48dc0d, type: 3}
-      propertyPath: m_LocalScale.z
-      value: 3
-      objectReference: {fileID: 0}
     - target: {fileID: 8143777740880231346, guid: d5c27d71bc2bd74429a3c2a12a48dc0d, type: 3}
       propertyPath: m_LocalPosition.x
       value: 14.85
@@ -6980,7 +6960,7 @@ PrefabInstance:
       objectReference: {fileID: 141861540}
     - target: {fileID: 8143777740880231346, guid: d5c27d71bc2bd74429a3c2a12a48dc0d, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 19.13
+      value: 17.995
       objectReference: {fileID: 0}
     - target: {fileID: 8143777740880231346, guid: d5c27d71bc2bd74429a3c2a12a48dc0d, type: 3}
       propertyPath: m_LocalPosition.y
@@ -6988,7 +6968,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8143777740880231346, guid: d5c27d71bc2bd74429a3c2a12a48dc0d, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 17.961
+      value: 18.7
       objectReference: {fileID: 0}
     - target: {fileID: 8143777740880231346, guid: d5c27d71bc2bd74429a3c2a12a48dc0d, type: 3}
       propertyPath: m_LocalRotation.w
@@ -7376,18 +7356,6 @@ PrefabInstance:
     m_TransformParent: {fileID: 278530566}
     m_Modifications:
     - target: {fileID: 4653642272599761624, guid: 88214be7609a9c8468ef1d50e1ba807b, type: 3}
-      propertyPath: m_LocalScale.x
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 4653642272599761624, guid: 88214be7609a9c8468ef1d50e1ba807b, type: 3}
-      propertyPath: m_LocalScale.y
-      value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 4653642272599761624, guid: 88214be7609a9c8468ef1d50e1ba807b, type: 3}
-      propertyPath: m_LocalScale.z
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 4653642272599761624, guid: 88214be7609a9c8468ef1d50e1ba807b, type: 3}
       propertyPath: m_LocalPosition.x
       value: 28.36
       objectReference: {fileID: 0}
@@ -7427,10 +7395,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 4990743165102366331, guid: 88214be7609a9c8468ef1d50e1ba807b, type: 3}
-      propertyPath: m_Extents.y
-      value: 0.05
-      objectReference: {fileID: 0}
     - target: {fileID: 5154844460071028047, guid: 88214be7609a9c8468ef1d50e1ba807b, type: 3}
       propertyPath: refillSlider
       value: 
@@ -7438,10 +7402,6 @@ PrefabInstance:
     - target: {fileID: 7484644687131541789, guid: 88214be7609a9c8468ef1d50e1ba807b, type: 3}
       propertyPath: m_Name
       value: FoodBowl
-      objectReference: {fileID: 0}
-    - target: {fileID: 9172329773206202363, guid: 88214be7609a9c8468ef1d50e1ba807b, type: 3}
-      propertyPath: m_Enabled
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
