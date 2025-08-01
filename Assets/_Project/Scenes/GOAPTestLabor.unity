@@ -1220,7 +1220,7 @@ MonoBehaviour:
   WaterBowl1: {fileID: 1782146866}
   WaterBowl2: {fileID: 2073485716}
   RestingPosition: {fileID: 1934129092}
-  Obstacle1: {fileID: 1675581295}
+  Obstacle1: {fileID: 1795213740}
   Obstacle2: {fileID: 1781837173}
   Obstacle3: {fileID: 923585829}
   Obstacle4: {fileID: 1147180274}
@@ -1794,7 +1794,7 @@ PrefabInstance:
     - target: {fileID: 1480929528619238946, guid: cee21173f6d97ab4fb6fb1a249c2dcfe, type: 3}
       propertyPath: targetPosition
       value: 
-      objectReference: {fileID: 1675581295}
+      objectReference: {fileID: 1795213740}
     - target: {fileID: 3900511342323719920, guid: cee21173f6d97ab4fb6fb1a249c2dcfe, type: 3}
       propertyPath: m_LocalPosition.x
       value: 18.176361
