@@ -30,15 +30,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 115e90c1efa3ec64bb4da09bb521a7a3, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -13.948
+      value: -12.936
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 115e90c1efa3ec64bb4da09bb521a7a3, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.3875247
+      value: 0.387
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 115e90c1efa3ec64bb4da09bb521a7a3, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 14.351
+      value: 14.377
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 115e90c1efa3ec64bb4da09bb521a7a3, type: 3}
       propertyPath: m_LocalRotation.w
@@ -82,6 +82,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 100000, guid: 115e90c1efa3ec64bb4da09bb521a7a3, type: 3}
       insertIndex: -1
       addedObject: {fileID: 6931237481751404970}
+    - targetCorrespondingSourceObject: {fileID: 100000, guid: 115e90c1efa3ec64bb4da09bb521a7a3, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1822236959647810728}
   m_SourcePrefab: {fileID: 100100000, guid: 115e90c1efa3ec64bb4da09bb521a7a3, type: 3}
 --- !u!1 &1847474342833409199 stripped
 GameObject:
@@ -123,3 +126,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   waterSlider: {fileID: 0}
+--- !u!208 &1822236959647810728
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1847474342833409199}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 0.15, y: 0.05, z: 0.05}
+  m_MoveThreshold: 0.1
+  m_Carve: 1
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: 0, z: 0}
+  m_TimeToStationary: 0.5

@@ -21,7 +21,7 @@ public enum AnimationActionType
     ShakeToy
 }
 
-public abstract class AnimationController : MonoBehaviour {
+public class AnimationController : MonoBehaviour {
     const float k_crossfadeDuration = 0.1f;
     
     private Animator animator;
@@ -50,7 +50,6 @@ public abstract class AnimationController : MonoBehaviour {
     
     void Awake() {
         animator = GetComponentInChildren<Animator>();
-        SetSpeedHash();
     }
 
     public void SetSpeed(float speed) => animator.SetFloat(speedHash, speed);
@@ -116,7 +115,5 @@ public abstract class AnimationController : MonoBehaviour {
         go.transform.SetParent(fxTransform);
         go.transform.localPosition = new Vector3(go.transform.localPosition.x, go.transform.localPosition.y, go.transform.localPosition.z + 0.3f);
     }
-
-    protected abstract void SetSpeedHash();
 }
 

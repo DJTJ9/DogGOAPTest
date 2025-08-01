@@ -12,6 +12,7 @@ public class RigidbodyMovement : MonoBehaviour
 
     private new Transform transform;
     private new Rigidbody rigidbody;
+    private AnimationControllerPlayer animations;
     private GroundChecker groundChecker;
 
     private Vector3 moveDirection;
@@ -20,6 +21,7 @@ public class RigidbodyMovement : MonoBehaviour
     {
         transform = GetComponent<Transform>();
         rigidbody = GetComponent<Rigidbody>();
+        animations = GetComponent<AnimationControllerPlayer>();
         groundChecker = GetComponent<GroundChecker>();
     }
 
@@ -27,6 +29,8 @@ public class RigidbodyMovement : MonoBehaviour
     {
         UpdateHorizontalMovement();
         UpdateVerticalMovement();
+        if (rigidbody.linearVelocity.magnitude > 0.5f) animations.SetSpeed(rigidbody.linearVelocity.magnitude);
+        else animations.SetSpeed(0f);
     }
 
     /// <summary>

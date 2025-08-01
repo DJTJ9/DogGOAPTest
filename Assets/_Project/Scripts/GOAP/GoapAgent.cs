@@ -70,10 +70,10 @@ public class GoapAgent : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         rb.freezeRotation = true;
         ikHandler = GetComponent<IKHandler>();
-        obstacle1 = blackboard.Obstacle1.GetComponent<Obstacle>();
-        obstacle2 = blackboard.Obstacle2.GetComponent<Obstacle>();
-        obstacle3 = blackboard.Obstacle3.GetComponent<Obstacle>();
-        obstacle4 = blackboard.Obstacle4.GetComponent<Obstacle>();
+        obstacle1 = blackboard.Obstacle1.GetComponentInParent<Obstacle>();
+        obstacle2 = blackboard.Obstacle2.GetComponentInParent<Obstacle>();
+        obstacle3 = blackboard.Obstacle3.GetComponentInParent<Obstacle>();
+        obstacle4 = blackboard.Obstacle4.GetComponentInParent<Obstacle>();
         
         gPlanner = new GoapPlanner();
     }
@@ -269,7 +269,7 @@ public class GoapAgent : MonoBehaviour
             .Build());
         
         actions.Add(new AgentAction.Builder(ActionType.MoveToObstacle2)
-            .WithStrategy(new MoveStrategy(navMeshAgent, () => blackboard.Obstacle2.position,  dog,1.7f))
+            .WithStrategy(new MoveStrategy(navMeshAgent, () => blackboard.Obstacle2.position,  dog,1.9f))
             .AddEffect(beliefs[Beliefs.DogAtObstacle2])
             .Build());
 
@@ -282,7 +282,7 @@ public class GoapAgent : MonoBehaviour
             .Build());
         
         actions.Add(new AgentAction.Builder(ActionType.MoveToObstacle3)
-            .WithStrategy(new MoveStrategy(navMeshAgent, () => blackboard.Obstacle3.position, dog, 1.8f))
+            .WithStrategy(new MoveStrategy(navMeshAgent, () => blackboard.Obstacle3.position, dog, 1.9f))
             .AddEffect(beliefs[Beliefs.DogAtObstacle3])
             .Build());
 

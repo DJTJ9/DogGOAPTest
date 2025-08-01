@@ -99,6 +99,7 @@ GameObject:
   - component: {fileID: 4157672764903537301}
   - component: {fileID: 9172329773206202363}
   - component: {fileID: 5154844460071028047}
+  - component: {fileID: 4990743165102366331}
   m_Layer: 0
   m_Name: FoodBowl
   m_TagString: Untagged
@@ -114,9 +115,9 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7484644687131541789}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 19.62, y: 0, z: 11.86}
-  m_LocalScale: {x: 2, y: 2, z: 2}
+  m_LocalScale: {x: 3, y: 4, z: 3}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 6620205042558276000}
@@ -211,6 +212,23 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   fillAmount: {fileID: 6620205042558276000}
   refillAmount: 0.02
+  refillSlider: {fileID: 0}
   minYPosition: -0.14
   maxYPosition: 0
-  foodOrWaterAvailable: {fileID: 11400000, guid: 803a13c8ae8b6c841b5342a8d40846f3, type: 2}
+  foodOrWaterAvailable: {fileID: 11400000, guid: a3b46f1949e83e84b946f1125cdcedd1, type: 2}
+--- !u!208 &4990743165102366331
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7484644687131541789}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 0.05, y: 0.00001, z: 0.05}
+  m_MoveThreshold: 0.1
+  m_Carve: 1
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: 0.035, z: 0}
+  m_TimeToStationary: 0.5

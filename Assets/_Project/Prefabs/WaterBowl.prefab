@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 2813917976764977029}
   - component: {fileID: 3056156440162924935}
   - component: {fileID: 6806995279038293960}
+  - component: {fileID: 4594107022868071751}
   m_Layer: 0
   m_Name: WaterBowl
   m_TagString: Untagged
@@ -28,9 +29,9 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2776153189305019602}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 17.483267, y: 0, z: 12.834734}
-  m_LocalScale: {x: 2, y: 2, z: 2}
+  m_LocalScale: {x: 3, y: 4, z: 3}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 5714613138687095961}
@@ -125,9 +126,26 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   fillAmount: {fileID: 5714613138687095961}
   refillAmount: 0.02
+  refillSlider: {fileID: 0}
   minYPosition: -0.08
   maxYPosition: 0
   foodOrWaterAvailable: {fileID: 11400000, guid: 9be3ec88b6bf7504da730a36a8e692d0, type: 2}
+--- !u!208 &4594107022868071751
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2776153189305019602}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 0.05, y: 0.00001, z: 0.05}
+  m_MoveThreshold: 0.1
+  m_Carve: 1
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: 0.035, z: 0}
+  m_TimeToStationary: 0.5
 --- !u!1 &5577960595252846448
 GameObject:
   m_ObjectHideFlags: 0
