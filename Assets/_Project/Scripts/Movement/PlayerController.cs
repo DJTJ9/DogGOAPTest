@@ -42,18 +42,9 @@ public class PlayerController : MonoBehaviour
 
     [SerializeField]
     private ScriptableBoolValue dogCalled;
-    //
-    // [SerializeField] 
-    // private DogStatus dogStatus;
 
-
-    // [SerializeField] BlackboardData blackboardData;
-    //
-    // private Blackboard blackboard;
-    // private BlackboardKey ballInHandKey;
-    // private BlackboardKey ballThrownKey;
-    // private BlackboardKey dogCalledKey;
-
+    private AnimationControllerPlayer animations;
+   
     private InputAction moveInputAction;
     private InputAction jumpInputAction;
     private InputAction lookInputAction;
@@ -63,18 +54,11 @@ public class PlayerController : MonoBehaviour
     private InputAction callDogInputAction;
     private InputAction applicationQuitInputAction;
 
-    // private PlayerInteraction playerInteraction;
-
     private const float interactionDistance = 5f;
 
     private void Awake() {
         MapInputActions();
-
-        // blackboard = BlackboardManager.SharedBlackboard;
-        // blackboardData.SetValuesOnBlackboard(blackboard);
-        // ballInHandKey = blackboard.GetOrRegisterKey("BallInHand");
-        // ballThrownKey = blackboard.GetOrRegisterKey("BallThrown");
-        // dogCalledKey = blackboard.GetOrRegisterKey("DogCalled");
+        animations = GetComponent<AnimationControllerPlayer>();
     }
 
     /// <summary>
@@ -133,7 +117,7 @@ public class PlayerController : MonoBehaviour
 
         interactionInputAction = playerInput.actions["Interact"];
         interactionInputAction.started += OnInteractInput;
-        interactionInputAction.started += OnRepairInput;
+        interactionInputAction.started += OnStatusRequstInput;
         interactionInputAction.started += OnGrabInput;
 
         dropInputAction = playerInput.actions["Drop"];
@@ -181,12 +165,11 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    private void OnRepairInput(InputAction.CallbackContext context) {
+    private void OnStatusRequstInput(InputAction.CallbackContext context) {
         if (context.phase == InputActionPhase.Started) {
             if (Physics.Raycast(mainCameraTransform.position, mainCameraTransform.forward, out RaycastHit raycastHit, interactionDistance)) {
-                if (raycastHit.transform.TryGetComponent(out IDamagable damagable)) {
-                    damagable.TakeDamage(-20f);
-                    Debug.Log($"Player demolished {damagable.GetType().Name}");
+                if (raycastHit.transform.TryGetComponent(out DogStatus interactable)) {
+                    interactable.Interact();
                 }
             }
         }
@@ -199,6 +182,7 @@ public class PlayerController : MonoBehaviour
                         out RaycastHit raycastHit, interactionDistance)) {
                     if (raycastHit.transform.TryGetComponent(out GrabbableObject grabbableObj)) {
                         grabbableObj.Grab(objectGrabPoint);
+                        grabbableObj.GetComponent<CapsuleCollider>().enabled = false;
                         grabbableObj.objectPossessed = true;
                         grabbableObject = grabbableObj;
                         ballThrown.Value = false;
@@ -223,11 +207,14 @@ public class PlayerController : MonoBehaviour
         if (grabbableObject == null) return;
 
         if (context.phase == InputActionPhase.Started) {
+            animations.SetAnimatorTrigger("isThrowing");
+            grabbableObject.GetComponent<CapsuleCollider>().enabled = true;
             grabbableObject.Throw(mainCameraTransform.forward);
             grabbableObject.objectPossessed = false;
             grabbableObject = null;
             ballThrown.Value = true;
             ballInHand.Value = false;
+            
         }
     }
 

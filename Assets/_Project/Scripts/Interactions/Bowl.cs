@@ -18,6 +18,13 @@ public class Bowl : MonoBehaviour, IInteractable
     
     [SerializeField]
     private ScriptableBoolValue foodOrWaterAvailable;
+    
+    [SerializeField]
+    private string interactionName;
+
+    public string GetInteractionName() {
+        return interactionName;
+    }
 
     private void Update() {
         foodOrWaterAvailable.Value = !(fillAmount.position.y <= minYPosition);

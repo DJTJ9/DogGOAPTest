@@ -13,6 +13,7 @@ public class AnimationControllerPlayer : MonoBehaviour {
     [HideInInspector] public int isPunchingRightHash = Animator.StringToHash("isPunching_Right");
     [HideInInspector] public int isWavingHash = Animator.StringToHash("isWaving");
     [HideInInspector] public int isTextingHash = Animator.StringToHash("isTexting");
+    [HideInInspector] public int isThrowingHash = Animator.StringToHash("isThrowing");
     
     void Awake() {
         animator = GetComponentInChildren<Animator>();
@@ -21,6 +22,8 @@ public class AnimationControllerPlayer : MonoBehaviour {
     public void SetSpeed(float speed) => animator.SetFloat(speedHash, speed);
     
     public void SetAnimatorBool(string name, bool value) => animator.SetBool(name, value);
+    
+    public void SetAnimatorTrigger(string name) => animator.SetTrigger(name);
     
     public void LocoMotion() {
         animator.CrossFade(locoMotionHash, k_crossfadeDuration);

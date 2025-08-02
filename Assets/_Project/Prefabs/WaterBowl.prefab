@@ -130,6 +130,7 @@ MonoBehaviour:
   minYPosition: -0.08
   maxYPosition: 0
   foodOrWaterAvailable: {fileID: 11400000, guid: 2297d2f64ce750d45a00a8d41078989b, type: 2}
+  interactionName: Fill
 --- !u!208 &4594107022868071751
 NavMeshObstacle:
   m_ObjectHideFlags: 0
@@ -140,8 +141,8 @@ NavMeshObstacle:
   m_Enabled: 1
   serializedVersion: 3
   m_Shape: 0
-  m_Extents: {x: 0.06, y: 0.035, z: 0.06}
-  m_MoveThreshold: 0.1
+  m_Extents: {x: 0.05, y: 0.1, z: 0.05}
+  m_MoveThreshold: 0.2
   m_Carve: 1
   m_CarveOnlyStationary: 1
   m_Center: {x: 0, y: 0.035, z: 0}
@@ -157,6 +158,8 @@ GameObject:
   - component: {fileID: 5714613138687095961}
   - component: {fileID: 6554715720061244553}
   - component: {fileID: 3245846772363142389}
+  - component: {fileID: 6505767515488101307}
+  - component: {fileID: 8687189102538161460}
   m_Layer: 0
   m_Name: Water
   m_TagString: Untagged
@@ -232,3 +235,36 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &6505767515488101307
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5577960595252846448}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6079c2f25b324eaea7789c0e939f3d4d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!135 &8687189102538161460
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5577960595252846448}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 0.03
+  m_Center: {x: -0.00000008940697, y: 0.05, z: -0.00000041350722}

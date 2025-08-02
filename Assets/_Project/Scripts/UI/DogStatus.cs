@@ -2,8 +2,9 @@
 using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
+using TMPro;
 
-public class DogStatus : MonoBehaviour
+public class DogStatus : MonoBehaviour, IInteractable
 {
     [SerializeField]
     private GameObject goapAgent;
@@ -33,13 +34,21 @@ public class DogStatus : MonoBehaviour
 
     [SerializeField]
     private DogSO dog;
+    
+    [SerializeField]
+    TMP_Text interactionText;
 
+    private string interactionName;
+    
     private void LateUpdate() {
+        if (dog.SeekingAttention) interactionName = "Treat";
+        interactionName = "Status";
         canvas.transform.LookAt(cam.transform.position); // transform.position + cam.transform.forward
     }
 
     public IEnumerator ShowStatus() {
         healthBar.SetActive(false);
+        interactionText.gameObject.SetActive(false);
         yield return bubble1.transform.DOScale(Vector3.one, animationDuration).SetEase(bubble1AppearCurve).WaitForCompletion();
         yield return bubble2.transform.DOScale(Vector3.one, animationDuration).SetEase(bubble2AppearCurve).WaitForCompletion();
         yield return bubble3.transform.DOScale(Vector3.one, animationDuration).SetEase(bubble3AppearCurve).WaitForCompletion();
@@ -70,7 +79,21 @@ public class DogStatus : MonoBehaviour
         yield return bedIcon.transform.DOScale(Vector3.zero, animationDuration);
         yield return ballIcon.transform.DOScale(Vector3.zero, animationDuration);
         
-        healthBar.SetActive(true);       
+        healthBar.SetActive(true); 
+        interactionText.gameObject.SetActive(true);
         Debug.Log("Tween finished!");
+    }
+
+    public string GetInteractionName() {
+        return interactionName;
+    }
+
+    public void Interact() {
+        if (dog.SeekingAttention) {
+            dog.Aggression -= 50f;
+            dog.Satiety += 20f;
+            return;
+        }
+        StartCoroutine(ShowStatus());       
     }
 }

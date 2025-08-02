@@ -11,6 +11,8 @@ GameObject:
   - component: {fileID: 6620205042558276000}
   - component: {fileID: 2402466667170502573}
   - component: {fileID: 6852425913606032834}
+  - component: {fileID: 2032962898675181796}
+  - component: {fileID: 4006193226702384756}
   m_Layer: 0
   m_Name: Food
   m_TagString: Untagged
@@ -86,6 +88,39 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &2032962898675181796
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4091131377160894611}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6079c2f25b324eaea7789c0e939f3d4d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!135 &4006193226702384756
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4091131377160894611}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 0.03
+  m_Center: {x: -0.00000008940697, y: 0.05, z: -0.00000041350722}
 --- !u!1 &7484644687131541789
 GameObject:
   m_ObjectHideFlags: 0
@@ -216,6 +251,7 @@ MonoBehaviour:
   minYPosition: -0.14
   maxYPosition: 0
   foodOrWaterAvailable: {fileID: 11400000, guid: a3b46f1949e83e84b946f1125cdcedd1, type: 2}
+  interactionName: Fill
 --- !u!208 &4990743165102366331
 NavMeshObstacle:
   m_ObjectHideFlags: 0
@@ -226,8 +262,8 @@ NavMeshObstacle:
   m_Enabled: 1
   serializedVersion: 3
   m_Shape: 0
-  m_Extents: {x: 0.06, y: 0.035, z: 0.06}
-  m_MoveThreshold: 0.1
+  m_Extents: {x: 0.05, y: 0.1, z: 0.05}
+  m_MoveThreshold: 0.5
   m_Carve: 1
   m_CarveOnlyStationary: 1
   m_Center: {x: 0, y: 0.035, z: 0}

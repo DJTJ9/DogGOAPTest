@@ -32,7 +32,7 @@ public class AttackStrategy : IActionStrategy
     readonly CountdownTimer attackAnimationTimer;
     readonly AnimationController animations;
     readonly Obstacle obstacle;
-    private readonly float hitDamage = 100f;
+    private readonly float hitDamage = 50f;
 
     public AttackStrategy(NavMeshAgent agent, AnimationController animations, DogSO dog, Obstacle obstacle, float funFactor = 100) {
         this.agent = agent;
@@ -350,7 +350,7 @@ public class EatStrategy : IActionStrategy
         eatAnimationTimer.OnTimerStart += () => {
             Complete = false;
             lookAtTarget = food;
-            lookAtTrigger.radius = 0f;
+            lookAtTrigger.radius = 2f;
         };
         eatAnimationTimer.OnTimerStop += () => {
             dog.Satiety += saturation;
@@ -401,7 +401,7 @@ public class DrinkStrategy : IActionStrategy
         drinkAnimationTimer = new CountdownTimer(11f);
         drinkAnimationTimer.OnTimerStart += () => {
             Complete = false;
-            lookAtTrigger.radius = 0f;
+            lookAtTrigger.radius = 2f;
         };
         drinkAnimationTimer.OnTimerStop += () => {
             dog.Hydration += hydration;

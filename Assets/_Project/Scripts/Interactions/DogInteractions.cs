@@ -6,6 +6,13 @@ public class DogInteractions : MonoBehaviour, IInteractable, ICommandable
     private DogSO dog;
     
     private DogStatus dogStatus;
+    
+    [SerializeField]
+    private string interactionName;
+
+    public string GetInteractionName() {
+        return interactionName;
+    }
 
     private void Start() {
         dogStatus = GetComponent<DogStatus>();

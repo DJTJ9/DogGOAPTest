@@ -2,7 +2,7 @@
     using UnityEngine;
     using UnityEngine.UI;
 
-    public class Obstacle : MonoBehaviour, IDamagable
+    public class Obstacle : MonoBehaviour, IDamagable, IInteractable
     {
         public float Health = 100f;
 
@@ -11,6 +11,9 @@
         
         [SerializeField]
         private Slider healthSlider;
+        
+        [SerializeField]
+        private string interactionName;
         
         [SerializeField]
         private GameObject canvas;
@@ -30,14 +33,27 @@
         private void Update() {
             healthSlider.value = Health;
             if (Health <= 0) {
+                interactionName = "";
                 canvas.SetActive(false);
                 actionCostIncrease = 100;
             }
-            else actionCostIncrease = 0;
+            else if (Health >= 99.9f) interactionName = "";
+            else {
+                interactionName = "Repair";
+                actionCostIncrease = 0;
+            }
         }
         
         private void LateUpdate() {
             canvas.transform.LookAt(cam.transform.position); // transform.position + cam.transform.forward
+        }
+
+        public string GetInteractionName() {
+            return interactionName;
+        }
+
+        public void Interact() {
+            TakeDamage(-20f);
         }
 
         public void TakeDamage(float damage) {

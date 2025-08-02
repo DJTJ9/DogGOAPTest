@@ -289,6 +289,7 @@ MonoBehaviour:
   Health: 100
   actionCostIncrease: 0
   healthSlider: {fileID: 7371305140068503290}
+  interactionName: Repair
   canvas: {fileID: 1683005293429749856}
   targetPosition: {fileID: 7895079091432593358}
 --- !u!114 &8873203173461352971
@@ -494,7 +495,7 @@ NavMeshObstacle:
   m_Enabled: 1
   serializedVersion: 3
   m_Shape: 1
-  m_Extents: {x: 0.35, y: 1, z: 0.1}
+  m_Extents: {x: 0.45, y: 1, z: 0.15}
   m_MoveThreshold: 0.1
   m_Carve: 1
   m_CarveOnlyStationary: 1
