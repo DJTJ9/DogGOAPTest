@@ -1,12 +1,16 @@
 using System;
+using ScriptableValues;
 using UnityEngine;
 using UnityEngine.Events;
 
 [RequireComponent(typeof(Rigidbody))]
-public class GrabbableObject : MonoBehaviour
+public class GrabbableObject : MonoBehaviour, IInteractable
 {
     public float ThrowSpeed = 50f;
-
+    
+    [SerializeField]
+    private ScriptableBoolValue ballInHand;
+    
     [HideInInspector]
     public bool objectPossessed;
 
@@ -47,23 +51,19 @@ public class GrabbableObject : MonoBehaviour
         objectRigidbody.AddForce(_direction * ThrowSpeed, ForceMode.Impulse);
     }
 
-    // Diese Methoden können im Unity Inspector für UnityEvents verwendet werden
-    public void ThrowForward() {
-        Throw(cam.transform.forward);
-    }
-
-    public void ThrowUp() {
-        Throw(transform.up);
-    }
-
-    public void ThrowRight() {
-        Throw(transform.right);
-    }
-
     private void FixedUpdate() {
         if (objectGrabPoint != null) {
             Vector3 newPosition = Vector3.Lerp(transform.position, objectGrabPoint.position, lerpSpeed * Time.deltaTime);
             objectRigidbody.MovePosition(newPosition);
         }
+    }
+
+    public string GetInteractionName() {
+        return ballInHand.Value ? "Drop" : "Grab";
+    }
+
+    public void Interact() {
+        if (ballInHand.Value) Drop();
+        else Grab(objectGrabPoint);
     }
 }

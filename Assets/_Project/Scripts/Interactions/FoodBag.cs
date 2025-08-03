@@ -13,6 +13,7 @@ public class FoodBag : MonoBehaviour, IInteractable
     }
     
     public void Interact() {
+        if (foodSlider.value >= 100f) return;
         foodSlider.value += 25f;
     }
 }

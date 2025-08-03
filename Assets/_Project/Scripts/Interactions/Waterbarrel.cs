@@ -13,6 +13,7 @@ public class Waterbarrel : MonoBehaviour, IInteractable
     }
 
     public void Interact() {
+        if (waterSlider.value >= 100f) return;
        waterSlider.value += 25f;
     }
 }

@@ -127,7 +127,7 @@ MonoBehaviour:
   fillAmount: {fileID: 5714613138687095961}
   refillAmount: 0.02
   refillSlider: {fileID: 0}
-  minYPosition: -0.08
+  minYPosition: -0.04
   maxYPosition: 0
   foodOrWaterAvailable: {fileID: 11400000, guid: 2297d2f64ce750d45a00a8d41078989b, type: 2}
   interactionName: Fill
@@ -160,6 +160,7 @@ GameObject:
   - component: {fileID: 3245846772363142389}
   - component: {fileID: 6505767515488101307}
   - component: {fileID: 8687189102538161460}
+  - component: {fileID: 249676042635715436}
   m_Layer: 0
   m_Name: Water
   m_TagString: Untagged
@@ -266,5 +267,24 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 0.03
+  m_Radius: 0.07
   m_Center: {x: -0.00000008940697, y: 0.05, z: -0.00000041350722}
+--- !u!114 &249676042635715436
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5577960595252846448}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 349afdb42fc94693b6d7551bdc1888a4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  fillAmount: {fileID: 5714613138687095961}
+  refillAmount: 0.02
+  refillSlider: {fileID: 0}
+  minYPosition: -0.04
+  maxYPosition: 0
+  foodOrWaterAvailable: {fileID: 11400000, guid: 2297d2f64ce750d45a00a8d41078989b, type: 2}
+  interactionName: Fill

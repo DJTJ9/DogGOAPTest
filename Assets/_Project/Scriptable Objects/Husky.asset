@@ -12,12 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e8e5514dffb34874841d134ee94c6d9a, type: 3}
   m_Name: Husky
   m_EditorClassIdentifier: 
-  Health: 100
-  Aggression: 0
+  Health: 95.20007
+  Aggression: 48
   Stamina: 100
-  Satiety: 80
-  Hydration: 30
-  Fun: 0
+  Satiety: 0
+  Hydration: 0
+  Fun: 100
   Dominance: 60
   StatManager: {fileID: 11400000, guid: dc99d76271051df439d8051053ea5fab, type: 2}
   BallInHand: {fileID: 11400000, guid: e218d8f69f18b5f41ace3a5559f9df96, type: 2}
@@ -37,22 +37,22 @@ MonoBehaviour:
   defaultAggression: 0
   defaultStamina: 100
   defaultHunger: 80
-  defaultThirst: 30
+  defaultThirst: 100
   defaultFun: 0
   defaultDominance: 60
   defaultDogCalled: 0
-  SleepCosts: 4.22364
-  RestCosts: 24.995928
-  SeekAttentionCosts: 14.461594
-  RageObstacle1Costs: 0.77724457
-  RageObstacle2Costs: 0.77450395
-  RageObstacle3Costs: 0.31749818
-  RageObstacle4Costs: -0.06061399
-  DiggingCosts: 15.973743
-  EatAtBowl1Costs: 11.636349
-  EatAtBowl2Costs: 0.22558689
-  DrinkAtBowl1Costs: 9.236769
-  DrinkAtBowl2Costs: 16.447496
+  SleepCosts: 8.945866
+  RestCosts: 19.957458
+  SeekAttentionCosts: 8.809081
+  RageObstacle1Costs: 5.692482
+  RageObstacle2Costs: 5.96732
+  RageObstacle3Costs: 5.763253
+  RageObstacle4Costs: 4.2613144
+  DiggingCosts: 19.911652
+  EatAtBowl1Costs: 6.3326035
+  EatAtBowl2Costs: 13.774984
+  DrinkAtBowl1Costs: 8.623365
+  DrinkAtBowl2Costs: 16.837002
   defaultSleepCosts: 15
   defaultRestCosts: 15
   defaultSeekAttentionCosts: 15
@@ -68,10 +68,10 @@ MonoBehaviour:
   IdlePrio: 1
   WanderPrio: 2
   KeepStaminaUpPrio: 5
-  KeepHydrationLevelUpPrio: 7
-  KeepSatietyLevelUpPrio: 12
-  KeepFunUpPrio: 150
-  FetchBallAndReturnItPrio: 50
+  KeepHydrationLevelUpPrio: 15
+  KeepSatietyLevelUpPrio: 15
+  KeepFunUpPrio: 140
+  FetchBallAndReturnItPrio: 40
   StayAlive: 100
   defaultIdlePrio: 1
   defaultWanderPrio: 2
@@ -84,4 +84,4 @@ MonoBehaviour:
   Settings: {fileID: 11400000, guid: 1b08550701af21b44aac0e77b049f306, type: 2}
   StoppingDistance: 1.9
   SeekingAttention: 0
-  ballInMouth: 1
+  ballInMouth: 0

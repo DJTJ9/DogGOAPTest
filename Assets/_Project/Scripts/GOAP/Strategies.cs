@@ -817,6 +817,7 @@ public class DropBallStrategy : IActionStrategy
         this.animations = animations;
         this.dog = dog;
         this.playerTransform = playerTransform;
+        this.dropRange = dropRange;
         ballAvailable = dog.ballAvailable;
         
         dropAnimationTimer = new CountdownTimer(10f);
@@ -849,7 +850,7 @@ public class DropBallStrategy : IActionStrategy
         Complete = false;
         dog.StoppingDistance = dropRange;
         currentState = DropState.MovingToPlayer;
-        agent.stoppingDistance = dropRange - 0.2f;
+        agent.stoppingDistance = dropRange;
         agent.SetDestination(playerTransform.position);
     }
 
@@ -879,7 +880,8 @@ public class DropBallStrategy : IActionStrategy
 
     private void DropBall(float deltaTime) {
         if (!dog.ballInMouth) Complete = true;
-        else dropAnimationTimer.Tick(deltaTime);
+        
+        dropAnimationTimer.Tick(deltaTime);
     }
 
     public void Stop() {

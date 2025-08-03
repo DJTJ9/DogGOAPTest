@@ -38,17 +38,29 @@ public class DogStatus : MonoBehaviour, IInteractable
     [SerializeField]
     TMP_Text interactionText;
 
+    [SerializeField]
     private string interactionName;
     
+    private string interactionNameHolder;
+    
+    private void Start() {
+        interactionNameHolder = interactionName;
+    }
+    
     private void LateUpdate() {
-        if (dog.SeekingAttention) interactionName = "Treat";
-        interactionName = "Status";
-        canvas.transform.LookAt(cam.transform.position); // transform.position + cam.transform.forward
+        canvas.transform.LookAt(cam.transform.position);
+        
+        if (dog.SeekingAttention) {
+            interactionName = "Treat";
+            return;
+        }
+        
+        interactionName = interactionNameHolder;
     }
 
     public IEnumerator ShowStatus() {
         healthBar.SetActive(false);
-        interactionText.gameObject.SetActive(false);
+        interactionNameHolder = "";
         yield return bubble1.transform.DOScale(Vector3.one, animationDuration).SetEase(bubble1AppearCurve).WaitForCompletion();
         yield return bubble2.transform.DOScale(Vector3.one, animationDuration).SetEase(bubble2AppearCurve).WaitForCompletion();
         yield return bubble3.transform.DOScale(Vector3.one, animationDuration).SetEase(bubble3AppearCurve).WaitForCompletion();
@@ -79,8 +91,8 @@ public class DogStatus : MonoBehaviour, IInteractable
         yield return bedIcon.transform.DOScale(Vector3.zero, animationDuration);
         yield return ballIcon.transform.DOScale(Vector3.zero, animationDuration);
         
-        healthBar.SetActive(true); 
-        interactionText.gameObject.SetActive(true);
+        healthBar.SetActive(true);
+        interactionNameHolder = "Status";
         Debug.Log("Tween finished!");
     }
 

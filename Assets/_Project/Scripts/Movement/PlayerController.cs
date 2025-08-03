@@ -44,7 +44,7 @@ public class PlayerController : MonoBehaviour
     private ScriptableBoolValue dogCalled;
 
     private AnimationControllerPlayer animations;
-   
+
     private InputAction moveInputAction;
     private InputAction jumpInputAction;
     private InputAction lookInputAction;
@@ -118,6 +118,7 @@ public class PlayerController : MonoBehaviour
         interactionInputAction = playerInput.actions["Interact"];
         interactionInputAction.started += OnInteractInput;
         interactionInputAction.started += OnStatusRequstInput;
+        interactionInputAction.started += OnDropInput;
         interactionInputAction.started += OnGrabInput;
 
         dropInputAction = playerInput.actions["Drop"];
@@ -180,11 +181,11 @@ public class PlayerController : MonoBehaviour
             if (grabbableObject == null) {
                 if (Physics.Raycast(mainCameraTransform.position, mainCameraTransform.forward,
                         out RaycastHit raycastHit, interactionDistance)) {
-                    if (raycastHit.transform.TryGetComponent(out GrabbableObject grabbableObj)) {
-                        grabbableObj.Grab(objectGrabPoint);
-                        grabbableObj.GetComponent<CapsuleCollider>().enabled = false;
-                        grabbableObj.objectPossessed = true;
-                        grabbableObject = grabbableObj;
+                    if (raycastHit.transform.TryGetComponent(out GrabbableObject grabbableObject)) {
+                        grabbableObject.Grab(objectGrabPoint);
+                        grabbableObject.GetComponent<CapsuleCollider>().enabled = false;
+                        grabbableObject.objectPossessed = true;
+                        this.grabbableObject = grabbableObject;
                         ballThrown.Value = false;
                         ballInHand.Value = true;
                         ballReturned.Value = false;
@@ -195,11 +196,14 @@ public class PlayerController : MonoBehaviour
 
     private void OnDropInput(InputAction.CallbackContext context) {
         if (context.phase == InputActionPhase.Started) {
-            grabbableObject.Drop();
-            grabbableObject.objectPossessed = false;
-            grabbableObject = null;
-            ballInHand.Value = false;
-            ballReturned.Value = true;
+            if (grabbableObject != null) {
+                grabbableObject.GetComponent<CapsuleCollider>().enabled = true;
+                grabbableObject.Drop();
+                grabbableObject.objectPossessed = false;
+                grabbableObject = null;
+                ballInHand.Value = false;
+                ballReturned.Value = true;
+            }
         }
     }
 
@@ -214,7 +218,6 @@ public class PlayerController : MonoBehaviour
             grabbableObject = null;
             ballThrown.Value = true;
             ballInHand.Value = false;
-            
         }
     }
 
@@ -226,6 +229,7 @@ public class PlayerController : MonoBehaviour
                 }
             }
         }
+
         dogCalled.Value = !dogCalled.Value;
     }
 

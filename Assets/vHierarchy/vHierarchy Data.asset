@@ -73,6 +73,13 @@ MonoBehaviour:
         - globalObjectIdString: GlobalObjectId_V1-2-99c9720ab356a0642a771bea13969a05-2776153189305019602-1536510691302466093
         - globalObjectIdString: GlobalObjectId_V1-2-99c9720ab356a0642a771bea13969a05-7484644687131541789-5810436878130382640
         - globalObjectIdString: GlobalObjectId_V1-2-99c9720ab356a0642a771bea13969a05-7092775352889968647-599023458
+        - globalObjectIdString: GlobalObjectId_V1-2-99c9720ab356a0642a771bea13969a05-3961675071015143593-7618824781439994011
+        - globalObjectIdString: GlobalObjectId_V1-2-99c9720ab356a0642a771bea13969a05-3961675071015143593-1250535972
+        - globalObjectIdString: GlobalObjectId_V1-2-99c9720ab356a0642a771bea13969a05-3961675071015143593-216772335
+        - globalObjectIdString: GlobalObjectId_V1-2-99c9720ab356a0642a771bea13969a05-3961675071015143593-807309810
+        - globalObjectIdString: GlobalObjectId_V1-2-99c9720ab356a0642a771bea13969a05-3961675071015143593-619286752
+        - globalObjectIdString: GlobalObjectId_V1-2-99c9720ab356a0642a771bea13969a05-1847474342833409199-8343626074978360859
+        - globalObjectIdString: GlobalObjectId_V1-2-99c9720ab356a0642a771bea13969a05-1847474342833409199-5390934640809429309
         values:
         - colorIndex: 7
           iconNameOrGuid: b20590aafbdb7c74ab7de5dcd5d6bac6
@@ -181,6 +188,20 @@ MonoBehaviour:
         - colorIndex: 3
           iconNameOrGuid: 
         - colorIndex: 5
+          iconNameOrGuid: 
+        - colorIndex: 3
+          iconNameOrGuid: 
+        - colorIndex: 3
+          iconNameOrGuid: 
+        - colorIndex: 3
+          iconNameOrGuid: 
+        - colorIndex: 3
+          iconNameOrGuid: 
+        - colorIndex: 3
+          iconNameOrGuid: 
+        - colorIndex: 3
+          iconNameOrGuid: 
+        - colorIndex: 3
           iconNameOrGuid: 
     - goDatas_byGlobalId:
         keys:
