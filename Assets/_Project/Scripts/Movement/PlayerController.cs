@@ -1,9 +1,9 @@
-using System;
 using ScriptableValues;
+using Sirenix.OdinInspector;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.InputSystem;
-// using BlackboardSystem;
-using UnityEngine.Serialization;
+
 
 public class PlayerController : MonoBehaviour
 {
@@ -24,8 +24,7 @@ public class PlayerController : MonoBehaviour
     private GrabbableObject grabbableObject;
 
     [Header("Input")]
-    [SerializeField]
-    private PlayerInput playerInput;
+    public static PlayerInput PlayerInput;
 
     [Header("Settings")]
     [SerializeField]
@@ -43,6 +42,12 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     private ScriptableBoolValue dogCalled;
 
+    [FoldoutGroup("Events", expanded: false), SerializeField]
+    private UnityEvent pauseEvent;
+    
+    [FoldoutGroup("Events"), SerializeField]
+    private UnityEvent unpauseEvent;
+
     private AnimationControllerPlayer animations;
 
     private InputAction moveInputAction;
@@ -57,8 +62,10 @@ public class PlayerController : MonoBehaviour
     private const float interactionDistance = 5f;
 
     private void Awake() {
+        PlayerInput = GetComponent<PlayerInput>();
         MapInputActions();
         animations = GetComponent<AnimationControllerPlayer>();
+        Cursor.lockState = CursorLockMode.Locked;
     }
 
     /// <summary>
@@ -67,8 +74,8 @@ public class PlayerController : MonoBehaviour
     /// Rotates the rigidbody horizontally if cursor lock mode is locked.
     /// </summary>
     private void Update() {
-        if (Mouse.current.rightButton.wasPressedThisFrame) Cursor.lockState = CursorLockMode.Locked;
-        if (Keyboard.current.escapeKey.wasPressedThisFrame) Cursor.lockState = CursorLockMode.None;
+        // if (Mouse.current.rightButton.wasPressedThisFrame) Cursor.lockState = CursorLockMode.Locked == Cursor.lockState ? CursorLockMode.None : CursorLockMode.Locked;
+        // if (Keyboard.current.escapeKey.wasPressedThisFrame) Cursor.lockState = CursorLockMode.None;
 
         // Cursor.lockState = CursorLockMode.Locked;
         
@@ -105,30 +112,33 @@ public class PlayerController : MonoBehaviour
     /// Subcribes the OnJumpInput method to the jump started action
     /// </summary>
     private void MapInputActions() {
-        moveInputAction = playerInput.actions["Move"];
+        moveInputAction = PlayerInput.actions["Move"];
 
-        jumpInputAction = playerInput.actions["Jump"];
+        jumpInputAction = PlayerInput.actions["Jump"];
         jumpInputAction.started += OnJumpInput;
 
-        lookInputAction = playerInput.actions["Look"];
+        lookInputAction = PlayerInput.actions["Look"];
 
-        interactionInputAction = playerInput.actions["Interact"];
+        interactionInputAction = PlayerInput.actions["Interact"];
         interactionInputAction.started += OnInteractInput;
         interactionInputAction.started += OnStatusRequstInput;
         interactionInputAction.started += OnDropInput;
         interactionInputAction.started += OnGrabInput;
 
-        dropInputAction = playerInput.actions["Drop"];
+        dropInputAction = PlayerInput.actions["Drop"];
         dropInputAction.started += OnDropInput;
 
-        throwInputAction = playerInput.actions["Throw"];
+        throwInputAction = PlayerInput.actions["Throw"];
         throwInputAction.started += OnThrowInput;
 
-        callDogInputAction = playerInput.actions["Call Dog"];
+        callDogInputAction = PlayerInput.actions["Call Dog"];
         callDogInputAction.started += OnCallDogInput;
 
-        applicationQuitInputAction = playerInput.actions["Quit"];
+        applicationQuitInputAction = PlayerInput.actions["OpenMenu"];
         applicationQuitInputAction.started += OnPauseMenuInput;
+        
+        applicationQuitInputAction = PlayerInput.actions["CloseMenu"];
+        applicationQuitInputAction.started += OnUnpauseMenuInput;
     }
 
     private void OnJumpInput(InputAction.CallbackContext context) {
@@ -232,12 +242,13 @@ public class PlayerController : MonoBehaviour
 
     private void OnPauseMenuInput(InputAction.CallbackContext context) {
         if (context.phase == InputActionPhase.Started) {
-            GameState currentGameState = GameStateManager.Instance.CurrentGameState;
-            GameState newGameState = currentGameState == GameState.Gameplay
-                ? GameState.Paused
-                : GameState.Gameplay;
- 
-            GameStateManager.Instance.SetState(newGameState);
+            pauseEvent.Invoke();
+        }
+    }
+    
+    private void OnUnpauseMenuInput(InputAction.CallbackContext context) {
+        if (context.phase == InputActionPhase.Started) {
+            unpauseEvent.Invoke();
         }
     }
 }

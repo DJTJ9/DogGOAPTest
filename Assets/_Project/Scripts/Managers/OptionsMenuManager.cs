@@ -6,22 +6,35 @@ using UnityEngine.UI;
 
 public class OptionsMenuManager : MonoBehaviour
 {
+    // [SerializeField]
+    // private GameObject mainMenuUI;
+    
+    [SerializeField]
+    private GameObject pauseMenuUI;
+    
+    [SerializeField]
+    private GameObject optionsMenuUI;
+    
     [SerializeField]
     private AudioMixer audioMixer;
-    public Slider slider;
-
-
-    //private void Start()
-    //{
-    //    slider.value = 1f;
-    //    SetVolume(slider.value);
-    //    slider.onValueChanged.AddListener(SetVolume);
-    //}
 
     public void PlayGame()
     {
-        SceneManager.LoadScene("Level1");
+        SceneManager.LoadScene("StartLevel");
         //SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+    }
+
+    public void RestartGame() {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        
+        Time.timeScale = 1f;
+        Cursor.lockState = CursorLockMode.Locked;
+        // Cursor.visible = false;
+    }
+    
+    public void BackToMainMenu()
+    {
+        SceneManager.LoadScene("MainMenu");
     }
 
     public void QuitGame()
