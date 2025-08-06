@@ -70,17 +70,14 @@ public class PlayerController : MonoBehaviour
         if (Mouse.current.rightButton.wasPressedThisFrame) Cursor.lockState = CursorLockMode.Locked;
         if (Keyboard.current.escapeKey.wasPressedThisFrame) Cursor.lockState = CursorLockMode.None;
 
-
+        // Cursor.lockState = CursorLockMode.Locked;
+        
         var moveDirection = GetMoveDirectionFromInput();
         rigidbodyMovement.Move(moveDirection);
 
         if (Cursor.lockState == CursorLockMode.Locked) {
             var rotation = GetRotationFromInput();
             rigidbodyMovement.RotateHorizontal(rotation.x * lookSensitivity);
-        }
-
-        if (Input.GetKeyDown(KeyCode.Q)) {
-            // blackboard.Debug();
         }
     }
 
@@ -131,7 +128,7 @@ public class PlayerController : MonoBehaviour
         callDogInputAction.started += OnCallDogInput;
 
         applicationQuitInputAction = playerInput.actions["Quit"];
-        applicationQuitInputAction.started += context => OnApplicationQuit();
+        applicationQuitInputAction.started += OnPauseMenuInput;
     }
 
     private void OnJumpInput(InputAction.CallbackContext context) {
@@ -233,11 +230,14 @@ public class PlayerController : MonoBehaviour
         dogCalled.Value = !dogCalled.Value;
     }
 
-    private void OnApplicationQuit() {
-        // #if UNITY_EDITOR
-        // UnityEditor.EditorApplication.isPlaying = false;
-        // #endif
-
-        Application.Quit();
+    private void OnPauseMenuInput(InputAction.CallbackContext context) {
+        if (context.phase == InputActionPhase.Started) {
+            GameState currentGameState = GameStateManager.Instance.CurrentGameState;
+            GameState newGameState = currentGameState == GameState.Gameplay
+                ? GameState.Paused
+                : GameState.Gameplay;
+ 
+            GameStateManager.Instance.SetState(newGameState);
+        }
     }
 }

@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 public class DogInteractions : MonoBehaviour, IInteractable, ICommandable
 {
@@ -10,6 +11,8 @@ public class DogInteractions : MonoBehaviour, IInteractable, ICommandable
     [SerializeField]
     private string interactionName;
 
+    private bool treatWasGiven = false;
+
     public string GetInteractionName() {
         return interactionName;
     }
@@ -18,13 +21,20 @@ public class DogInteractions : MonoBehaviour, IInteractable, ICommandable
         dogStatus = GetComponent<DogStatus>();
     }
 
+    private void Update() {
+        if (!dog.SeekingAttention) treatWasGiven = false;
+    }
+
     public void Interact() {
-        if (dog.SeekingAttention) {
+        if (dog.SeekingAttention && !treatWasGiven) {
             dog.Fun += 25f;
             dog.Aggression -= 25f;
             dog.Satiety += 20f;
+            treatWasGiven = true;
         }
-        else StartCoroutine(dogStatus.ShowStatus());
+        else if (!dog.SeekingAttention) {
+            StartCoroutine(dogStatus.ShowStatus());
+        }
     }
 
     public void ExecuteCommand() {

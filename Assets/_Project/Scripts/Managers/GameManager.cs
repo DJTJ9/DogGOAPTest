@@ -8,17 +8,17 @@ public class GameManager : MonoBehaviour
     private float roundDuration;
     
     [HideInInspector]
-    public CountdownTimer gameTimer;
+    public CountdownTimer GameTimer;
 
     private void Awake() {
-        gameTimer = new CountdownTimer(roundDuration);
+        GameTimer = new CountdownTimer(roundDuration);
     }
     
     private void Start() {
-        gameTimer.Start();
+        GameTimer.Start();
     }
     
     private void OnDestroy() {
-        gameTimer.Stop();
+        GameTimer.Stop();
     }
 }

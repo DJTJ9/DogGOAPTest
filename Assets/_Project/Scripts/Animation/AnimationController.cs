@@ -2,24 +2,6 @@ using System.Collections;
 using UnityEngine;
 using ImprovedTimers;
 
-public enum AnimationActionType
-{
-    NoAction = 0,
-    Bark,
-    Beg = 2,
-    Cower,
-    Dig,
-    Eat,
-    Howl,
-    Drink,
-    Pee,
-    Poo,
-    Shake,
-    Sniff,
-    Yawn,
-    ShakeToy
-}
-
 public class AnimationController : MonoBehaviour {
     const float k_crossfadeDuration = 0.1f;
     

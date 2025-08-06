@@ -9,7 +9,8 @@
     KeepBoredomLow,
     FetchBallAndReturnIt,
     StayAlive,
-    FollowCommand
+    FollowCommand,
+    ChaseRat
 }
 
 public enum Beliefs {
@@ -60,7 +61,9 @@ public enum Beliefs {
     DogAtObstacle4,
     DogCalled,
     FollowCommand,
-    FollowPlayer
+    FollowPlayer,
+    RatIsRunning,
+    ChaseRat
 }
 
 public enum ActionType
@@ -97,5 +100,24 @@ public enum ActionType
     EatAtBowl2,
     DrinkAtBowl2,
     ComeToPlayer,
-    WaitForAction
+    WaitForAction,
+    ChaseRat
+}
+
+public enum AnimationActionType
+{
+    NoAction = 0,
+    Bark,
+    Beg = 2,
+    Cower,
+    Dig,
+    Eat,
+    Howl,
+    Drink,
+    Pee,
+    Poo,
+    Shake,
+    Sniff,
+    Yawn,
+    ShakeToy
 }

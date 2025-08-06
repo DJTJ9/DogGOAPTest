@@ -61,6 +61,7 @@ public class GoapAgent : MonoBehaviour
     private Obstacle obstacle2;
     private Obstacle obstacle3;
     private Obstacle obstacle4;
+    private GameObject rat;
     
     #endregion
 
@@ -132,6 +133,8 @@ public class GoapAgent : MonoBehaviour
         factory.AddBelief(Beliefs.WaterBowl1IsAvailable, () => dog.WaterBowl1Available.Value);
         factory.AddBelief(Beliefs.WaterBowl2IsAvailable, () => dog.WaterBowl2Available.Value);
         factory.AddBelief(Beliefs.RestingSpotIsAvailable, () => dog.RestingSpotAvailable);
+        // factory.AddBelief(Beliefs.RatIsRunning, () => dog.RatIsRunning);
+        // factory.AddBelief(Beliefs.ChaseRat, () => false);
 
         factory.AddLocationBelief(Beliefs.DogAtRestingPosition, 3f, blackboard.RestingPosition);
         factory.AddLocationBelief(Beliefs.DogAtFoodBowl1, 2.3f, blackboard.FoodBowl1);
@@ -338,6 +341,12 @@ public class GoapAgent : MonoBehaviour
             .AddPrecondition(beliefs[Beliefs.ReturnBall])
             .AddEffect(beliefs[Beliefs.BallReturned])
             .Build());
+
+        // actions.Add(new AgentAction.Builder(ActionType.ChaseRat)
+        //     .WithStrategy(new ChaseRatStrategy(navMeshAgent, dog, rat, dog.RatIsRunning))
+        //     .AddPrecondition(beliefs[Beliefs.RatIsRunning])
+        //     .AddEffect(beliefs[Beliefs.ChaseRat])
+        //     .Build());
     }
     
     [Button("Update Goals"), FoldoutGroup("Buttons"), PropertyOrder(-10)]
@@ -383,6 +392,11 @@ public class GoapAgent : MonoBehaviour
             .WithPriority(200)
             .WithDesiredEffect(beliefs[Beliefs.FollowCommand])
             .Build());
+
+        // goals.Add(new AgentGoal.Builder(GoalType.ChaseRat)
+        //     .WithPriority(250)
+        //     .WithDesiredEffect(beliefs[Beliefs.ChaseRat])
+        //     .Build());
         
         if (dog.Satiety < 10 || dog.Hydration < 10) {
             goals.Add(new AgentGoal.Builder(GoalType.StayAlive)
@@ -489,6 +503,8 @@ public class GoapAgent : MonoBehaviour
             actionPlan = potentialPlan;
         }
     }
+    
+    public void SetActiveRat(GameObject thisRat)  => rat = thisRat; 
 
 // #if UNITY_EDITOR
 //     private void OnGUI() {

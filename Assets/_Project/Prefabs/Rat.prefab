@@ -13,7 +13,6 @@ GameObject:
   - component: {fileID: -4709080101101234892}
   - component: {fileID: 8811468012002510640}
   - component: {fileID: 4653523049573590264}
-  - component: {fileID: 6560034412200940503}
   m_Layer: 8
   m_Name: Rat
   m_TagString: Untagged
@@ -71,6 +70,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 56a7800b653b86c479be488d097874b8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ratIsRunning: {fileID: 11400000, guid: 35244a64ad47b7946ad7bc0a3536922c, type: 2}
 --- !u!135 &8811468012002510640
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -114,18 +114,6 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 0}
---- !u!114 &6560034412200940503
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6813464145964376092}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c5955cc4a0944c11a251eaf0677657e6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &8723597358893485146
 PrefabInstance:
   m_ObjectHideFlags: 0

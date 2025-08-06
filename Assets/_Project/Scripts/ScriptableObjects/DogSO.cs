@@ -68,7 +68,10 @@ public class DogSO : ScriptableObject
     public ScriptableBoolValue RestingSpotAvailable;
     
     [TabGroup("Conditions"), InlineEditor(Expanded = true)]
-    public ScriptableBoolValue ballAvailable;
+    public ScriptableBoolValue BallAvailable;
+    
+    [TabGroup("Conditions"), InlineEditor(Expanded = true)]
+    public ScriptableBoolValue RatIsRunning;
     
     [FoldoutGroup("Stats Settings", expanded: false), SerializeField]
     private float defaultHealth;

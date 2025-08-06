@@ -31,21 +31,30 @@
         }
         
         private void Update() {
+            UpdateHealthSlider();
+            UpdateInteractionName();
+        }
+        
+        private void LateUpdate() {
+            canvas.transform.LookAt(cam.transform.position); // transform.position + cam.transform.forward
+        }
+
+        private void UpdateHealthSlider() {
             healthSlider.value = Health;
+            healthSlider.value = Mathf.Clamp(healthSlider.value, 0f, 100f);
+        }
+
+        private void UpdateInteractionName() {
             if (Health <= 0) {
                 interactionName = "";
                 canvas.SetActive(false);
                 actionCostIncrease = 100;
             }
-            else if (Health >= 99.9f) interactionName = "";
+            else if (Health >= 99f) interactionName = "";
             else {
                 interactionName = "Repair";
                 actionCostIncrease = 0;
             }
-        }
-        
-        private void LateUpdate() {
-            canvas.transform.LookAt(cam.transform.position); // transform.position + cam.transform.forward
         }
 
         public string GetInteractionName() {

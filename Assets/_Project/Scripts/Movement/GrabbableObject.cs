@@ -1,5 +1,6 @@
 using System;
 using ScriptableValues;
+using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -8,7 +9,7 @@ public class GrabbableObject : MonoBehaviour, IInteractable
 {
     public float ThrowSpeed = 50f;
     
-    [SerializeField]
+    [SerializeField, Optional]
     private ScriptableBoolValue ballInHand;
     
     [HideInInspector]
@@ -59,6 +60,8 @@ public class GrabbableObject : MonoBehaviour, IInteractable
     }
 
     public string GetInteractionName() {
+        if (ballInHand == null) return "Grab";
+        
         return ballInHand.Value ? "Drop" : "Grab";
     }
 

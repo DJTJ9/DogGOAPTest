@@ -95,6 +95,41 @@ public class MoveStrategy : IActionStrategy
     }
 }
 
+public class ChaseRatStrategy : IActionStrategy
+{
+    readonly NavMeshAgent agent;
+    private readonly DogSO dog;
+    private readonly GameObject rat;
+    private readonly ScriptableBoolValue ratIsRunning;
+    readonly float stoppingDistance;
+
+    public bool CanPerform => !Complete;
+    public bool Complete { get; private set; }
+
+    public ChaseRatStrategy(NavMeshAgent agent, DogSO dog, GameObject rat, ScriptableBoolValue ratIsRunning, float stoppingDistance = 2.15f) {
+        this.agent = agent;
+        this.dog = dog;
+        this.rat = rat;
+        this.ratIsRunning = ratIsRunning;
+        this.stoppingDistance = stoppingDistance;
+    }
+
+    public void Start() {
+        dog.StoppingDistance = stoppingDistance;
+        agent.SetDestination(rat.transform.position);
+        Debug.LogWarning($"Start MoveStrategy to {rat.name}");
+    }
+    
+    public void Update(float deltaTime) {
+        agent.SetDestination(rat.transform.position);
+        if (!ratIsRunning.Value) Complete = true;
+    }
+
+    public void Stop() {
+        agent.ResetPath();
+    }
+}
+
 public class WanderStrategy : IActionStrategy
 {
     private readonly NavMeshAgent agent;
@@ -152,7 +187,7 @@ public class DiggingStrategy : IActionStrategy
 
 
         digAnimationTimer = new CountdownTimer(7f);
-        itemPopUpTimer = new CountdownTimer(4.5f);
+        itemPopUpTimer = new CountdownTimer(3f);
         digAnimationTimer.OnTimerStart += () => { Complete = false; };
         digAnimationTimer.OnTimerStop += () => {
             dog.Fun += funFactor;
@@ -771,12 +806,12 @@ public class PickUpBallStrategy : IActionStrategy
     }
 
     private void PickUpBall(float deltaTime) {
-        if (!dog.ballAvailable) Complete = true;
+        if (!dog.BallAvailable) Complete = true;
         if (Vector3.Distance(agent.transform.position, ball.transform.position) <= pickupRange) {
             pickUpAnimationTimer.Tick(deltaTime);
             pickUpTimer.Tick(deltaTime);
             dog.ballInMouth = true;
-            dog.ballAvailable.Value = false;
+            dog.BallAvailable.Value = false;
         }
         else currentState = PickUpState.MovingToBall;
     }
@@ -818,7 +853,7 @@ public class DropBallStrategy : IActionStrategy
         this.dog = dog;
         this.playerTransform = playerTransform;
         this.dropRange = dropRange;
-        ballAvailable = dog.ballAvailable;
+        ballAvailable = dog.BallAvailable;
         
         dropAnimationTimer = new CountdownTimer(10f);
         dropAnimationTimer.OnTimerStart += () => {
@@ -846,7 +881,7 @@ public class DropBallStrategy : IActionStrategy
     }
 
     public void Start() {
-        if (!dog.ballAvailable) Complete = true;
+        if (!dog.BallAvailable) Complete = true;
         Complete = false;
         dog.StoppingDistance = dropRange;
         currentState = DropState.MovingToPlayer;
