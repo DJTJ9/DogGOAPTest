@@ -67,7 +67,7 @@ MonoBehaviour:
       m_Top: 0
       m_Bottom: 0
     m_Font: {fileID: 0}
-    m_FontSize: 0
+    m_FontSize: 12
     m_FontStyle: 0
     m_Alignment: 3
     m_WordWrap: 0
@@ -820,7 +820,7 @@ MonoBehaviour:
       m_Top: 0
       m_Bottom: 0
     m_Font: {fileID: 0}
-    m_FontSize: 0
+    m_FontSize: 12
     m_FontStyle: 0
     m_Alignment: 3
     m_WordWrap: 0
@@ -1098,7 +1098,7 @@ MonoBehaviour:
   StaticObjectsLayer: 0
   AlignStrength: 1
   ExtraDragForRotationMode: 100
-  GravityStrength: {x: -1.4192438e-10, y: -9.752969, z: -0.0000011626446}
+  GravityStrength: {x: -1.4192016e-10, y: -9.752679, z: -0.00000116261}
   LimitBodyVelocityInGravityMode: 0
   SetGravityInDirectionOfMouse: 0
   PausePositionReajustment: 1

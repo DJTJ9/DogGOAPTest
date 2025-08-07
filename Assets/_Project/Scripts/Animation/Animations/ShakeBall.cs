@@ -23,15 +23,6 @@ public class ShakeBall : MonoBehaviour
     
     private bool isShaking;
 
-    private void Awake() {
-        // // Falls ballTransform nicht in Inspector gesetzt wurde, versuchen wir es zu finden
-        // if (ballTransform == null) {
-        //     // Suchen nach einem Kind-GameObject mit dem Tag "Ball" oder ähnlichem
-        //     // oder verwende objectGrabPoint selbst als Fallback
-        //     ballTransform = objectGrabPoint;
-        // }
-    }
-
     public void Shake(Transform objectGrabPoint) {
         StartCoroutine(ShakeCoroutine(objectGrabPoint));
     }
