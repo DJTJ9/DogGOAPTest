@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using Sirenix.OdinInspector;
 
-[ManageableData, InlineEditor(Expanded = true)]
+[InlineEditor(Expanded = true)]
 [CreateAssetMenu(fileName = "Known Locations", menuName = "Scriptable Objects/Known Locations")]
 public class KnownLocationsSO : ScriptableObject
 {

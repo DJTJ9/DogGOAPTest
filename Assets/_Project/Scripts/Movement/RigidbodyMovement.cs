@@ -1,17 +1,26 @@
+using Sirenix.OdinInspector;
 using UnityEngine;
 
 [RequireComponent (typeof(Rigidbody), typeof(GroundChecker))]
 public class RigidbodyMovement : MonoBehaviour
 {
-    [Header("Settings")]
-    public float Speed;
-    public float MaxSpeed;
-    public float JumpPower;
-    public float JumpSpeedModifier = 1;
-    public float FallSpeedModifier = 1;
+    [FoldoutGroup("Settings", expanded: true), SerializeField, Range(0, 20)]
+    private float speed;
+    
+    [FoldoutGroup("Settings", expanded: true), SerializeField, Range(0, 20)]
+    private float maxSpeed;
+    
+    [FoldoutGroup("Settings", expanded: true), SerializeField, Range(0, 20)]
+    private float jumpPower;
+    
+    [FoldoutGroup("Settings", expanded: true), SerializeField, Range(0, 20)]
+    private float jumpSpeedModifier = 1;
+    
+    [FoldoutGroup("Settings", expanded: true), SerializeField, Range(0, 20)]
+    private float fallSpeedModifier = 1;
 
     private new Transform transform;
-    private new Rigidbody rigidbody;
+    private Rigidbody rb;
     private AnimationControllerPlayer animations;
     private GroundChecker groundChecker;
 
@@ -20,7 +29,7 @@ public class RigidbodyMovement : MonoBehaviour
     private void Awake()
     {
         transform = GetComponent<Transform>();
-        rigidbody = GetComponent<Rigidbody>();
+        rb = GetComponent<Rigidbody>();
         animations = GetComponent<AnimationControllerPlayer>();
         groundChecker = GetComponent<GroundChecker>();
     }
@@ -29,22 +38,22 @@ public class RigidbodyMovement : MonoBehaviour
     {
         UpdateHorizontalMovement();
         UpdateVerticalMovement();
-        if (rigidbody.linearVelocity.magnitude > 0.5f) animations.SetSpeed(rigidbody.linearVelocity.magnitude);
+        if (rb.linearVelocity.magnitude > 0.5f) animations.SetSpeed(rb.linearVelocity.magnitude);
         else animations.SetSpeed(0f);
     }
 
     /// <summary>
     /// Recieves a move direction
     /// </summary>
-    public void Move(Vector3 _direction)
+    public void Move(Vector3 direction)
     {
-        moveDirection = _direction;
+        moveDirection = direction;
     }
 
     public void Jump()
     {
-        if (groundChecker.isGrounded == true)
-            rigidbody.AddForce(Vector3.up * JumpPower, ForceMode.Impulse);
+        if (groundChecker.isGrounded && rb != null)
+            rb.AddForce(Vector3.up * jumpPower, ForceMode.Impulse);
     }
 
     /// <summary>
@@ -55,28 +64,28 @@ public class RigidbodyMovement : MonoBehaviour
     /// </summary>
     public void UpdateHorizontalMovement()
     {
-        Vector3 currentVelocity = rigidbody.linearVelocity;
+        Vector3 currentVelocity = rb.linearVelocity;
         Vector3 targetVelocity = new Vector3(moveDirection.x, 0f , moveDirection.z);
-        targetVelocity *= Speed;
+        targetVelocity *= speed;
 
         targetVelocity = transform.TransformDirection(targetVelocity);
 
         Vector3 velocityChange = targetVelocity - currentVelocity;
         velocityChange = new Vector3(velocityChange.x, 0f, velocityChange.z);
-        velocityChange = Vector3.ClampMagnitude(velocityChange, MaxSpeed);
+        velocityChange = Vector3.ClampMagnitude(velocityChange, maxSpeed);
 
-        rigidbody.AddForce(velocityChange, ForceMode.VelocityChange);
+        rb.AddForce(velocityChange, ForceMode.VelocityChange);
     }
 
     /// <summary>
     /// Recieves the current rotation
     /// Sets the rotation to a target rotation
     /// </summary>
-    public void RotateHorizontal(float _rotation)
+    public void RotateHorizontal(float rotation)
     {
-        var currentRotation = rigidbody.rotation.eulerAngles;
-        var targetRotation = currentRotation + new Vector3(0f, _rotation, 0f);
-        rigidbody.rotation = Quaternion.Euler(targetRotation);
+        var currentRotation = rb.rotation.eulerAngles;
+        var targetRotation = currentRotation + new Vector3(0f, rotation, 0f);
+        rb.rotation = Quaternion.Euler(targetRotation);
     }
 
     /// <summary>
@@ -84,10 +93,10 @@ public class RigidbodyMovement : MonoBehaviour
     /// </summary>
     private void UpdateVerticalMovement()
     {
-        if (rigidbody.linearVelocity.y < 0)
-            rigidbody.linearVelocity += Vector3.up * Physics.gravity.y * (FallSpeedModifier - 1) * Time.fixedDeltaTime;
+        if (rb.linearVelocity.y < 0)
+            rb.linearVelocity += Vector3.up * Physics.gravity.y * (fallSpeedModifier - 1) * Time.fixedDeltaTime;
 
-        if (rigidbody.linearVelocity.y > 0)
-            rigidbody.linearVelocity += Vector3.up * Physics.gravity.y * JumpSpeedModifier * Time.fixedDeltaTime;
+        if (rb.linearVelocity.y > 0)
+            rb.linearVelocity += Vector3.up * Physics.gravity.y * jumpSpeedModifier * Time.fixedDeltaTime;
     }
 }

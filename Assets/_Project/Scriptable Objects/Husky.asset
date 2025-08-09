@@ -13,11 +13,11 @@ MonoBehaviour:
   m_Name: Husky
   m_EditorClassIdentifier: 
   Health: 100
-  Aggression: 100
-  Stamina: 100
-  Satiety: 80
-  Hydration: 40
-  Fun: 0
+  Aggression: 0
+  Stamina: 81
+  Satiety: 61
+  Hydration: 97
+  Fun: 41
   Dominance: 60
   StatManager: {fileID: 11400000, guid: dc99d76271051df439d8051053ea5fab, type: 2}
   BallInHand: {fileID: 11400000, guid: e218d8f69f18b5f41ace3a5559f9df96, type: 2}
@@ -35,25 +35,25 @@ MonoBehaviour:
   BallAvailable: {fileID: 11400000, guid: 879a36c51d462174aaa998505f95f090, type: 2}
   RatIsRunning: {fileID: 11400000, guid: 35244a64ad47b7946ad7bc0a3536922c, type: 2}
   defaultHealth: 100
-  defaultAggression: 100
+  defaultAggression: 0
   defaultStamina: 100
   defaultHunger: 80
   defaultThirst: 40
-  defaultFun: 0
+  defaultFun: 60
   defaultDominance: 60
   defaultDogCalled: 0
-  SleepCosts: 15
-  RestCosts: 15
-  SeekAttentionCosts: 15
-  RageObstacle1Costs: 15
-  RageObstacle2Costs: 15
-  RageObstacle3Costs: 15
-  RageObstacle4Costs: 15
-  DiggingCosts: 0
-  EatAtBowl1Costs: 0
-  EatAtBowl2Costs: 0
-  DrinkAtBowl1Costs: 0
-  DrinkAtBowl2Costs: 0
+  SleepCosts: 6.0574327
+  RestCosts: 23.423891
+  SeekAttentionCosts: 10.052513
+  RageObstacle1Costs: 19.824263
+  RageObstacle2Costs: 18.370552
+  RageObstacle3Costs: 18.373371
+  RageObstacle4Costs: 18.270336
+  DiggingCosts: 4.100345
+  EatAtBowl1Costs: 8.214559
+  EatAtBowl2Costs: 7.8498516
+  DrinkAtBowl1Costs: 8.459712
+  DrinkAtBowl2Costs: 10.386275
   defaultSleepCosts: 15
   defaultRestCosts: 15
   defaultSeekAttentionCosts: 15
@@ -68,11 +68,11 @@ MonoBehaviour:
   defaultDrinkAtBowl2Costs: 0
   IdlePrio: 1
   WanderPrio: 2
-  KeepStaminaUpPrio: 15
-  KeepHydrationLevelUpPrio: 15
-  KeepSatietyLevelUpPrio: 15
-  KeepFunUpPrio: 150
-  FetchBallAndReturnItPrio: 50
+  KeepStaminaUpPrio: 6.9
+  KeepHydrationLevelUpPrio: 8.9
+  KeepSatietyLevelUpPrio: 5.3
+  KeepFunUpPrio: 145.9
+  FetchBallAndReturnItPrio: 45.9
   StayAlive: 100
   defaultIdlePrio: 1
   defaultWanderPrio: 2
@@ -83,6 +83,6 @@ MonoBehaviour:
   defaultFetchBallAndReturnItPrio: 50
   defaultStayAlive: 100
   Settings: {fileID: 11400000, guid: 1b08550701af21b44aac0e77b049f306, type: 2}
-  StoppingDistance: 1.9
+  StoppingDistance: 2
   SeekingAttention: 0
   ballInMouth: 1

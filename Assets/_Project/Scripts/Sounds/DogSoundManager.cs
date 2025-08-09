@@ -1,6 +1,7 @@
 ﻿using System;
 using Sirenix.OdinInspector;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class DogSoundManager : MonoBehaviour
 {
@@ -8,17 +9,29 @@ public class DogSoundManager : MonoBehaviour
     private DogSO dog;
 
     [FoldoutGroup("Audio"), SerializeField]
-    private AudioClip Barking;
+    private AudioClip barking1;
+    
+    [FoldoutGroup("Audio"), SerializeField]
+    private AudioClip barking2;
+    
+    [FoldoutGroup("Audio"), SerializeField]
+    private AudioClip barking3;
 
-    private void Update() {
-        PlayBarkingSoundOnLowStat();
-    }
+    // private void Update() {
+    //     PlayBarkingSoundOnLowStat();
+    // }
 
-    private void PlayBarkingSoundOnLowStat() {
-        if (Input.GetKeyDown(KeyCode.G)) {
-            if (dog.Stamina <= 30f || dog.Satiety <= 30f || dog.Hydration <= 30f || dog.Fun <= 30f) {
-                SoundFXManager.Instance.PlaySoundFXWithFixedDurationClip(Barking, transform, 1f, 0.5f);
-            }
+    public void PlayBarkingSoundOnLowStat(int barkSound) {
+        switch (barkSound) {
+            case 1:
+                SoundFXManager.Instance.PlaySoundFXWithFixedDurationClip(barking1, transform, 1f, 0.5f);
+                break;
+            case 2:
+                SoundFXManager.Instance.PlaySoundFXWithFixedDurationClip(barking2, transform, 1f, 0.5f);
+                break;
+            case 3:
+                SoundFXManager.Instance.PlaySoundFXWithFixedDurationClip(barking3, transform, 1f, 0.5f);
+                break;
         }
     }
 }

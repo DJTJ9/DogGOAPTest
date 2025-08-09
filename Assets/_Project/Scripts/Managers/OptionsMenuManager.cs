@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 using UnityEngine.Audio;
+using UnityEngine.Events;
 using UnityEngine.UI;
 
 public class OptionsMenuManager : MonoBehaviour
@@ -18,6 +19,9 @@ public class OptionsMenuManager : MonoBehaviour
     [SerializeField]
     private AudioMixer audioMixer;
 
+    [SerializeField]
+    private UnityEvent onRestart;
+
     public void PlayGame()
     {
         SceneManager.LoadScene("StartLevel");
@@ -29,7 +33,7 @@ public class OptionsMenuManager : MonoBehaviour
         
         Time.timeScale = 1f;
         Cursor.lockState = CursorLockMode.Locked;
-        // Cursor.visible = false;
+       onRestart.Invoke();
     }
     
     public void BackToMainMenu()

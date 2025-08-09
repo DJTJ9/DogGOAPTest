@@ -1,7 +1,7 @@
 ﻿using Sirenix.OdinInspector;
 using UnityEngine;
 
-[ManageableData, InlineEditor(Expanded = true)]
+[InlineEditor(Expanded = true)]
 [CreateAssetMenu(fileName = "StatManager", menuName = "Scriptable Objects/StatManager")]
 public class StatManager : ScriptableObject
 {

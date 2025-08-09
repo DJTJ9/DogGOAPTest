@@ -6,6 +6,7 @@ using ScriptableValues;
 using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.Events;
 using UnityEngine.UI;
 using Random = System.Random;
 
@@ -56,6 +57,9 @@ public class GoapAgent : MonoBehaviour
     private AgentAction currentAction;
     private IGoapPlanner gPlanner;
     private IKHandler ikHandler;
+
+    [SerializeField]
+    private UnityEvent deathEvent;
     
     private Obstacle obstacle1;
     private Obstacle obstacle2;
@@ -430,6 +434,7 @@ public class GoapAgent : MonoBehaviour
         if (dog.Health <= 0) {
             animations.SetAnimatorBool("Death_b", true);
             navMeshAgent.speed = 0f;
+            deathEvent.Invoke();
         }
         else {
             animations.SetAnimatorBool("Death_b", false);

@@ -13,7 +13,8 @@
     ChaseRat
 }
 
-public enum Beliefs {
+public enum Beliefs
+{
     Nothing,
     Idle,
     IsMoving,
@@ -33,12 +34,12 @@ public enum Beliefs {
     ReturnBall,
     FetchBall,
     DropBall,
-    
+
     //Global Beliefs
     FoodBowl1IsAvailable,
     WaterBowl1IsAvailable,
     RestingSpotIsAvailable,
-    
+
     //Location Beliefs
     DogAtRestingPosition,
     DogAtFoodBowl1,
@@ -46,7 +47,7 @@ public enum Beliefs {
     DogAtObstacle1,
     DogAtBall,
     DogAtPlayer,
-    
+
     //Sensor Beliefs
     PlayerInRange,
     PlayerInAttackRange,
@@ -120,4 +121,12 @@ public enum AnimationActionType
     Sniff,
     Yawn,
     ShakeToy
+}
+
+public enum DogSoundFX
+{
+    NoSound,
+    Bark1,
+    Bark2,
+    Bark3,
 }

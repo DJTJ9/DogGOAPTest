@@ -1244,7 +1244,7 @@ MonoBehaviour:
   m_Weight: 1
   m_Data:
     m_Root: {fileID: 7356610863790216034}
-    m_Tip: {fileID: 7619747662171621159}
+    m_Tip: {fileID: 9045265847230567693}
     m_Target: {fileID: 3027561813869574379}
     m_ChainRotationWeight: 1
     m_TipRotationWeight: 1
@@ -3455,6 +3455,7 @@ GameObject:
   - component: {fileID: 7566888078305542594}
   - component: {fileID: 7100849519622414471}
   - component: {fileID: 6485208329972664398}
+  - component: {fileID: 5151251654921174477}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -3658,11 +3659,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 45a8685f52c00574d9549d5304d77a24, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Speed: 10
-  MaxSpeed: 10
-  JumpPower: 10
-  JumpSpeedModifier: 1
-  FallSpeedModifier: 2
+  speed: 5.3
+  maxSpeed: 10.8
+  jumpPower: 1.4
+  jumpSpeedModifier: 1
+  fallSpeedModifier: 1
 --- !u!114 &192333522673131554
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3748,6 +3749,27 @@ MonoBehaviour:
   - m_Rig: {fileID: 7989103731735268813}
     m_Active: 1
   m_Effectors: []
+--- !u!65 &5151251654921174477
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7092775352889968647}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.35485697, y: 1.0980625, z: 0.9814739}
+  m_Center: {x: 0.014038086, y: 1.2053995, z: 0.15085936}
 --- !u!1 &7127208121757602152
 GameObject:
   m_ObjectHideFlags: 0

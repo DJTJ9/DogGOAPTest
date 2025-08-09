@@ -251,4 +251,14 @@ public class PlayerController : MonoBehaviour
             unpauseEvent.Invoke();
         }
     }
+
+    public void SwitchToPlayerInputMap() {
+        PlayerInput.SwitchCurrentActionMap("Player");
+        Cursor.lockState = CursorLockMode.Locked;
+    }
+    
+    public void SwitchToUIInputMap() {
+        PlayerInput.SwitchCurrentActionMap("UI");
+        Cursor.lockState = CursorLockMode.None;
+    }
 }

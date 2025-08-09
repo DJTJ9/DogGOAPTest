@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace ScriptableValues
 {
-    [ManageableData, InlineEditor(Expanded = true)]
+    [InlineEditor(Expanded = true)]
     [CreateAssetMenu(fileName = "Dog Settings", menuName = "Scriptable Objects/Dog Settings")]
     public class DogSettingsSO : ScriptableObject
     {

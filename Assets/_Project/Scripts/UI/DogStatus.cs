@@ -41,7 +41,12 @@ public class DogStatus : MonoBehaviour, IInteractable
     [SerializeField]
     private string interactionName;
     
+    [SerializeField]
+    private AudioClip barkSoundFX;
+    
     private string interactionNameHolder;
+    
+    private bool barkOnLowSatiety, barkOnLowHydration, barkOnLowFun;
     
     private void Start() {
         interactionNameHolder = interactionName;
@@ -56,6 +61,8 @@ public class DogStatus : MonoBehaviour, IInteractable
         }
         
         interactionName = interactionNameHolder;
+        
+        PlayBarkSoundFXOnLowStats();
     }
 
     public IEnumerator ShowStatus() {
@@ -107,5 +114,26 @@ public class DogStatus : MonoBehaviour, IInteractable
             return;
         }
         StartCoroutine(ShowStatus());       
+    }
+
+    private void PlayBarkSoundFXOnLowStats() {
+        if (dog.Satiety <= 0f && !barkOnLowSatiety) {
+            SoundFXManager.Instance.PlaySoundFXWithFixedDurationClip(barkSoundFX, transform, 0.8f, 0.5f);
+            barkOnLowSatiety = true;
+        }
+        if (dog.Satiety >= 30f) barkOnLowSatiety = false;
+        
+        if (dog.Hydration <= 0f && !barkOnLowHydration) {
+            SoundFXManager.Instance.PlaySoundFXWithFixedDurationClip(barkSoundFX, transform, 0.7f, 0.5f);
+            barkOnLowHydration = true;
+        }
+        if (dog.Hydration >= 30f) barkOnLowHydration = false;
+
+        if (dog.Fun <= 0f && !barkOnLowFun) {
+            SoundFXManager.Instance.PlaySoundFXWithFixedDurationClip(barkSoundFX, transform, 0.6f, 0.5f);
+            barkOnLowFun = true;
+        }
+        if (dog.Fun >= 30f) barkOnLowFun = false;
+
     }
 }

@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace ScriptableValues
 {
-    [ManageableData, InlineEditor(Expanded = true)]
+    [InlineEditor(Expanded = true)]
     [CreateAssetMenu(fileName = "Action Costs", menuName = "Scriptable Objects/Action Costs")]
     public class ActionCostsSO : ScriptableObject
     {

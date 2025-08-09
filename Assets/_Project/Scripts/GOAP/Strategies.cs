@@ -86,7 +86,6 @@ public class MoveStrategy : IActionStrategy
     public void Start() {
         dog.StoppingDistance = stoppingDistance;
         agent.SetDestination(destination());
-        Debug.LogWarning($"Start MoveStrategy to {destination()}");
     }
 
     public void Stop() {

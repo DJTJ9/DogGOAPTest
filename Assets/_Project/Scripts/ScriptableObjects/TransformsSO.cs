@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using Sirenix.OdinInspector;
 
-[ManageableData, InlineEditor(Expanded = true)]
+[InlineEditor(Expanded = true)]
 [CreateAssetMenu(fileName = "Transforms", menuName = "Scriptable Objects/Transforms")]
 public class TransformsSO : ScriptableObject
 {

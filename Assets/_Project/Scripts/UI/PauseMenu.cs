@@ -1,9 +1,14 @@
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PauseMenu : MonoBehaviour
 {
-    public GameObject PauseMenuUI;
+    [SerializeField]
+    private GameObject pauseMenuUI;
+    
+    [SerializeField]
+    private GameObject optionsMenuUI;
 
     public static bool GameIsPaused = false;
 
@@ -13,16 +18,21 @@ public class PauseMenu : MonoBehaviour
     // }
 
     public void Resume() {
-        PauseMenuUI.SetActive(false);
+        pauseMenuUI.SetActive(false);
+        optionsMenuUI.SetActive(false);
         Time.timeScale = 1f;
         Cursor.lockState = CursorLockMode.Locked;
         PlayerController.PlayerInput.SwitchCurrentActionMap("Player");
     }
 
     public void Pause() {
-        PauseMenuUI.SetActive(true);
+        pauseMenuUI.SetActive(true);
         Time.timeScale = 0f;
         Cursor.lockState = CursorLockMode.None;
         PlayerController.PlayerInput.SwitchCurrentActionMap("UI");
+    }
+
+    public void LoadMainMenu() {
+        SceneManager.LoadScene("MainMenu");
     }
 }
