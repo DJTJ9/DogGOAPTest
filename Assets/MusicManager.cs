@@ -8,13 +8,14 @@ public class MusicManager : MonoBehaviour
     [FoldoutGroup("Settings", expanded: true), SerializeField]
     private float startVolume = 0.69f;
     
-    private float fullVolume = 1f;
     
     [FoldoutGroup("Settings", expanded: true), SerializeField]
     private float dimDuration = 1.5f;
     
     [FoldoutGroup("Audio Clips", expanded: false), SerializeField]
     private List<AudioClip> musicClips;
+    
+    private const float fullVolume = 1f;
     
     private AudioSource audioSource;
     

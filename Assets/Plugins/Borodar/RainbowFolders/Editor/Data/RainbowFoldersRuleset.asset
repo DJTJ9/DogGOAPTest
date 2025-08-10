@@ -41,7 +41,7 @@ MonoBehaviour:
     Key: Assets/_Project/Scripts/Editor
     Ordinal: 2
     Priority: 0
-    IconType: 0
+    IconType: 2170
     SmallIcon: {fileID: 0}
     LargeIcon: {fileID: 0}
     IsIconRecursive: 0
@@ -189,7 +189,7 @@ MonoBehaviour:
     SmallIcon: {fileID: 0}
     LargeIcon: {fileID: 0}
     IsIconRecursive: 0
-    BackgroundType: 0
+    BackgroundType: 50
     BackgroundTexture: {fileID: 0}
     IsBackgroundRecursive: 0
     IsHidden: 0
@@ -197,7 +197,7 @@ MonoBehaviour:
     Key: Assets/_Project/Scripts
     Ordinal: 15
     Priority: 0
-    IconType: 2120
+    IconType: 2170
     SmallIcon: {fileID: 0}
     LargeIcon: {fileID: 0}
     IsIconRecursive: 0
@@ -341,7 +341,7 @@ MonoBehaviour:
     Key: Assets/_Project/Scripts/UI
     Ordinal: 27
     Priority: 0
-    IconType: 0
+    IconType: 2170
     SmallIcon: {fileID: 0}
     LargeIcon: {fileID: 0}
     IsIconRecursive: 0
@@ -353,7 +353,7 @@ MonoBehaviour:
     Key: Assets/_Project/Scripts/Utilities
     Ordinal: 28
     Priority: 0
-    IconType: 0
+    IconType: 2170
     SmallIcon: {fileID: 0}
     LargeIcon: {fileID: 0}
     IsIconRecursive: 0
@@ -365,7 +365,7 @@ MonoBehaviour:
     Key: Assets/_Project/Scripts/Movement
     Ordinal: 29
     Priority: 0
-    IconType: 0
+    IconType: 2170
     SmallIcon: {fileID: 0}
     LargeIcon: {fileID: 0}
     IsIconRecursive: 0
@@ -377,7 +377,7 @@ MonoBehaviour:
     Key: Assets/_Project/Scripts/GOAP
     Ordinal: 30
     Priority: 0
-    IconType: 0
+    IconType: 2170
     SmallIcon: {fileID: 0}
     LargeIcon: {fileID: 0}
     IsIconRecursive: 0
@@ -389,7 +389,7 @@ MonoBehaviour:
     Key: Assets/_Project/Scripts/DependencyInjection
     Ordinal: 31
     Priority: 0
-    IconType: 0
+    IconType: 2170
     SmallIcon: {fileID: 0}
     LargeIcon: {fileID: 0}
     IsIconRecursive: 0
@@ -401,7 +401,7 @@ MonoBehaviour:
     Key: Assets/_Project/Scripts/ScriptableObjects
     Ordinal: 32
     Priority: 0
-    IconType: 0
+    IconType: 2170
     SmallIcon: {fileID: 0}
     LargeIcon: {fileID: 0}
     IsIconRecursive: 0
@@ -413,7 +413,7 @@ MonoBehaviour:
     Key: Assets/_Project/Scripts/TimerSystem
     Ordinal: 33
     Priority: 0
-    IconType: 0
+    IconType: 2170
     SmallIcon: {fileID: 0}
     LargeIcon: {fileID: 0}
     IsIconRecursive: 0
@@ -425,7 +425,7 @@ MonoBehaviour:
     Key: Assets/_Project/Scripts/Animation
     Ordinal: 34
     Priority: 0
-    IconType: 0
+    IconType: 2170
     SmallIcon: {fileID: 0}
     LargeIcon: {fileID: 0}
     IsIconRecursive: 0
@@ -461,11 +461,11 @@ MonoBehaviour:
     Key: Assets/_Project/Scriptable Objects/Value Assets
     Ordinal: 37
     Priority: 0
-    IconType: 0
+    IconType: 2120
     SmallIcon: {fileID: 0}
     LargeIcon: {fileID: 0}
     IsIconRecursive: 0
-    BackgroundType: 40
+    BackgroundType: 160
     BackgroundTexture: {fileID: 0}
     IsBackgroundRecursive: 0
     IsHidden: 0
@@ -473,11 +473,11 @@ MonoBehaviour:
     Key: Assets/_Project/Scriptable Objects/Scriptable Values
     Ordinal: 38
     Priority: 0
-    IconType: 0
+    IconType: 2120
     SmallIcon: {fileID: 0}
     LargeIcon: {fileID: 0}
     IsIconRecursive: 0
-    BackgroundType: 40
+    BackgroundType: 160
     BackgroundTexture: {fileID: 0}
     IsBackgroundRecursive: 0
     IsHidden: 0
@@ -485,11 +485,11 @@ MonoBehaviour:
     Key: Assets/_Project/Scriptable Objects
     Ordinal: 39
     Priority: 0
-    IconType: 0
+    IconType: 2120
     SmallIcon: {fileID: 0}
     LargeIcon: {fileID: 0}
     IsIconRecursive: 0
-    BackgroundType: 40
+    BackgroundType: 160
     BackgroundTexture: {fileID: 0}
     IsBackgroundRecursive: 0
     IsHidden: 0
@@ -497,7 +497,7 @@ MonoBehaviour:
     Key: Assets/_Project/Scripts/Interfaces
     Ordinal: 40
     Priority: 0
-    IconType: 0
+    IconType: 2170
     SmallIcon: {fileID: 0}
     LargeIcon: {fileID: 0}
     IsIconRecursive: 0
@@ -509,7 +509,7 @@ MonoBehaviour:
     Key: Assets/_Project/Scripts/Interactions
     Ordinal: 41
     Priority: 0
-    IconType: 0
+    IconType: 2170
     SmallIcon: {fileID: 0}
     LargeIcon: {fileID: 0}
     IsIconRecursive: 0
@@ -521,7 +521,7 @@ MonoBehaviour:
     Key: Assets/_Project/Scripts/Odin
     Ordinal: 42
     Priority: 0
-    IconType: 0
+    IconType: 2170
     SmallIcon: {fileID: 0}
     LargeIcon: {fileID: 0}
     IsIconRecursive: 0
@@ -533,7 +533,7 @@ MonoBehaviour:
     Key: Assets/_Project/Scripts/Behavior Graph
     Ordinal: 43
     Priority: 0
-    IconType: 0
+    IconType: 2170
     SmallIcon: {fileID: 0}
     LargeIcon: {fileID: 0}
     IsIconRecursive: 0
@@ -761,7 +761,7 @@ MonoBehaviour:
     Key: Assets/_Project/Scripts/SpawnSystem
     Ordinal: 62
     Priority: 0
-    IconType: 0
+    IconType: 2170
     SmallIcon: {fileID: 0}
     LargeIcon: {fileID: 0}
     IsIconRecursive: 0
@@ -773,7 +773,115 @@ MonoBehaviour:
     Key: Assets/_Project/Scripts/Detectors
     Ordinal: 63
     Priority: 0
-    IconType: 0
+    IconType: 2170
+    SmallIcon: {fileID: 0}
+    LargeIcon: {fileID: 0}
+    IsIconRecursive: 0
+    BackgroundType: 70
+    BackgroundTexture: {fileID: 0}
+    IsBackgroundRecursive: 0
+    IsHidden: 0
+  - Type: 1
+    Key: Assets/_Project/Scriptable Objects/Events
+    Ordinal: 64
+    Priority: 0
+    IconType: 2120
+    SmallIcon: {fileID: 0}
+    LargeIcon: {fileID: 0}
+    IsIconRecursive: 0
+    BackgroundType: 160
+    BackgroundTexture: {fileID: 0}
+    IsBackgroundRecursive: 0
+    IsHidden: 0
+  - Type: 0
+    Key: StartLevel
+    Ordinal: 65
+    Priority: 0
+    IconType: 2150
+    SmallIcon: {fileID: 0}
+    LargeIcon: {fileID: 0}
+    IsIconRecursive: 0
+    BackgroundType: 50
+    BackgroundTexture: {fileID: 0}
+    IsBackgroundRecursive: 0
+    IsHidden: 0
+  - Type: 0
+    Key: Little Planet
+    Ordinal: 66
+    Priority: 0
+    IconType: 2150
+    SmallIcon: {fileID: 0}
+    LargeIcon: {fileID: 0}
+    IsIconRecursive: 0
+    BackgroundType: 50
+    BackgroundTexture: {fileID: 0}
+    IsBackgroundRecursive: 0
+    IsHidden: 0
+  - Type: 0
+    Key: GOAPTestLabor
+    Ordinal: 67
+    Priority: 0
+    IconType: 2150
+    SmallIcon: {fileID: 0}
+    LargeIcon: {fileID: 0}
+    IsIconRecursive: 0
+    BackgroundType: 50
+    BackgroundTexture: {fileID: 0}
+    IsBackgroundRecursive: 0
+    IsHidden: 0
+  - Type: 0
+    Key: Level2
+    Ordinal: 68
+    Priority: 0
+    IconType: 2150
+    SmallIcon: {fileID: 0}
+    LargeIcon: {fileID: 0}
+    IsIconRecursive: 0
+    BackgroundType: 50
+    BackgroundTexture: {fileID: 0}
+    IsBackgroundRecursive: 0
+    IsHidden: 0
+  - Type: 0
+    Key: SampleScene
+    Ordinal: 69
+    Priority: 0
+    IconType: 2150
+    SmallIcon: {fileID: 0}
+    LargeIcon: {fileID: 0}
+    IsIconRecursive: 0
+    BackgroundType: 50
+    BackgroundTexture: {fileID: 0}
+    IsBackgroundRecursive: 0
+    IsHidden: 0
+  - Type: 1
+    Key: Assets/_Project/Scripts/SceneManagement
+    Ordinal: 70
+    Priority: 0
+    IconType: 2170
+    SmallIcon: {fileID: 0}
+    LargeIcon: {fileID: 0}
+    IsIconRecursive: 0
+    BackgroundType: 70
+    BackgroundTexture: {fileID: 0}
+    IsBackgroundRecursive: 0
+    IsHidden: 0
+  - Type: 1
+    Key: Assets/_Project/Scripts/Sounds
+    Ordinal: 71
+    Priority: 0
+    IconType: 2170
+    SmallIcon: {fileID: 0}
+    LargeIcon: {fileID: 0}
+    IsIconRecursive: 0
+    BackgroundType: 70
+    BackgroundTexture: {fileID: 0}
+    IsBackgroundRecursive: 0
+    IsHidden: 0
+  - Type: 1
+    Key: Assets/_Project/Scripts/Managers
+    Ordinal: 72
+    Priority: 0
+    IconType: 2170
     SmallIcon: {fileID: 0}
     LargeIcon: {fileID: 0}
     IsIconRecursive: 0

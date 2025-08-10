@@ -1,5 +1,7 @@
 using System.Collections;
+using System.Threading.Tasks;
 using Sirenix.OdinInspector;
+using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
@@ -7,61 +9,104 @@ using UnityEngine.SceneManagement;
 
 public class AsyncLevelLoader : MonoBehaviour
 {
-    [FoldoutGroup("Menu Screens", expanded: false), SerializeField]
+    [Header("Menu Screens"), SerializeField]
     private GameObject mainMenu;
     
-    [FoldoutGroup("Menu Screens", expanded: false), SerializeField]
+    [Header("Menu Screens"), SerializeField]
     private GameObject loadingScreen;
     
-    [FoldoutGroup("Progress Bar", expanded: false), SerializeField]
+    [Header("Fade Image"), SerializeField]
+    private Image fadeImage;
+    
+    [SerializeField]
+    private float duration = 5f;
+    
+    [Header("Progress Bar"), SerializeField]
     private Slider progressBar;
-
-    [FoldoutGroup("Settings", expanded: false), SerializeField]
-    private float minLoadingScreenTime = 5f;
+    [SerializeField]
+    private TMP_Text progressText;
     
     [FoldoutGroup("Events"), SerializeField]
-    private UnityEvent onLevelLoaded;
+    private UnityEvent onLevelChange;
+
+    public static AsyncLevelLoader Instance;
+
+    private float target;
     
-    public void LoadLevel(string levelName)
-    {
-        if (mainMenu != null) mainMenu.SetActive(false);
-        if (loadingScreen != null) loadingScreen.SetActive(true);
-        StartCoroutine(LoadLevelAsync(levelName));
+    private void Awake() {
+        if (Instance == null) {
+            Instance = this;
+            DontDestroyOnLoad(this);
+        }
+        else
+            Destroy(gameObject);
     }
 
-    private IEnumerator LoadLevelAsync(string levelName) {
-        float elapsed = 0f;
-        AsyncOperation asyncLoadOperation = SceneManager.LoadSceneAsync(levelName);
-        asyncLoadOperation.allowSceneActivation = false;
+    public async void LoadScene(int sceneIndex) {
+        onLevelChange?.Invoke();
+        var color = fadeImage.color;
+        color.a = 1f;
+        fadeImage.color = color;
+        progressBar.gameObject.SetActive(true);
+        progressBar.value = 0;
+        target = 0;
+        
+        var scene = SceneManager.LoadSceneAsync(sceneIndex);
+        scene.allowSceneActivation = false;
+        loadingScreen.SetActive(true);
 
-        // Laden bis 90% (Unity hält bei ~0.9, bis allowSceneActivation true wird)
-        while (asyncLoadOperation.progress < 0.9f) {
-            if (progressBar != null) {
-                float progress = Mathf.Clamp01(asyncLoadOperation.progress / 0.9f);
-                progressBar.value = progress;
+        do {
+            await Task.Delay(500);
+            target = Mathf.Clamp01(scene.progress / 0.9f);
+        } while (scene.progress < 0.9f);
+        
+        await Task.Delay(2000);
+        
+        if (sceneIndex == 0) mainMenu.SetActive(true);
+        else mainMenu.SetActive(false);
+        
+        // loadingScreen.SetActive(false);
+        scene.allowSceneActivation = true;
+    }
+    
+    void Update() {
+        progressBar.value = Mathf.MoveTowards(progressBar.value, target, Time.deltaTime * 0.5f);
+        progressText.text = $"{progressBar.value * 100:0}%";
+    }
+
+    public void FadeOutLoadingScreen() {
+        StartCoroutine(FadeOutLoadingScreenCoroutine());
+    }
+
+    private IEnumerator FadeOutLoadingScreenCoroutine() {
+        {
+            if (fadeImage == null || duration <= 0f)
+                yield break;
+            
+            progressBar.gameObject.SetActive(false);
+
+            // Von 255 (1.0) nach 0 (0.0) ausblenden
+            var color = fadeImage.color;
+            color.a = 1f;               // Start bei 255/volle Sichtbarkeit
+            fadeImage.color = color;
+
+            float elapsed = 0f;
+            while (elapsed < duration)
+            {
+                elapsed += Time.deltaTime;
+                float t = Mathf.Clamp01(elapsed / duration);
+                color.a = Mathf.Lerp(1f, 0f, t);
+                fadeImage.color = color;
+                yield return null;
             }
 
-            elapsed += Time.unscaledDeltaTime;
-            yield return null;
+            // Abschluss sicherstellen
+            color.a = 0f;
+            fadeImage.color = color;
         }
-
-        // Fortschritt voll anzeigen, während wir auf die Mindestzeit warten
-        while (elapsed < minLoadingScreenTime) {
-            if (progressBar != null)
-                progressBar.value = 1f;
-
-            elapsed += Time.unscaledDeltaTime;
-            yield return null;
-        }
-
-        // Jetzt Szene aktivieren
-        asyncLoadOperation.allowSceneActivation = true;
-
-        // Warten, bis die Aktivierung abgeschlossen ist
-        while (!asyncLoadOperation.isDone)
-            yield return null;
-
-        if (loadingScreen != null) loadingScreen.SetActive(false);
-        onLevelLoaded?.Invoke();
+    }
+    
+    public void SetTimeScale(float timeScale) {
+        Time.timeScale = timeScale;
     }
 }

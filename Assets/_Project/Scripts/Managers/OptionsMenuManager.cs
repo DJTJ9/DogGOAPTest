@@ -7,9 +7,6 @@ using UnityEngine.UI;
 
 public class OptionsMenuManager : MonoBehaviour
 {
-    // [SerializeField]
-    // private GameObject mainMenuUI;
-    
     [SerializeField]
     private GameObject pauseMenuUI;
     
@@ -22,10 +19,12 @@ public class OptionsMenuManager : MonoBehaviour
     [SerializeField]
     private UnityEvent onRestart;
 
+    private const int mainMenuSceneIndex = 0;
+    private const int startLevelSceneIndex = 1;
+
     public void PlayGame()
     {
-        SceneManager.LoadScene("StartLevel");
-        //SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+        AsyncLevelLoader.Instance.LoadScene(startLevelSceneIndex);
     }
 
     public void RestartGame() {
@@ -38,7 +37,7 @@ public class OptionsMenuManager : MonoBehaviour
     
     public void BackToMainMenu()
     {
-        SceneManager.LoadScene("MainMenu");
+        AsyncLevelLoader.Instance.LoadScene(mainMenuSceneIndex);
     }
 
     public void QuitGame()

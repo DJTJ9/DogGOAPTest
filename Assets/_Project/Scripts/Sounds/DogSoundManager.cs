@@ -17,10 +17,6 @@ public class DogSoundManager : MonoBehaviour
     [FoldoutGroup("Audio"), SerializeField]
     private AudioClip barking3;
 
-    // private void Update() {
-    //     PlayBarkingSoundOnLowStat();
-    // }
-
     public void PlayBarkingSoundOnLowStat(int barkSound) {
         switch (barkSound) {
             case 1:

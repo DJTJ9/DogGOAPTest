@@ -10,12 +10,8 @@ public class PauseMenu : MonoBehaviour
     [SerializeField]
     private GameObject optionsMenuUI;
 
-    public static bool GameIsPaused = false;
-
-    // void Update() {
-    //     if (GameIsPaused) Resume();
-    //     else Pause();
-    // }
+    private const int mainMenuSceneIndex = 0;
+    
 
     public void Resume() {
         pauseMenuUI.SetActive(false);
@@ -33,6 +29,6 @@ public class PauseMenu : MonoBehaviour
     }
 
     public void LoadMainMenu() {
-        SceneManager.LoadScene("MainMenu");
+        AsyncLevelLoader.Instance.LoadScene(mainMenuSceneIndex);
     }
 }

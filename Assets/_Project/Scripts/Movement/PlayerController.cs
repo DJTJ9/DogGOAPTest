@@ -184,33 +184,42 @@ public class PlayerController : MonoBehaviour
     }
 
     private void OnGrabInput(InputAction.CallbackContext context) {
-        if (context.phase == InputActionPhase.Started)
-            if (grabbableObject == null) {
-                if (Physics.Raycast(mainCameraTransform.position, mainCameraTransform.forward,
-                        out RaycastHit raycastHit, interactionDistance)) {
-                    if (raycastHit.transform.TryGetComponent(out GrabbableObject grabbableObject)) {
-                        grabbableObject.Grab(objectGrabPoint);
-                        grabbableObject.GetComponent<CapsuleCollider>().enabled = false;
-                        grabbableObject.objectPossessed = true;
-                        this.grabbableObject = grabbableObject;
-                        ballThrown.Value = false;
-                        ballInHand.Value = true;
-                        ballReturned.Value = false;
-                    }
+        if (context.phase == InputActionPhase.Started) {
+            HandleObjectGrab();
+        }
+    }
+
+    private void HandleObjectGrab() {
+        if (grabbableObject == null) {
+            if (Physics.Raycast(mainCameraTransform.position, mainCameraTransform.forward,
+                    out RaycastHit raycastHit, interactionDistance)) {
+                if (raycastHit.transform.TryGetComponent(out GrabbableObject grabbableObject)) {
+                    grabbableObject.GetComponent<CapsuleCollider>().enabled = false;
+                    grabbableObject.Grab(objectGrabPoint);
+                    grabbableObject.objectPossessed = true;
+                    this.grabbableObject = grabbableObject;
+                    ballThrown.Value = false;
+                    ballInHand.Value = true;
+                    ballReturned.Value = false;
                 }
             }
+        }
     }
 
     private void OnDropInput(InputAction.CallbackContext context) {
         if (context.phase == InputActionPhase.Started) {
-            if (grabbableObject != null) {
-                grabbableObject.GetComponent<CapsuleCollider>().enabled = true;
-                grabbableObject.Drop();
-                grabbableObject.objectPossessed = false;
-                grabbableObject = null;
-                ballInHand.Value = false;
-                ballReturned.Value = true;
-            }
+            HandleObjectDrop();
+        }
+    }
+
+    private void HandleObjectDrop() {
+        if (grabbableObject != null) {
+            grabbableObject.GetComponent<CapsuleCollider>().enabled = true;
+            grabbableObject.Drop();
+            grabbableObject.objectPossessed = false;
+            grabbableObject = null;
+            ballInHand.Value = false;
+            ballReturned.Value = true;
         }
     }
 
@@ -218,25 +227,33 @@ public class PlayerController : MonoBehaviour
         if (grabbableObject == null) return;
 
         if (context.phase == InputActionPhase.Started) {
-            animations.SetAnimatorTrigger("isThrowing");
-            grabbableObject.GetComponent<CapsuleCollider>().enabled = true;
-            grabbableObject.Throw(mainCameraTransform.forward);
-            grabbableObject.objectPossessed = false;
-            grabbableObject = null;
-            ballThrown.Value = true;
-            ballInHand.Value = false;
+            HandleThrowAction();
         }
+    }
+
+    private void HandleThrowAction() {
+        animations.SetAnimatorTrigger("isThrowing");
+        grabbableObject.GetComponent<CapsuleCollider>().enabled = true;
+        grabbableObject.Throw(mainCameraTransform.forward);
+        grabbableObject.objectPossessed = false;
+        grabbableObject = null;
+        ballThrown.Value = true;
+        ballInHand.Value = false;
     }
 
     private void OnCallDogInput(InputAction.CallbackContext context) {
         if (context.phase == InputActionPhase.Started) {
-            if (Physics.Raycast(mainCameraTransform.position, mainCameraTransform.forward, out RaycastHit raycastHit, 15f)) {
-                if (raycastHit.transform.TryGetComponent(out ICommandable commandable)) {
-                    commandable.ExecuteCommand();
-                }
+            HandleCallDog();
+        }
+    }
+
+    private void HandleCallDog() {
+        if (Physics.Raycast(mainCameraTransform.position, mainCameraTransform.forward, out RaycastHit raycastHit, 15f)) {
+            if (raycastHit.transform.TryGetComponent(out ICommandable commandable)) {
+                commandable.ExecuteCommand();
             }
         }
-
+        
         dogCalled.Value = !dogCalled.Value;
     }
 

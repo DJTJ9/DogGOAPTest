@@ -31,7 +31,7 @@ public class GrabbableObject : MonoBehaviour, IInteractable
             objectGrabPoint = _objectGrabPoint;
             objectRigidbody.useGravity = false;
             objectRigidbody.linearVelocity = Vector3.zero;
-            objectRigidbody.isKinematic = true;
+            // objectRigidbody.isKinematic = true;
             objectPossessed = true;
         }
     }
@@ -40,7 +40,7 @@ public class GrabbableObject : MonoBehaviour, IInteractable
         if (objectGrabPoint != null && objectPossessed) {
             objectGrabPoint = null;
             objectRigidbody.useGravity = true;
-            objectRigidbody.isKinematic = false;
+            // objectRigidbody.isKinematic = false;
             objectPossessed = false;
         }
     }
@@ -48,7 +48,7 @@ public class GrabbableObject : MonoBehaviour, IInteractable
     public void Throw(Vector3 _direction) {
         objectGrabPoint = null;
         objectRigidbody.useGravity = true;
-        objectRigidbody.isKinematic = false;
+        // objectRigidbody.isKinematic = false;
         objectRigidbody.AddForce(_direction * ThrowSpeed, ForceMode.Impulse);
     }
 

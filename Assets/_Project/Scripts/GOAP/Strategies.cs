@@ -384,19 +384,21 @@ public class EatStrategy : IActionStrategy
         eatAnimationTimer.OnTimerStart += () => {
             Complete = false;
             lookAtTarget = food;
-            lookAtTrigger.radius = 2f;
+            lookAtTrigger.radius = 1.2f;
         };
         eatAnimationTimer.OnTimerStop += () => {
             dog.Satiety += saturation;
             dog.Aggression -= aggressionLost;
-            lookAtTrigger.radius = 5f;
+            lookAtTrigger.radius = 3f;
             lookAtTarget = currentLookAtTarget;
             Complete = true;
         };
 
         foodDropTimer = new CountdownTimer(5f);
         foodDropTimer.OnTimerStart += () => Complete = false;
-        foodDropTimer.OnTimerStop += () => { food.position += new Vector3(0f, eatAmount, 0f); };
+        foodDropTimer.OnTimerStop += () => {
+            if (food != null) food.position += new Vector3(0f, eatAmount, 0f);
+        };
     }
 
     public void Start() {
@@ -435,16 +437,18 @@ public class DrinkStrategy : IActionStrategy
         drinkAnimationTimer = new CountdownTimer(11f);
         drinkAnimationTimer.OnTimerStart += () => {
             Complete = false;
-            lookAtTrigger.radius = 2f;
+            lookAtTrigger.radius = 1.2f;
         };
         drinkAnimationTimer.OnTimerStop += () => {
             dog.Hydration += hydration;
-            lookAtTrigger.radius = 5f;
+            lookAtTrigger.radius = 3f;
             Complete = true;
         };
 
         waterDropTimer = new CountdownTimer(4f);
-        waterDropTimer.OnTimerStop += () => { water.position += new Vector3(0f, drinkAmount, 0f); };
+        waterDropTimer.OnTimerStop += () => {
+            if (water != null) water.position += new Vector3(0f, drinkAmount, 0f);
+        };
     }
 
     public void Start() {
