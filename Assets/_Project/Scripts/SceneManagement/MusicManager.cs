@@ -5,6 +5,8 @@ using UnityEngine;
 
 public class MusicManager : MonoBehaviour
 {
+    public static MusicManager Instance;
+    
     [FoldoutGroup("Settings", expanded: true), SerializeField]
     private float startVolume = 0.69f;
     
@@ -21,6 +23,14 @@ public class MusicManager : MonoBehaviour
     
     private void Awake()
     {
+        if (Instance == null) {
+            Instance = this;
+            DontDestroyOnLoad(this);
+        }
+        else {
+            Destroy(gameObject);
+        }
+        
         audioSource = GetComponent<AudioSource>();
         audioSource.volume = startVolume;
         audioSource.Play();
@@ -36,7 +46,7 @@ public class MusicManager : MonoBehaviour
 
     private AudioClip lastPlayedClip;
 
-    private void ChangeMusicClip()
+    public void ChangeMusicClip()
     {
         if (musicClips.Count == 0)
             return;

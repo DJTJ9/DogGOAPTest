@@ -392,7 +392,7 @@ AudioSource:
   m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1
-  Loop: 1
+  Loop: 0
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
@@ -1100,18 +1100,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 235201248}
-        m_TargetAssemblyTypeName: ChangeSceneButton, Assembly-CSharp
-        m_MethodName: SetMasterVolumeToOne
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
       - m_Target: {fileID: 11400000, guid: ea751cadb9bd44f4a9405c5ae4453288, type: 2}
         m_TargetAssemblyTypeName: DogSO, Assembly-CSharp
         m_MethodName: ResetStats
@@ -1408,6 +1396,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 419647288}
+        m_TargetAssemblyTypeName: MusicManager, Assembly-CSharp
+        m_MethodName: ChangeMusicClip
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &2131296210 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 5261195715714648174, guid: 1dea6e5ba1effb74cbcde0d4514d7fab, type: 3}
@@ -1444,6 +1444,22 @@ PrefabInstance:
     - target: {fileID: 3781058945966245291, guid: 1dea6e5ba1effb74cbcde0d4514d7fab, type: 3}
       propertyPath: m_Name
       value: Menu Canvas
+      objectReference: {fileID: 0}
+    - target: {fileID: 3781058945966245291, guid: 1dea6e5ba1effb74cbcde0d4514d7fab, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3825543069400422129, guid: 1dea6e5ba1effb74cbcde0d4514d7fab, type: 3}
+      propertyPath: m_Value
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3825543069400422129, guid: 1dea6e5ba1effb74cbcde0d4514d7fab, type: 3}
+      propertyPath: m_MaxValue
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3825543069400422129, guid: 1dea6e5ba1effb74cbcde0d4514d7fab, type: 3}
+      propertyPath: m_MinValue
+      value: 0.001
       objectReference: {fileID: 0}
     - target: {fileID: 3825543069400422129, guid: 1dea6e5ba1effb74cbcde0d4514d7fab, type: 3}
       propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Target
@@ -1530,6 +1546,18 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4808843963849341754, guid: 1dea6e5ba1effb74cbcde0d4514d7fab, type: 3}
+      propertyPath: m_Value
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4808843963849341754, guid: 1dea6e5ba1effb74cbcde0d4514d7fab, type: 3}
+      propertyPath: m_MaxValue
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4808843963849341754, guid: 1dea6e5ba1effb74cbcde0d4514d7fab, type: 3}
+      propertyPath: m_MinValue
+      value: 0.001
+      objectReference: {fileID: 0}
+    - target: {fileID: 4808843963849341754, guid: 1dea6e5ba1effb74cbcde0d4514d7fab, type: 3}
       propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 389860199}
@@ -1541,6 +1569,10 @@ PrefabInstance:
       propertyPath: m_Sprite
       value: 
       objectReference: {fileID: 21300000, guid: af213773d2b1440508fa19e31b21d0e3, type: 3}
+    - target: {fileID: 6137269103707221229, guid: 1dea6e5ba1effb74cbcde0d4514d7fab, type: 3}
+      propertyPath: m_text
+      value: PAWS PENSION
+      objectReference: {fileID: 0}
     - target: {fileID: 6465399838940579963, guid: 1dea6e5ba1effb74cbcde0d4514d7fab, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
@@ -1552,6 +1584,18 @@ PrefabInstance:
     - target: {fileID: 6465399838940579963, guid: 1dea6e5ba1effb74cbcde0d4514d7fab, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
       value: GameEvent, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 6559809397056256284, guid: 1dea6e5ba1effb74cbcde0d4514d7fab, type: 3}
+      propertyPath: m_Value
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6559809397056256284, guid: 1dea6e5ba1effb74cbcde0d4514d7fab, type: 3}
+      propertyPath: m_MaxValue
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6559809397056256284, guid: 1dea6e5ba1effb74cbcde0d4514d7fab, type: 3}
+      propertyPath: m_MinValue
+      value: 0.001
       objectReference: {fileID: 0}
     - target: {fileID: 6559809397056256284, guid: 1dea6e5ba1effb74cbcde0d4514d7fab, type: 3}
       propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Target
@@ -1635,11 +1679,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7775924553301952712, guid: 1dea6e5ba1effb74cbcde0d4514d7fab, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 5.086
+      value: 5.0859375
       objectReference: {fileID: 0}
     - target: {fileID: 7775924553301952712, guid: 1dea6e5ba1effb74cbcde0d4514d7fab, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -168.304
+      value: -168.30396
       objectReference: {fileID: 0}
     - target: {fileID: 8605558716968872162, guid: 1dea6e5ba1effb74cbcde0d4514d7fab, type: 3}
       propertyPath: m_AnchoredPosition.y
@@ -1661,10 +1705,10 @@ SceneRoots:
   m_Roots:
   - {fileID: 1312790588}
   - {fileID: 1014316683}
-  - {fileID: 419647290}
   - {fileID: 300782445}
   - {fileID: 596792930}
-  - {fileID: 2549089912603728633}
   - {fileID: 389860200}
+  - {fileID: 419647290}
   - {fileID: 1700791017}
   - {fileID: 34951463}
+  - {fileID: 2549089912603728633}

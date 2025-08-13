@@ -432,6 +432,10 @@ MonoBehaviour:
         - globalObjectIdString: GlobalObjectId_V1-2-658d64683fb4cfb4eb7ab8ae9c0184ce-800806331-0
         - globalObjectIdString: GlobalObjectId_V1-2-658d64683fb4cfb4eb7ab8ae9c0184ce-2015811318-0
         - globalObjectIdString: GlobalObjectId_V1-2-658d64683fb4cfb4eb7ab8ae9c0184ce-1509793799-0
+        - globalObjectIdString: GlobalObjectId_V1-2-658d64683fb4cfb4eb7ab8ae9c0184ce-34951461-0
+        - globalObjectIdString: GlobalObjectId_V1-2-658d64683fb4cfb4eb7ab8ae9c0184ce-389860198-0
+        - globalObjectIdString: GlobalObjectId_V1-2-658d64683fb4cfb4eb7ab8ae9c0184ce-419647287-0
+        - globalObjectIdString: GlobalObjectId_V1-2-658d64683fb4cfb4eb7ab8ae9c0184ce-1700791015-0
         values:
         - colorIndex: 1
           iconNameOrGuid: 
@@ -453,15 +457,23 @@ MonoBehaviour:
           iconNameOrGuid: Canvas Icon
         - colorIndex: 8
           iconNameOrGuid: Canvas Icon
-        - colorIndex: 2
+        - colorIndex: 9
           iconNameOrGuid: 
-        - colorIndex: 2
+        - colorIndex: 9
           iconNameOrGuid: 
-        - colorIndex: 2
+        - colorIndex: 9
           iconNameOrGuid: 
-        - colorIndex: 2
+        - colorIndex: 9
           iconNameOrGuid: 
-        - colorIndex: 2
+        - colorIndex: 9
           iconNameOrGuid: 
-        - colorIndex: 2
+        - colorIndex: 9
+          iconNameOrGuid: 
+        - colorIndex: 9
+          iconNameOrGuid: 
+        - colorIndex: 9
+          iconNameOrGuid: 
+        - colorIndex: 9
+          iconNameOrGuid: 
+        - colorIndex: 9
           iconNameOrGuid: 

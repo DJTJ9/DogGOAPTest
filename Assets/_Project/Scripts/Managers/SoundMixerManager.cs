@@ -40,20 +40,20 @@ public class SoundMixerManager : MonoBehaviour
     }
     
     public void SetMasterVolume(float volume) {
-        var db = masterVolumeSlider.value <= 0.0001f ? minDb : Mathf.Lerp(minDb, maxDb, Mathf.Log10(volume) / Mathf.Log10(1f));
+        // var db = masterVolumeSlider.value <= 0.0001f ? minDb : Mathf.Lerp(minDb, maxDb, Mathf.Log10(volume) / Mathf.Log10(1f));
         
-        audioMixer.SetFloat("MasterVolume", db);
+        audioMixer.SetFloat("MasterVolume", Mathf.Log10(volume) * 20f);
     }
     
     public void SetMusicVolume(float volume) {
-        var db = musicVolumeSlider.value <= 0.0001f ? minDb : Mathf.Lerp(minDb, maxDb, Mathf.Log10(volume) / Mathf.Log10(1f));
+        // var db = musicVolumeSlider.value <= 0.0001f ? minDb : Mathf.Lerp(minDb, maxDb, Mathf.Log10(volume) / Mathf.Log10(1f));
         
-        audioMixer.SetFloat("MusicVolume", volume);
+        audioMixer.SetFloat("MusicVolume", Mathf.Log10(volume) * 20f);
     }
     
     public void SetSoundFXVolume(float volume) {
-        var db = soundFXVolumeSlider.value <= 0.0001f ? minDb : Mathf.Lerp(minDb, maxDb, Mathf.Log10(volume) / Mathf.Log10(1f));
+        // var db = soundFXVolumeSlider.value <= 0.0001f ? minDb : Mathf.Lerp(minDb, maxDb, Mathf.Log10(volume) / Mathf.Log10(1f));
         
-        audioMixer.SetFloat("SoundFXVolume", volume);   
+        audioMixer.SetFloat("SoundFXVolume", Mathf.Log10(volume) * 20f);   
     }
 }

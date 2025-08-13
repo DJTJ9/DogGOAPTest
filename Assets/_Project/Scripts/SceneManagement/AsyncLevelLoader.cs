@@ -88,6 +88,7 @@ public class AsyncLevelLoader : MonoBehaviour
             // FadeEffectManager.Instance.StartFadeIn();
             FadeOutLoadingScreen();
             scene.allowSceneActivation = true;
+            MusicManager.Instance.ChangeMusicClip();
             
             // await Task.Delay(2000);
             // loadingScreen.SetActive(false);
