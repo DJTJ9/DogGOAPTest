@@ -14,10 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Health: 100
   Aggression: 0
-  Stamina: 81
-  Satiety: 61
-  Hydration: 97
-  Fun: 41
+  Stamina: 60
+  Satiety: 100
+  Hydration: 100
+  Fun: 20
   Dominance: 60
   StatManager: {fileID: 11400000, guid: dc99d76271051df439d8051053ea5fab, type: 2}
   BallInHand: {fileID: 11400000, guid: e218d8f69f18b5f41ace3a5559f9df96, type: 2}
@@ -42,37 +42,37 @@ MonoBehaviour:
   defaultFun: 60
   defaultDominance: 60
   defaultDogCalled: 0
-  SleepCosts: 6.0574327
-  RestCosts: 23.423891
-  SeekAttentionCosts: 10.052513
-  RageObstacle1Costs: 19.824263
-  RageObstacle2Costs: 18.370552
-  RageObstacle3Costs: 18.373371
-  RageObstacle4Costs: 18.270336
-  DiggingCosts: 4.100345
-  EatAtBowl1Costs: 8.214559
-  EatAtBowl2Costs: 7.8498516
-  DrinkAtBowl1Costs: 8.459712
-  DrinkAtBowl2Costs: 10.386275
+  SleepCosts: 9.892335
+  RestCosts: 20.621641
+  SeekAttentionCosts: 12.006334
+  RageObstacle1Costs: 2.440263
+  RageObstacle2Costs: 1.7067374
+  RageObstacle3Costs: 1.497421
+  RageObstacle4Costs: 2.027368
+  DiggingCosts: 16.217468
+  EatAtBowl1Costs: 15.587795
+  EatAtBowl2Costs: 2.2269893
+  DrinkAtBowl1Costs: 0.61882734
+  DrinkAtBowl2Costs: 0.3547263
   defaultSleepCosts: 15
   defaultRestCosts: 15
   defaultSeekAttentionCosts: 15
-  defaultObstacle1RageCosts: 15
-  defaultObstacle2RageCosts: 15
-  defaultObstacle3RageCosts: 15
-  defaultObstacle4RageCosts: 15
-  defaultDiggingCosts: 0
+  defaultObstacle1RageCosts: 0
+  defaultObstacle2RageCosts: 0
+  defaultObstacle3RageCosts: 0
+  defaultObstacle4RageCosts: 0
+  defaultDiggingCosts: 15
   defaultEatAtBowl1Costs: 0
   defaultEatAtBowl2Costs: 0
   defaultDrinkAtBowl1Costs: 0
   defaultDrinkAtBowl2Costs: 0
   IdlePrio: 1
   WanderPrio: 2
-  KeepStaminaUpPrio: 6.9
-  KeepHydrationLevelUpPrio: 8.9
-  KeepSatietyLevelUpPrio: 5.3
-  KeepFunUpPrio: 145.9
-  FetchBallAndReturnItPrio: 45.9
+  KeepStaminaUpPrio: 9
+  KeepHydrationLevelUpPrio: 5
+  KeepSatietyLevelUpPrio: 5
+  KeepFunUpPrio: 148
+  FetchBallAndReturnItPrio: 48
   StayAlive: 100
   defaultIdlePrio: 1
   defaultWanderPrio: 2
@@ -83,6 +83,6 @@ MonoBehaviour:
   defaultFetchBallAndReturnItPrio: 50
   defaultStayAlive: 100
   Settings: {fileID: 11400000, guid: 1b08550701af21b44aac0e77b049f306, type: 2}
-  StoppingDistance: 2
+  StoppingDistance: 1.9
   SeekingAttention: 0
   ballInMouth: 1
