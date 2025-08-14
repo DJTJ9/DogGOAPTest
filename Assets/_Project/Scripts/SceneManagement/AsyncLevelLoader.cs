@@ -81,7 +81,7 @@ public class AsyncLevelLoader : MonoBehaviour
             else {
                 mainMenu.SetActive(false);
                 mainMenuImage.SetActive(false);
-                duration = 5f;
+                duration = 2f;
             }
 
             progressBar.gameObject.SetActive(false);
