@@ -59,7 +59,7 @@ public class AsyncLevelLoader : MonoBehaviour
             progressBar.value = 0;
             target = 0;
             
-            await Task.Delay(2000);
+            await Task.Delay(300);
 
             var scene = SceneManager.LoadSceneAsync(sceneIndex);
             if (scene == null) return;
@@ -71,7 +71,7 @@ public class AsyncLevelLoader : MonoBehaviour
                 target = Mathf.Clamp01(scene.progress / 0.9f);
             } while (scene.progress < 0.9f);
 
-            await Task.Delay(2000);
+            await Task.Delay(1000);
 
             if (sceneIndex == 0) {
                 mainMenu.SetActive(true);

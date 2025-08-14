@@ -278,4 +278,12 @@ public class PlayerController : MonoBehaviour
         PlayerInput.SwitchCurrentActionMap("UI");
         Cursor.lockState = CursorLockMode.None;
     }
+
+    public void LockCursor() {
+        Cursor.lockState = CursorLockMode.Locked;
+    }
+    
+    public void UnlockCursor() {
+        Cursor.lockState = CursorLockMode.None;
+    }
 }
