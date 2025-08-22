@@ -10,15 +10,18 @@ public interface IActionStrategy
     bool CanPerform { get; }
     bool Complete   { get; }
 
-    void Start() {
+    void Start()
+    {
         // noop
     }
 
-    void Update(float deltaTime) {
+    void Update(float deltaTime)
+    {
         // noop
     }
 
-    void Stop() {
+    void Stop()
+    {
         // noop
     }
 }
@@ -34,31 +37,36 @@ public class AttackStrategy : IActionStrategy
     readonly Obstacle obstacle;
     private readonly float hitDamage = 50f;
 
-    public AttackStrategy(NavMeshAgent agent, AnimationController animations, DogSO dog, Obstacle obstacle, float funFactor = 100) {
+    public AttackStrategy(NavMeshAgent agent, AnimationController animations, DogSO dog, Obstacle obstacle, float funFactor = 100)
+    {
         this.agent = agent;
         this.animations = animations;
         this.obstacle = obstacle;
         attackAnimationTimer = new CountdownTimer(7f);
 
         attackAnimationTimer.OnTimerStart += () => { Complete = false; };
-        attackAnimationTimer.OnTimerStop += () => {
+        attackAnimationTimer.OnTimerStop += () =>
+        {
             dog.Fun += funFactor;
             obstacle.TakeDamage(hitDamage);
             Complete = true;
         };
     }
 
-    public void Start() {
+    public void Start()
+    {
         attackAnimationTimer.Start();
         animations.StartAttackAction();
     }
 
-    public void Update(float deltaTime) {
+    public void Update(float deltaTime)
+    {
         attackAnimationTimer.Tick(deltaTime);
         agent.transform.LookAt(obstacle.transform);
-        }
+    }
 
-    public void Stop() {
+    public void Stop()
+    {
         attackAnimationTimer.Stop();
         animations.SetAnimatorBool("AttackReady_b", false);
         animations.LocoMotion();
@@ -76,19 +84,22 @@ public class MoveStrategy : IActionStrategy
     public bool CanPerform => !Complete;
     public bool Complete   => agent.remainingDistance <= agent.stoppingDistance && !agent.pathPending;
 
-    public MoveStrategy(NavMeshAgent agent, Func<Vector3> destination, DogSO dog, float stoppingDistance = 2.15f) {
+    public MoveStrategy(NavMeshAgent agent, Func<Vector3> destination, DogSO dog, float stoppingDistance = 2.15f)
+    {
         this.agent = agent;
         this.destination = destination;
         this.dog = dog;
         this.stoppingDistance = stoppingDistance;
     }
 
-    public void Start() {
+    public void Start()
+    {
         dog.StoppingDistance = stoppingDistance;
         agent.SetDestination(destination());
     }
 
-    public void Stop() {
+    public void Stop()
+    {
         agent.transform.LookAt(destination());
         agent.ResetPath();
     }
@@ -103,9 +114,10 @@ public class ChaseRatStrategy : IActionStrategy
     readonly float stoppingDistance;
 
     public bool CanPerform => !Complete;
-    public bool Complete { get; private set; }
+    public bool Complete   { get; private set; }
 
-    public ChaseRatStrategy(NavMeshAgent agent, DogSO dog, GameObject rat, ScriptableBoolValue ratIsRunning, float stoppingDistance = 2.15f) {
+    public ChaseRatStrategy(NavMeshAgent agent, DogSO dog, GameObject rat, ScriptableBoolValue ratIsRunning, float stoppingDistance = 2.15f)
+    {
         this.agent = agent;
         this.dog = dog;
         this.rat = rat;
@@ -113,18 +125,21 @@ public class ChaseRatStrategy : IActionStrategy
         this.stoppingDistance = stoppingDistance;
     }
 
-    public void Start() {
+    public void Start()
+    {
         dog.StoppingDistance = stoppingDistance;
         agent.SetDestination(rat.transform.position);
         Debug.LogWarning($"Start MoveStrategy to {rat.name}");
     }
-    
-    public void Update(float deltaTime) {
+
+    public void Update(float deltaTime)
+    {
         agent.SetDestination(rat.transform.position);
         if (!ratIsRunning.Value) Complete = true;
     }
 
-    public void Stop() {
+    public void Stop()
+    {
         agent.ResetPath();
     }
 }
@@ -141,7 +156,8 @@ public class WanderStrategy : IActionStrategy
 
     public bool Complete => agent.remainingDistance <= stoppingDistance && !agent.pathPending;
 
-    public WanderStrategy(NavMeshAgent agent, DogSO dog, float wanderRadius) {
+    public WanderStrategy(NavMeshAgent agent, DogSO dog, float wanderRadius)
+    {
         this.agent = agent;
         this.dog = dog;
         this.wanderRadius = wanderRadius;
@@ -151,18 +167,21 @@ public class WanderStrategy : IActionStrategy
         wanderTimer.OnTimerStop += agent.ResetPath;
     }
 
-    public void Start() {
+    public void Start()
+    {
         dog.StoppingDistance = stoppingDistance;
 
         Vector3 randomDirection = (UnityEngine.Random.insideUnitSphere * wanderRadius).With(y: 0);
         NavMeshHit hit;
 
-        if (NavMesh.SamplePosition(agent.transform.position + randomDirection, out hit, wanderRadius, 1)) {
+        if (NavMesh.SamplePosition(agent.transform.position + randomDirection, out hit, wanderRadius, 1))
+        {
             agent.SetDestination(hit.position);
         }
     }
 
-    public void Stop() {
+    public void Stop()
+    {
         agent.ResetPath();
     }
 }
@@ -179,7 +198,8 @@ public class DiggingStrategy : IActionStrategy
 
     public bool Complete { get; private set; }
 
-    public DiggingStrategy(AnimationController animations, DogSO dog, Transform rayCastTransform, float funFactor = 100, float aggressionLost = 25f) {
+    public DiggingStrategy(AnimationController animations, DogSO dog, Transform rayCastTransform, float funFactor = 100, float aggressionLost = 25f)
+    {
         this.animations = animations;
         this.rayCastTransform = rayCastTransform;
         itemsLayer = LayerMask.GetMask("Items");
@@ -188,35 +208,42 @@ public class DiggingStrategy : IActionStrategy
         digAnimationTimer = new CountdownTimer(7f);
         itemPopUpTimer = new CountdownTimer(3f);
         digAnimationTimer.OnTimerStart += () => { Complete = false; };
-        digAnimationTimer.OnTimerStop += () => {
+        digAnimationTimer.OnTimerStop += () =>
+        {
             dog.Fun += funFactor;
             dog.Aggression -= aggressionLost;
             Complete = true;
         };
-        itemPopUpTimer.OnTimerStop += () => {
-            if (Physics.Raycast(rayCastTransform.position, Vector3.down, out RaycastHit hit, 3f, itemsLayer)) {
+        itemPopUpTimer.OnTimerStop += () =>
+        {
+            if (Physics.Raycast(rayCastTransform.position, Vector3.down, out RaycastHit hit, 3f, itemsLayer))
+            {
                 // Prüfe, ob das getroffene Objekt ein IDiggable ist
-                if (hit.transform.TryGetComponent(out IDiggable item)) {
+                if (hit.transform.TryGetComponent(out IDiggable item))
+                {
                     item.PopUp();
                 }
             }
         };
     }
 
-    public void Start() {
+    public void Start()
+    {
         digAnimationTimer.Start();
         itemPopUpTimer.Start();
         animations.StartCoroutine(animations.DogActions(AnimationActionType.Dig));
         animations.SpawnDirtWhileDigging();
     }
 
-    public void Stop() {
+    public void Stop()
+    {
         digAnimationTimer.Stop();
         itemPopUpTimer.Stop();
         Complete = true;
     }
 
-    public void OnDrawGizmos() {
+    public void OnDrawGizmos()
+    {
         if (rayCastTransform == null) return;
 
         // SphereCast-Parameter visualisieren
@@ -247,10 +274,12 @@ public class IdleStrategy : IActionStrategy
 
     readonly CountdownTimer timer;
 
-    public IdleStrategy(float duration, DogSO dog, float refill = 2) {
+    public IdleStrategy(float duration, DogSO dog, float refill = 2)
+    {
         timer = new CountdownTimer(duration);
         timer.OnTimerStart += () => Complete = false;
-        timer.OnTimerStop += () => {
+        timer.OnTimerStop += () =>
+        {
             dog.Stamina += refill;
             Complete = true;
         };
@@ -269,16 +298,19 @@ public class SleepAndWaitStrategy : IActionStrategy
     readonly CountdownTimer waitTimer;
     readonly AnimationController animations;
 
-    public SleepAndWaitStrategy(AnimationController animations, DogSO dog, SphereCollider lookAtTrigger, float staminaRefill = 100, float healthRefill = 25f, float aggressionLost = 25f) {
+    public SleepAndWaitStrategy(AnimationController animations, DogSO dog, SphereCollider lookAtTrigger, float staminaRefill = 100, float healthRefill = 25f, float aggressionLost = 25f)
+    {
         this.animations = animations;
 
         sleepAnimationTimer = new CountdownTimer(10f);
-        sleepAnimationTimer.OnTimerStart += () => {
+        sleepAnimationTimer.OnTimerStart += () =>
+        {
             Complete = false;
             dog.RestingSpotAvailable.Value = false;
             lookAtTrigger.radius = 0f;
         };
-        sleepAnimationTimer.OnTimerStop += () => {
+        sleepAnimationTimer.OnTimerStop += () =>
+        {
             dog.Stamina += staminaRefill;
             dog.Health += healthRefill;
             dog.Aggression -= aggressionLost;
@@ -288,24 +320,28 @@ public class SleepAndWaitStrategy : IActionStrategy
         };
         waitTimer = new CountdownTimer(14f);
         waitTimer.OnTimerStart += () => Complete = false;
-        waitTimer.OnTimerStop += () => {
+        waitTimer.OnTimerStop += () =>
+        {
             dog.RestingSpotAvailable.Value = true;
             Complete = true;
         };
     }
 
-    public void Start() {
+    public void Start()
+    {
         animations.SetAnimatorBool("Sleep_b", true);
         sleepAnimationTimer.Start();
         waitTimer.Start();
     }
 
-    public void Update(float deltaTime) {
+    public void Update(float deltaTime)
+    {
         sleepAnimationTimer.Tick(deltaTime);
         waitTimer.Tick(deltaTime);
     }
 
-    public void Stop() {
+    public void Stop()
+    {
         sleepAnimationTimer.Stop();
         waitTimer.Stop();
         Complete = true;
@@ -321,15 +357,18 @@ public class RestAndWaitStrategy : IActionStrategy
     readonly CountdownTimer waitTimer;
     readonly AnimationController animations;
 
-    public RestAndWaitStrategy(AnimationController animations, DogSO dog, float staminaRefill = 50, float healthRefill = 10f, float aggressionLost = 15f) {
+    public RestAndWaitStrategy(AnimationController animations, DogSO dog, float staminaRefill = 50, float healthRefill = 10f, float aggressionLost = 15f)
+    {
         this.animations = animations;
 
         restAnimationTimer = new CountdownTimer(10f);
-        restAnimationTimer.OnTimerStart += () => {
+        restAnimationTimer.OnTimerStart += () =>
+        {
             Complete = false;
             dog.RestingSpotAvailable.Value = false;
         };
-        restAnimationTimer.OnTimerStop += () => {
+        restAnimationTimer.OnTimerStop += () =>
+        {
             dog.Stamina += staminaRefill;
             dog.Health += healthRefill;
             dog.Aggression -= aggressionLost;
@@ -338,24 +377,28 @@ public class RestAndWaitStrategy : IActionStrategy
         };
         waitTimer = new CountdownTimer(14f);
         waitTimer.OnTimerStart += () => Complete = false;
-        waitTimer.OnTimerStop += () => {
+        waitTimer.OnTimerStop += () =>
+        {
             dog.RestingSpotAvailable.Value = true;
             Complete = true;
         };
     }
 
-    public void Start() {
+    public void Start()
+    {
         animations.SetAnimatorBool("Sit_b", true);
         restAnimationTimer.Start();
         waitTimer.Start();
     }
 
-    public void Update(float deltaTime) {
+    public void Update(float deltaTime)
+    {
         restAnimationTimer.Tick(deltaTime);
         waitTimer.Tick(deltaTime);
     }
 
-    public void Stop() {
+    public void Stop()
+    {
         restAnimationTimer.Stop();
         waitTimer.Stop();
         Complete = true;
@@ -372,21 +415,24 @@ public class EatStrategy : IActionStrategy
     readonly AnimationController animations;
 
     readonly float eatAmount = -0.03f;
-    
+
     readonly Transform currentLookAtTarget;
 
-    public EatStrategy(AnimationController animations, Transform food, DogSO dog, SphereCollider lookAtTrigger, Transform lookAtTarget, float saturation = 100f, float aggressionLost = 10f) {
+    public EatStrategy(AnimationController animations, Transform food, DogSO dog, SphereCollider lookAtTrigger, Transform lookAtTarget, float saturation = 100f, float aggressionLost = 10f)
+    {
         this.animations = animations;
-        
+
         currentLookAtTarget = lookAtTarget;
 
         eatAnimationTimer = new CountdownTimer(12.4f);
-        eatAnimationTimer.OnTimerStart += () => {
+        eatAnimationTimer.OnTimerStart += () =>
+        {
             Complete = false;
             lookAtTarget = food;
             lookAtTrigger.radius = 1.2f;
         };
-        eatAnimationTimer.OnTimerStop += () => {
+        eatAnimationTimer.OnTimerStop += () =>
+        {
             dog.Satiety += saturation;
             dog.Aggression -= aggressionLost;
             lookAtTrigger.radius = 3f;
@@ -396,23 +442,27 @@ public class EatStrategy : IActionStrategy
 
         foodDropTimer = new CountdownTimer(5f);
         foodDropTimer.OnTimerStart += () => Complete = false;
-        foodDropTimer.OnTimerStop += () => {
+        foodDropTimer.OnTimerStop += () =>
+        {
             if (food != null) food.position += new Vector3(0f, eatAmount, 0f);
         };
     }
 
-    public void Start() {
+    public void Start()
+    {
         animations.StartCoroutine(animations.DogActions(AnimationActionType.Eat));
         eatAnimationTimer.Start();
         foodDropTimer.Start();
     }
 
-    public void Update(float deltaTime) {
+    public void Update(float deltaTime)
+    {
         eatAnimationTimer.Tick(deltaTime);
         foodDropTimer.Tick(deltaTime);
     }
 
-    public void Stop() {
+    public void Stop()
+    {
         eatAnimationTimer.Stop();
         foodDropTimer.Stop();
 
@@ -431,38 +481,45 @@ public class DrinkStrategy : IActionStrategy
     readonly float drinkAmount = -0.02f;
 
 
-    public DrinkStrategy(AnimationController animations, Transform water, DogSO dog, SphereCollider lookAtTrigger, float hydration = 100f) {
+    public DrinkStrategy(AnimationController animations, Transform water, DogSO dog, SphereCollider lookAtTrigger, float hydration = 100f)
+    {
         this.animations = animations;
 
         drinkAnimationTimer = new CountdownTimer(11f);
-        drinkAnimationTimer.OnTimerStart += () => {
+        drinkAnimationTimer.OnTimerStart += () =>
+        {
             Complete = false;
             lookAtTrigger.radius = 1.2f;
         };
-        drinkAnimationTimer.OnTimerStop += () => {
+        drinkAnimationTimer.OnTimerStop += () =>
+        {
             dog.Hydration += hydration;
             lookAtTrigger.radius = 3f;
             Complete = true;
         };
 
         waterDropTimer = new CountdownTimer(4f);
-        waterDropTimer.OnTimerStop += () => {
+        waterDropTimer.OnTimerStop += () =>
+        {
             if (water != null) water.position += new Vector3(0f, drinkAmount, 0f);
         };
     }
 
-    public void Start() {
+    public void Start()
+    {
         animations.StartCoroutine(animations.DogActions(AnimationActionType.Drink));
         drinkAnimationTimer.Start();
         waterDropTimer.Start();
     }
 
-    public void Update(float deltaTime) {
+    public void Update(float deltaTime)
+    {
         drinkAnimationTimer.Tick(deltaTime);
         waterDropTimer.Tick(deltaTime);
     }
 
-    public void Stop() {
+    public void Stop()
+    {
         drinkAnimationTimer.Stop();
         waterDropTimer.Stop();
         Complete = true;
@@ -645,7 +702,8 @@ public class SeekAttentionStrategy : IActionStrategy
     readonly AnimationController animations;
     readonly Transform playerPos;
 
-    public SeekAttentionStrategy(NavMeshAgent navMeshAgent, AnimationController animations, Transform playerPos, DogSO dog, float fun = 100) {
+    public SeekAttentionStrategy(NavMeshAgent navMeshAgent, AnimationController animations, Transform playerPos, DogSO dog, float fun = 100)
+    {
         this.navMeshAgent = navMeshAgent;
         this.animations = animations;
         this.dog = dog;
@@ -653,31 +711,36 @@ public class SeekAttentionStrategy : IActionStrategy
 
 
         begAnimationTimer = new CountdownTimer(14f);
-        begAnimationTimer.OnTimerStart += () => {
+        begAnimationTimer.OnTimerStart += () =>
+        {
             navMeshAgent.transform.LookAt(playerPos);
             dog.SeekingAttention = true;
             Complete = false;
         };
-        begAnimationTimer.OnTimerStop += () => {
+        begAnimationTimer.OnTimerStop += () =>
+        {
             dog.Fun += fun;
             dog.SeekingAttention = false;
             Complete = true;
         };
     }
 
-    public void Start() {
+    public void Start()
+    {
         dog.StoppingDistance = 2.1f;
 
         animations.StartCoroutine(animations.DogActions(AnimationActionType.Beg));
         begAnimationTimer.Start();
     }
 
-    public void Update(float deltaTime) {
+    public void Update(float deltaTime)
+    {
         navMeshAgent.transform.LookAt(playerPos);
         begAnimationTimer.Tick(deltaTime);
     }
 
-    public void Stop() {
+    public void Stop()
+    {
         begAnimationTimer.Stop();
         Complete = true;
     }
@@ -693,7 +756,8 @@ public class WaitForBallThrow : IActionStrategy
     readonly CountdownTimer standUpTimer;
     readonly bool ballThrown;
 
-    public WaitForBallThrow(NavMeshAgent agent, DogSO dog, AnimationController animations) {
+    public WaitForBallThrow(NavMeshAgent agent, DogSO dog, AnimationController animations)
+    {
         if (dog.BallThrown.Value) Complete = true;
 
         this.agent = agent;
@@ -702,23 +766,27 @@ public class WaitForBallThrow : IActionStrategy
 
         standUpTimer = new CountdownTimer(2f);
         standUpTimer.OnTimerStart += () => { animations.SetAnimatorBool("Sit_b", false); };
-        standUpTimer.OnTimerStop += () => {
+        standUpTimer.OnTimerStop += () =>
+        {
             agent.speed = 2.5f;
             Complete = true;
         };
     }
 
-    public void Start() {
+    public void Start()
+    {
         agent.speed = 0f;
         animations.SetAnimatorBool("Sit_b", true);
     }
 
-    public void Update(float deltaTime) {
+    public void Update(float deltaTime)
+    {
         standUpTimer.Tick(deltaTime);
         if (ballThrown) standUpTimer.Start();
     }
 
-    public void Stop() {
+    public void Stop()
+    {
         standUpTimer.Stop();
     }
 }
@@ -747,7 +815,8 @@ public class PickUpBallStrategy : IActionStrategy
 
     private PickUpState currentState;
 
-    public PickUpBallStrategy(NavMeshAgent agent, AnimationController animations, GameObject ball, Transform objectGrabPoint, DogSO dog, float pickupRange = 2.15f) {
+    public PickUpBallStrategy(NavMeshAgent agent, AnimationController animations, GameObject ball, Transform objectGrabPoint, DogSO dog, float pickupRange = 2.15f)
+    {
         this.agent = agent;
         this.animations = animations;
         this.dog = dog;
@@ -758,18 +827,22 @@ public class PickUpBallStrategy : IActionStrategy
         pickUpAnimationTimer = new CountdownTimer(12f);
         pickUpTimer = new CountdownTimer(5.7f);
 
-        pickUpAnimationTimer.OnTimerStart += () => {
+        pickUpAnimationTimer.OnTimerStart += () =>
+        {
             animations.StartDogAction(AnimationActionType.Eat);
             Complete = false;
         };
-        pickUpAnimationTimer.OnTimerStop += () => {
+        pickUpAnimationTimer.OnTimerStop += () =>
+        {
             dog.ReturnBall.Value = true;
             currentState = PickUpState.Completed;
             Complete = true;
         };
 
-        pickUpTimer.OnTimerStop += () => {
-            if (ball.TryGetComponent(out GrabbableObject grabbableObject)) {
+        pickUpTimer.OnTimerStop += () =>
+        {
+            if (ball.TryGetComponent(out GrabbableObject grabbableObject))
+            {
                 grabbableObject.Grab(objectGrabPoint);
             }
 
@@ -777,15 +850,18 @@ public class PickUpBallStrategy : IActionStrategy
         };
     }
 
-    public void Start() {
+    public void Start()
+    {
         dog.StoppingDistance = pickupRange;
         Complete = false;
         currentState = PickUpState.MovingToBall;
         agent.SetDestination(ball.transform.position);
     }
 
-    public void Update(float deltaTime) {
-        switch (currentState) {
+    public void Update(float deltaTime)
+    {
+        switch (currentState)
+        {
             case PickUpState.MovingToBall:
                 MoveToBall();
                 break;
@@ -798,8 +874,10 @@ public class PickUpBallStrategy : IActionStrategy
         }
     }
 
-    private void MoveToBall() {
-        if (Vector3.Distance(agent.transform.position, ball.transform.position) <= pickupRange && !agent.pathPending) {
+    private void MoveToBall()
+    {
+        if (Vector3.Distance(agent.transform.position, ball.transform.position) <= pickupRange && !agent.pathPending)
+        {
             agent.transform.LookAt(ball.transform);
             currentState = PickUpState.PickingUpBall;
             pickUpAnimationTimer.Start();
@@ -808,9 +886,11 @@ public class PickUpBallStrategy : IActionStrategy
         else agent.SetDestination(ball.transform.position);
     }
 
-    private void PickUpBall(float deltaTime) {
+    private void PickUpBall(float deltaTime)
+    {
         if (!dog.BallAvailable) Complete = true;
-        if (Vector3.Distance(agent.transform.position, ball.transform.position) <= pickupRange) {
+        if (Vector3.Distance(agent.transform.position, ball.transform.position) <= pickupRange)
+        {
             pickUpAnimationTimer.Tick(deltaTime);
             pickUpTimer.Tick(deltaTime);
             dog.ballInMouth = true;
@@ -819,7 +899,8 @@ public class PickUpBallStrategy : IActionStrategy
         else currentState = PickUpState.MovingToBall;
     }
 
-    public void Stop() {
+    public void Stop()
+    {
         pickUpAnimationTimer.Stop();
         pickUpTimer.Stop();
         agent.ResetPath();
@@ -850,25 +931,30 @@ public class DropBallStrategy : IActionStrategy
 
     private DropState currentState;
 
-    public DropBallStrategy(NavMeshAgent agent, AnimationController animations, DogSO dog, Transform playerTransform, GameObject ball, Transform objectGrabPoint, float dropRange = 5f) {
+    public DropBallStrategy(NavMeshAgent agent, AnimationController animations, DogSO dog, Transform playerTransform, GameObject ball, Transform objectGrabPoint, float dropRange = 5f)
+    {
         this.agent = agent;
         this.animations = animations;
         this.dog = dog;
         this.playerTransform = playerTransform;
         this.dropRange = dropRange;
         ballAvailable = dog.BallAvailable;
-        
+
         dropAnimationTimer = new CountdownTimer(10f);
-        dropAnimationTimer.OnTimerStart += () => {
+        dropAnimationTimer.OnTimerStart += () =>
+        {
             animations.StartDogAction(AnimationActionType.ShakeToy);
-            if (ball.TryGetComponent(out ShakeBall ballShake)) {
+            if (ball.TryGetComponent(out ShakeBall ballShake))
+            {
                 ballShake.Shake(objectGrabPoint);
             }
 
             Complete = false;
         };
-        dropAnimationTimer.OnTimerStop += () => {
-            if (ball.TryGetComponent(out GrabbableObject grabbableObject)) {
+        dropAnimationTimer.OnTimerStop += () =>
+        {
+            if (ball.TryGetComponent(out GrabbableObject grabbableObject))
+            {
                 grabbableObject.Drop();
                 dog.ballInMouth = false;
                 ballAvailable.Value = true;
@@ -883,7 +969,8 @@ public class DropBallStrategy : IActionStrategy
         };
     }
 
-    public void Start() {
+    public void Start()
+    {
         if (!dog.BallAvailable) Complete = true;
         Complete = false;
         dog.StoppingDistance = dropRange;
@@ -892,8 +979,10 @@ public class DropBallStrategy : IActionStrategy
         agent.SetDestination(playerTransform.position);
     }
 
-    public void Update(float deltaTime) {
-        switch (currentState) {
+    public void Update(float deltaTime)
+    {
+        switch (currentState)
+        {
             case DropState.MovingToPlayer:
                 MoveToPlayer();
                 break;
@@ -906,23 +995,27 @@ public class DropBallStrategy : IActionStrategy
         }
     }
 
-    private void MoveToPlayer() {
+    private void MoveToPlayer()
+    {
         if (!dog.ballInMouth) Complete = true;
 
-        if (Vector3.Distance(agent.transform.position, playerTransform.position) <= dropRange && !agent.pathPending) {
+        if (Vector3.Distance(agent.transform.position, playerTransform.position) <= dropRange && !agent.pathPending)
+        {
             agent.speed = 0f;
             currentState = DropState.DroppingBall;
             dropAnimationTimer.Start();
         }
     }
 
-    private void DropBall(float deltaTime) {
+    private void DropBall(float deltaTime)
+    {
         if (!dog.ballInMouth) Complete = true;
-        
+
         dropAnimationTimer.Tick(deltaTime);
     }
 
-    public void Stop() {
+    public void Stop()
+    {
         dropAnimationTimer.Stop();
         agent.ResetPath();
         agent.speed = 2.5f;
@@ -942,40 +1035,48 @@ public class WaitForActionStrategy : IActionStrategy
     private readonly Transform playerTransform;
     private readonly CountdownTimer standUpAnimationTimer;
 
-    public WaitForActionStrategy(NavMeshAgent agent, AnimationController animations, DogSO dog, Transform playerTransform) {
+    public WaitForActionStrategy(NavMeshAgent agent, AnimationController animations, DogSO dog, Transform playerTransform)
+    {
         this.agent = agent;
         this.animations = animations;
         this.dog = dog;
         this.playerTransform = playerTransform;
 
         standUpAnimationTimer = new CountdownTimer(4f);
-        standUpAnimationTimer.OnTimerStart += () => {
+        standUpAnimationTimer.OnTimerStart += () =>
+        {
             agent.speed = 0f;
             animations.SetAnimatorBool("Sit_b", false);
         };
-        standUpAnimationTimer.OnTimerStop += () => {
+        standUpAnimationTimer.OnTimerStop += () =>
+        {
             agent.speed = 2.5f;
             dog.DogCalled = false;
             Complete = true;
         };
     }
 
-    public void Start() {
+    public void Start()
+    {
         dog.StoppingDistance = 5.0f;
         agent.transform.LookAt(playerTransform);
         Complete = false;
         animations.SetAnimatorBool("Sit_b", true);
     }
 
-    public void Update(float deltaTime) {
-        if (dog.BallThrown || !dog.DogCalled) {
+    public void Update(float deltaTime)
+    {
+        if (dog.BallThrown || !dog.DogCalled)
+        {
             standUpAnimationTimer.Start();
             Complete = true;
         }
+
         standUpAnimationTimer.Tick(deltaTime);
     }
 
-    public void Stop() {
+    public void Stop()
+    {
         animations.SetAnimatorBool("Sit_b", false);
         standUpAnimationTimer.Stop();
         Complete = true;

@@ -10,41 +10,44 @@ public class MenuManager : MonoBehaviour
 
     [SerializeField]
     private GameObject mainMenuUI;
-    
+
     [SerializeField]
     private GameObject mainMenuBackgroundImage;
-    
+
     [SerializeField]
     private GameObject pauseMenuUI;
-    
+
     [SerializeField]
     private GameObject optionsMenuUI;
 
     [SerializeField]
     private AudioMixer audioMixer;
 
-    [FoldoutGroup("Events" , expanded: true), SerializeField]
+    [FoldoutGroup("Events", expanded: true), SerializeField]
     private UnityEvent onRestart;
-    
-    [FoldoutGroup("Events" , expanded: true), SerializeField]
+
+    [FoldoutGroup("Events", expanded: true), SerializeField]
     private UnityEvent onPause;
-    
-    [FoldoutGroup("Events" , expanded: true), SerializeField]
+
+    [FoldoutGroup("Events", expanded: true), SerializeField]
     private UnityEvent onUnpause;
 
     private const int mainMenuSceneIndex = 0;
     private const int startLevelSceneIndex = 1;
-    
-    private void Awake() {
-        if (Instance == null) {
+
+    private void Awake()
+    {
+        if (Instance == null)
+        {
             Instance = this;
             DontDestroyOnLoad(this);
         }
-        else {
+        else
+        {
             Destroy(gameObject);
         }
     }
-    
+
     public void PlayGame()
     {
         AsyncLevelLoader.Instance.LoadScene(startLevelSceneIndex);
@@ -55,21 +58,23 @@ public class MenuManager : MonoBehaviour
         // PlayerController.PlayerInput.SwitchCurrentActionMap("Player");
     }
 
-    public void RestartGame() {
+    public void RestartGame()
+    {
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         onRestart.Invoke();
-        
+
         Time.timeScale = 1f;
         Cursor.lockState = CursorLockMode.Locked;
         onRestart.Invoke();
     }
-    
+
     public void QuitGame()
     {
         Application.Quit();
     }
 
-    public void Pause() {
+    public void Pause()
+    {
         // onPause.Invoke();
         // pauseMenuUI.SetActive(true);
         // Time.timeScale = 0f;
@@ -77,7 +82,8 @@ public class MenuManager : MonoBehaviour
         PlayerController.PlayerInput.SwitchCurrentActionMap("UI");
     }
 
-    public void Unpause() {
+    public void Unpause()
+    {
         // onUnpause.Invoke();
         // pauseMenuUI.SetActive(false);
         // optionsMenuUI.SetActive(false);
@@ -86,7 +92,8 @@ public class MenuManager : MonoBehaviour
         PlayerController.PlayerInput.SwitchCurrentActionMap("Player");
     }
 
-    public void LoadMainMenu() {
+    public void LoadMainMenu()
+    {
         AsyncLevelLoader.Instance.LoadScene(mainMenuSceneIndex);
         // mainMenuUI.SetActive(true);
         // mainMenuBackgroundImage.SetActive(true);
@@ -94,7 +101,7 @@ public class MenuManager : MonoBehaviour
         // Cursor.lockState = CursorLockMode.None;
         // PlayerController.PlayerInput.SwitchCurrentActionMap("UI");
     }
-    
+
     public void SetQuality(int _qualityIndex)
     {
         QualitySettings.SetQualityLevel(_qualityIndex);
@@ -104,7 +111,7 @@ public class MenuManager : MonoBehaviour
     {
         Screen.fullScreen = _isFullscreen;
     }
-    
+
     public void SetCursorLock(bool _isCursorLocked)
     {
         Cursor.lockState = _isCursorLocked ? CursorLockMode.Locked : CursorLockMode.None;

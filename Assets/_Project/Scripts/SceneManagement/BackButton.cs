@@ -12,12 +12,15 @@ public class BackButton : MonoBehaviour
     [SerializeField]
     private GameObject optionsBubble;
 
-    public void OnBackButtonPressed() {
-        if (SceneManager.GetActiveScene().buildIndex == 0) {
+    public void OnBackButtonPressed()
+    {
+        if (SceneManager.GetActiveScene().buildIndex == 0)
+        {
             mainMenu.SetActive(true);
             optionsBubble.SetActive(false);
         }
-        else {
+        else
+        {
             pauseMenu.SetActive(true);
         }
     }

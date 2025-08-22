@@ -7,10 +7,10 @@ public class OptionsMenuManager : MonoBehaviour
 {
     [SerializeField]
     private GameObject pauseMenuUI;
-    
+
     [SerializeField]
     private GameObject optionsMenuUI;
-    
+
     [SerializeField]
     private AudioMixer audioMixer;
 
@@ -25,14 +25,15 @@ public class OptionsMenuManager : MonoBehaviour
         AsyncLevelLoader.Instance.LoadScene(startLevelSceneIndex);
     }
 
-    public void RestartGame() {
+    public void RestartGame()
+    {
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
-        
+
         Time.timeScale = 1f;
         Cursor.lockState = CursorLockMode.Locked;
         onRestart.Invoke();
     }
-    
+
     public void BackToMainMenu()
     {
         AsyncLevelLoader.Instance.LoadScene(mainMenuSceneIndex);

@@ -5,6 +5,9 @@
     public class Obstacle : MonoBehaviour, IDamagable, IInteractable
     {
         public float Health = 100f;
+        
+        [SerializeField]
+        private float repairAmount = 20f;
 
         [HideInInspector]
         public float actionCostIncrease;
@@ -28,6 +31,8 @@
         private void Awake() {
             cam = Camera.main;
             rigidComponent = GetComponent<RayfireRigid>();
+            
+            healthSlider.value = Health;
         }
         
         private void Update() {
@@ -40,7 +45,6 @@
         }
 
         private void UpdateHealthSlider() {
-            healthSlider.value = Health;
             healthSlider.value = Mathf.Clamp(healthSlider.value, 0f, 100f);
         }
 
@@ -50,7 +54,7 @@
                 canvas.SetActive(false);
                 actionCostIncrease = 100;
             }
-            else if (Health >= 99f) interactionName = "";
+            else if (Health >= 100f) interactionName = "";
             else {
                 interactionName = "Repair";
                 actionCostIncrease = 0;
@@ -62,7 +66,10 @@
         }
 
         public void Interact() {
-            TakeDamage(-20f);
+            if (healthSlider.value < Health)
+            {
+                TakeDamage(repairAmount * -1);
+            }
         }
 
         public void TakeDamage(float damage) {

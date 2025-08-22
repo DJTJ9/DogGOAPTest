@@ -44,7 +44,7 @@ public class PlayerController : MonoBehaviour
 
     [FoldoutGroup("Events", expanded: false), SerializeField]
     private UnityEvent pauseEvent;
-    
+
     [FoldoutGroup("Events"), SerializeField]
     private UnityEvent unpauseEvent;
 
@@ -61,7 +61,8 @@ public class PlayerController : MonoBehaviour
 
     private const float interactionDistance = 5f;
 
-    private void Awake() {
+    private void Awake()
+    {
         PlayerInput = GetComponent<PlayerInput>();
         MapInputActions();
         animations = GetComponent<AnimationControllerPlayer>();
@@ -73,16 +74,18 @@ public class PlayerController : MonoBehaviour
     /// Gets move direction from input and moves rigidbody into this direction.
     /// Rotates the rigidbody horizontally if cursor lock mode is locked.
     /// </summary>
-    private void Update() {
+    private void Update()
+    {
         // if (Mouse.current.rightButton.wasPressedThisFrame) Cursor.lockState = CursorLockMode.Locked == Cursor.lockState ? CursorLockMode.None : CursorLockMode.Locked;
         // if (Keyboard.current.escapeKey.wasPressedThisFrame) Cursor.lockState = CursorLockMode.None;
 
         // Cursor.lockState = CursorLockMode.Locked;
-        
+
         var moveDirection = GetMoveDirectionFromInput();
         rigidbodyMovement.Move(moveDirection);
 
-        if (Cursor.lockState == CursorLockMode.Locked) {
+        if (Cursor.lockState == CursorLockMode.Locked)
+        {
             var rotation = GetRotationFromInput();
             rigidbodyMovement.RotateHorizontal(rotation.x * lookSensitivity);
         }
@@ -91,8 +94,10 @@ public class PlayerController : MonoBehaviour
     /// <summary>
     /// Rotates camera vertically if cursor lock mode is locked.
     /// </summary>
-    private void LateUpdate() {
-        if (Cursor.lockState == CursorLockMode.Locked) {
+    private void LateUpdate()
+    {
+        if (Cursor.lockState == CursorLockMode.Locked)
+        {
             if (cameraRotator != null)
                 UpdateCamera();
         }
@@ -102,7 +107,8 @@ public class PlayerController : MonoBehaviour
     /// Gets rotation from input
     /// Rotates camera in the direction of the rotation input
     /// </summary>
-    private void UpdateCamera() {
+    private void UpdateCamera()
+    {
         var rotation = GetRotationFromInput();
         cameraRotator.Rotate(rotation.y);
     }
@@ -111,7 +117,8 @@ public class PlayerController : MonoBehaviour
     /// Maps the input actions
     /// Subcribes the OnJumpInput method to the jump started action
     /// </summary>
-    private void MapInputActions() {
+    private void MapInputActions()
+    {
         moveInputAction = PlayerInput.actions["Move"];
 
         jumpInputAction = PlayerInput.actions["Jump"];
@@ -136,12 +143,13 @@ public class PlayerController : MonoBehaviour
 
         applicationQuitInputAction = PlayerInput.actions["OpenMenu"];
         applicationQuitInputAction.started += OnPauseMenuInput;
-        
+
         applicationQuitInputAction = PlayerInput.actions["CloseMenu"];
         applicationQuitInputAction.started += OnUnpauseMenuInput;
     }
 
-    private void OnJumpInput(InputAction.CallbackContext context) {
+    private void OnJumpInput(InputAction.CallbackContext context)
+    {
         if (context.phase == InputActionPhase.Started)
             rigidbodyMovement.Jump();
     }
@@ -150,7 +158,8 @@ public class PlayerController : MonoBehaviour
     /// Gets the horizontal move direction from the input
     /// Converts this input into a 3D vector and returns it
     /// </summary>
-    private Vector3 GetMoveDirectionFromInput() {
+    private Vector3 GetMoveDirectionFromInput()
+    {
         var moveInput = moveInputAction.ReadValue<Vector2>();
         return new Vector3(moveInput.x, 0f, moveInput.y);
     }
@@ -158,14 +167,19 @@ public class PlayerController : MonoBehaviour
     /// <summary>
     /// Gets the rotation input and returns it
     /// </summary>
-    private Vector2 GetRotationFromInput() {
+    private Vector2 GetRotationFromInput()
+    {
         return lookInputAction.ReadValue<Vector2>();
     }
 
-    private void OnInteractInput(InputAction.CallbackContext context) {
-        if (context.phase == InputActionPhase.Started) {
-            if (Physics.Raycast(mainCameraTransform.position, mainCameraTransform.forward, out RaycastHit raycastHit, interactionDistance)) {
-                if (raycastHit.transform.TryGetComponent(out IInteractable interactable)) {
+    private void OnInteractInput(InputAction.CallbackContext context)
+    {
+        if (context.phase == InputActionPhase.Started)
+        {
+            if (Physics.Raycast(mainCameraTransform.position, mainCameraTransform.forward, out RaycastHit raycastHit, interactionDistance))
+            {
+                if (raycastHit.transform.TryGetComponent(out IInteractable interactable))
+                {
                     interactable.Interact();
                     Debug.Log($"Player interacted with {interactable.GetType().Name}");
                 }
@@ -173,27 +187,37 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    private void OnStatusRequstInput(InputAction.CallbackContext context) {
-        if (context.phase == InputActionPhase.Started) {
-            if (Physics.Raycast(mainCameraTransform.position, mainCameraTransform.forward, out RaycastHit raycastHit, interactionDistance)) {
-                if (raycastHit.transform.TryGetComponent(out DogStatus interactable)) {
+    private void OnStatusRequstInput(InputAction.CallbackContext context)
+    {
+        if (context.phase == InputActionPhase.Started)
+        {
+            if (Physics.Raycast(mainCameraTransform.position, mainCameraTransform.forward, out RaycastHit raycastHit, interactionDistance))
+            {
+                if (raycastHit.transform.TryGetComponent(out DogStatus interactable))
+                {
                     interactable.Interact();
                 }
             }
         }
     }
 
-    private void OnGrabInput(InputAction.CallbackContext context) {
-        if (context.phase == InputActionPhase.Started) {
+    private void OnGrabInput(InputAction.CallbackContext context)
+    {
+        if (context.phase == InputActionPhase.Started)
+        {
             HandleObjectGrab();
         }
     }
 
-    private void HandleObjectGrab() {
-        if (grabbableObject == null) {
+    private void HandleObjectGrab()
+    {
+        if (grabbableObject == null)
+        {
             if (Physics.Raycast(mainCameraTransform.position, mainCameraTransform.forward,
-                    out RaycastHit raycastHit, interactionDistance)) {
-                if (raycastHit.transform.TryGetComponent(out GrabbableObject grabbableObject)) {
+                    out RaycastHit raycastHit, interactionDistance))
+            {
+                if (raycastHit.transform.TryGetComponent(out GrabbableObject grabbableObject))
+                {
                     grabbableObject.GetComponent<CapsuleCollider>().enabled = false;
                     grabbableObject.Grab(objectGrabPoint);
                     grabbableObject.objectPossessed = true;
@@ -206,14 +230,18 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    private void OnDropInput(InputAction.CallbackContext context) {
-        if (context.phase == InputActionPhase.Started) {
+    private void OnDropInput(InputAction.CallbackContext context)
+    {
+        if (context.phase == InputActionPhase.Started)
+        {
             HandleObjectDrop();
         }
     }
 
-    private void HandleObjectDrop() {
-        if (grabbableObject != null) {
+    private void HandleObjectDrop()
+    {
+        if (grabbableObject != null)
+        {
             grabbableObject.GetComponent<CapsuleCollider>().enabled = true;
             grabbableObject.Drop();
             grabbableObject.objectPossessed = false;
@@ -223,15 +251,18 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    private void OnThrowInput(InputAction.CallbackContext context) {
+    private void OnThrowInput(InputAction.CallbackContext context)
+    {
         if (grabbableObject == null) return;
 
-        if (context.phase == InputActionPhase.Started) {
+        if (context.phase == InputActionPhase.Started)
+        {
             HandleThrowAction();
         }
     }
 
-    private void HandleThrowAction() {
+    private void HandleThrowAction()
+    {
         animations.SetAnimatorTrigger("isThrowing");
         grabbableObject.GetComponent<CapsuleCollider>().enabled = true;
         grabbableObject.Throw(mainCameraTransform.forward);
@@ -241,49 +272,62 @@ public class PlayerController : MonoBehaviour
         ballInHand.Value = false;
     }
 
-    private void OnCallDogInput(InputAction.CallbackContext context) {
-        if (context.phase == InputActionPhase.Started) {
+    private void OnCallDogInput(InputAction.CallbackContext context)
+    {
+        if (context.phase == InputActionPhase.Started)
+        {
             HandleCallDog();
         }
     }
 
-    private void HandleCallDog() {
-        if (Physics.Raycast(mainCameraTransform.position, mainCameraTransform.forward, out RaycastHit raycastHit, 15f)) {
-            if (raycastHit.transform.TryGetComponent(out ICommandable commandable)) {
+    private void HandleCallDog()
+    {
+        if (Physics.Raycast(mainCameraTransform.position, mainCameraTransform.forward, out RaycastHit raycastHit, 15f))
+        {
+            if (raycastHit.transform.TryGetComponent(out ICommandable commandable))
+            {
                 commandable.ExecuteCommand();
             }
         }
-        
+
         dogCalled.Value = !dogCalled.Value;
     }
 
-    private void OnPauseMenuInput(InputAction.CallbackContext context) {
-        if (context.phase == InputActionPhase.Started) {
+    private void OnPauseMenuInput(InputAction.CallbackContext context)
+    {
+        if (context.phase == InputActionPhase.Started)
+        {
             pauseEvent.Invoke();
         }
     }
-    
-    private void OnUnpauseMenuInput(InputAction.CallbackContext context) {
-        if (context.phase == InputActionPhase.Started) {
+
+    private void OnUnpauseMenuInput(InputAction.CallbackContext context)
+    {
+        if (context.phase == InputActionPhase.Started)
+        {
             unpauseEvent.Invoke();
         }
     }
 
-    public void SwitchToPlayerInputMap() {
+    public void SwitchToPlayerInputMap()
+    {
         PlayerInput.SwitchCurrentActionMap("Player");
         Cursor.lockState = CursorLockMode.Locked;
     }
-    
-    public void SwitchToUIInputMap() {
+
+    public void SwitchToUIInputMap()
+    {
         PlayerInput.SwitchCurrentActionMap("UI");
         Cursor.lockState = CursorLockMode.None;
     }
 
-    public void LockCursor() {
+    public void LockCursor()
+    {
         Cursor.lockState = CursorLockMode.Locked;
     }
-    
-    public void UnlockCursor() {
+
+    public void UnlockCursor()
+    {
         Cursor.lockState = CursorLockMode.None;
     }
 }

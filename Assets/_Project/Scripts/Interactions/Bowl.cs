@@ -31,7 +31,7 @@ public class Bowl : MonoBehaviour, IInteractable
     }
 
     public void Interact() {
-        if (fillAmount.position.y >= maxYPosition) return;
+        if (fillAmount.position.y >= maxYPosition || refillSlider.value <= 0) return;
         Vector3 newPosition = fillAmount.position + new Vector3(0f, refillAmount, 0f);
         newPosition.y = Mathf.Clamp(newPosition.y, minYPosition, maxYPosition);
         fillAmount.position = newPosition;

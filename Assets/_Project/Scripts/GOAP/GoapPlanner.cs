@@ -19,7 +19,7 @@ public class GoapPlanner : IGoapPlanner {
             Node goalNode = new Node(null, null, goal.DesiredEffects, 0);
             
             // If we can find a path to the goal, return the plan
-            if (FindPath(goalNode, agent.actions)) {
+            if (FindPath(goalNode, agent.Actions)) {
                 // If the goalNode has no leaves and no action to perform try a different goal
                 if (goalNode.IsLeafDead) continue;
                 

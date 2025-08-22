@@ -5,7 +5,10 @@ using UnityEngine.UI;
 
 public class SoundMixerManager : MonoBehaviour
 {
-    [SerializeField] private AudioMixer audioMixer;
+    public static SoundMixerManager Instance;
+    
+    [SerializeField] 
+    private AudioMixer audioMixer;
     
     [FoldoutGroup("Slider"), SerializeField]
     private Slider masterVolumeSlider;
@@ -15,13 +18,9 @@ public class SoundMixerManager : MonoBehaviour
     
     [FoldoutGroup("Slider"), SerializeField]
     private Slider soundFXVolumeSlider;
-
-    private const float minDb = -80f;
-    private const float maxDb = 0f;
     
-    public static SoundMixerManager Instance;
-    
-    private void Awake() {
+    private void Awake() 
+    {
         if (Instance == null) {
             Instance = this;
             DontDestroyOnLoad(this);
@@ -29,31 +28,19 @@ public class SoundMixerManager : MonoBehaviour
             Destroy(gameObject);
         }
     }
-    
-    private void Start() {
-        // masterVolumeSlider.onValueChanged.AddListener(SetMasterVolume);
-        // masterVolumeSlider.value = 1f;
-        // musicVolumeSlider.onValueChanged.AddListener(SetMusicVolume);
-        // musicVolumeSlider.value = 1f;
-        // soundFXVolumeSlider.onValueChanged.AddListener(SetSoundFXVolume);
-        // soundFXVolumeSlider.value = 1f;
-    }
-    
-    public void SetMasterVolume(float volume) {
-        // var db = masterVolumeSlider.value <= 0.0001f ? minDb : Mathf.Lerp(minDb, maxDb, Mathf.Log10(volume) / Mathf.Log10(1f));
-        
+   
+    public void SetMasterVolume(float volume) 
+    {
         audioMixer.SetFloat("MasterVolume", Mathf.Log10(volume) * 20f);
     }
     
-    public void SetMusicVolume(float volume) {
-        // var db = musicVolumeSlider.value <= 0.0001f ? minDb : Mathf.Lerp(minDb, maxDb, Mathf.Log10(volume) / Mathf.Log10(1f));
-        
+    public void SetMusicVolume(float volume) 
+    {
         audioMixer.SetFloat("MusicVolume", Mathf.Log10(volume) * 20f);
     }
     
-    public void SetSoundFXVolume(float volume) {
-        // var db = soundFXVolumeSlider.value <= 0.0001f ? minDb : Mathf.Lerp(minDb, maxDb, Mathf.Log10(volume) / Mathf.Log10(1f));
-        
+    public void SetSoundFXVolume(float volume) 
+    {
         audioMixer.SetFloat("SoundFXVolume", Mathf.Log10(volume) * 20f);   
     }
 }

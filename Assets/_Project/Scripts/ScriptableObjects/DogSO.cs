@@ -229,29 +229,35 @@ public class DogSO : ScriptableObject
     [HideInInspector]
     public bool ballInMouth;
 
-    private void OnEnable() {
+    private void OnEnable()
+    {
         ResetStats();
     }
 
-    public void UpdateDogBehaviour() {
+    public void UpdateDogBehaviour()
+    {
         UpdateStats();
         UpdateActionCosts();
         UpdatePriorities();
         GetRandomFoodAndWaterLocation();
     }
 
-    private void UpdateStats() {
-        if (Stamina <= 0) {
+    private void UpdateStats()
+    {
+        if (Stamina <= 0)
+        {
             Health -= 0.1f;
             Aggression += 1f;
         }
 
-        if (Satiety <= 0) {
+        if (Satiety <= 0)
+        {
             Health -= 0.1f;
             Aggression += 1f;
         }
 
-        if (Hydration <= 0) {
+        if (Hydration <= 0)
+        {
             Health -= 0.1f;
             Aggression += 1f;
         }
@@ -264,7 +270,8 @@ public class DogSO : ScriptableObject
         Hydration = Mathf.Clamp(Hydration - StatManager.HydrationLost, 0f, 100f);
     }
 
-    private void UpdateActionCosts() {
+    private void UpdateActionCosts()
+    {
         SleepCosts = CalculateGoodBehaviourActionCost(defaultSleepCosts, Stamina, Aggression);
         RestCosts = CalculateBadBehaviourActionCost(defaultRestCosts, Stamina, Aggression);
         SeekAttentionCosts = CalculateGoodBehaviourActionCost(defaultSeekAttentionCosts, Fun, Aggression);
@@ -275,17 +282,20 @@ public class DogSO : ScriptableObject
         DiggingCosts = CalculateBadBehaviourActionCost(defaultDiggingCosts, Fun, Aggression);
     }
 
-    private float CalculateGoodBehaviourActionCost(float defaultCost, float currentStatValue, float currentAggression) {
+    private float CalculateGoodBehaviourActionCost(float defaultCost, float currentStatValue, float currentAggression)
+    {
         float actionCost = defaultCost - (currentStatValue / 10f) + (currentAggression / 10) + UnityEngine.Random.Range(-1f, 1f);
         return actionCost;
     }
 
-    private float CalculateBadBehaviourActionCost(float defaultCost, float currentStatValue, float currentAggression) {
+    private float CalculateBadBehaviourActionCost(float defaultCost, float currentStatValue, float currentAggression)
+    {
         float actionCost = defaultCost + (currentStatValue / 10f) - (currentAggression / 10) + UnityEngine.Random.Range(-1f, 1f);
         return actionCost;
     }
 
-    private void UpdatePriorities() {
+    private void UpdatePriorities()
+    {
         KeepStaminaUpPrio = CalculatePriorities(defaultKeepStaminaUpPrio, Stamina);
         KeepHydrationLevelUpPrio = CalculatePriorities(defaultKeepHydrationLevelUpPrio, Satiety);
         KeepSatietyLevelUpPrio = CalculatePriorities(defaultKeepSatietyLevelUpPrio, Hydration);
@@ -293,19 +303,22 @@ public class DogSO : ScriptableObject
         FetchBallAndReturnItPrio = CalculatePriorities(defaultFetchBallAndReturnItPrio, Fun);
     }
 
-    private float CalculatePriorities(float defaultPriority, float currentStatValue) {
+    private float CalculatePriorities(float defaultPriority, float currentStatValue)
+    {
         float goalPriority = defaultPriority - (currentStatValue / 10f);
         return goalPriority;
     }
 
-    private void GetRandomFoodAndWaterLocation() {
+    private void GetRandomFoodAndWaterLocation()
+    {
         EatAtBowl1Costs = UnityEngine.Random.Range(0f, 20f);
         EatAtBowl2Costs = UnityEngine.Random.Range(0f, 20f);
         DrinkAtBowl1Costs = UnityEngine.Random.Range(0f, 20f);
         DrinkAtBowl2Costs = UnityEngine.Random.Range(0f, 20f);
     }
 
-    public void ResetStats() {
+    public void ResetStats()
+    {
         // Stats settings
         Health = defaultHealth;
         Aggression = defaultAggression;

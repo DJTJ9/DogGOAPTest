@@ -1,21 +1,21 @@
 using Sirenix.OdinInspector;
 using UnityEngine;
 
-[RequireComponent (typeof(Rigidbody), typeof(GroundChecker))]
+[RequireComponent(typeof(Rigidbody), typeof(GroundChecker))]
 public class RigidbodyMovement : MonoBehaviour
 {
     [FoldoutGroup("Settings", expanded: true), SerializeField, Range(0, 20)]
     private float speed;
-    
+
     [FoldoutGroup("Settings", expanded: true), SerializeField, Range(0, 20)]
     private float maxSpeed;
-    
+
     [FoldoutGroup("Settings", expanded: true), SerializeField, Range(0, 20)]
     private float jumpPower;
-    
+
     [FoldoutGroup("Settings", expanded: true), SerializeField, Range(0, 20)]
     private float jumpSpeedModifier = 1;
-    
+
     [FoldoutGroup("Settings", expanded: true), SerializeField, Range(0, 20)]
     private float fallSpeedModifier = 1;
 
@@ -65,7 +65,7 @@ public class RigidbodyMovement : MonoBehaviour
     public void UpdateHorizontalMovement()
     {
         Vector3 currentVelocity = rb.linearVelocity;
-        Vector3 targetVelocity = new Vector3(moveDirection.x, 0f , moveDirection.z);
+        Vector3 targetVelocity = new Vector3(moveDirection.x, 0f, moveDirection.z);
         targetVelocity *= speed;
 
         targetVelocity = transform.TransformDirection(targetVelocity);

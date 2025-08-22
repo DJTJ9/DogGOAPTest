@@ -6,36 +6,38 @@ using UnityEngine;
 public class MusicManager : MonoBehaviour
 {
     public static MusicManager Instance;
-    
+
     [FoldoutGroup("Settings", expanded: true), SerializeField]
     private float startVolume = 0.69f;
-    
-    
+
+
     [FoldoutGroup("Settings", expanded: true), SerializeField]
     private float dimDuration = 1.5f;
-    
+
     [FoldoutGroup("Audio Clips", expanded: false), SerializeField]
     private List<AudioClip> musicClips;
-    
+
     private const float fullVolume = 1f;
-    
+
     private AudioSource audioSource;
-    
+
     private void Awake()
     {
-        if (Instance == null) {
+        if (Instance == null)
+        {
             Instance = this;
             DontDestroyOnLoad(this);
         }
-        else {
+        else
+        {
             Destroy(gameObject);
         }
-        
+
         audioSource = GetComponent<AudioSource>();
         audioSource.volume = startVolume;
         audioSource.Play();
     }
-    
+
     private void Update()
     {
         if (!audioSource.isPlaying && audioSource.clip != null)
@@ -69,23 +71,28 @@ public class MusicManager : MonoBehaviour
         audioSource.Play();
     }
 
-    public void StopMusic() {
+    public void StopMusic()
+    {
         audioSource.Stop();
     }
 
-    public void DimMusic() {
+    public void DimMusic()
+    {
         StartCoroutine(DimMusicCoroutine());
     }
-    
-    public void UnDimMusic() {
+
+    public void UnDimMusic()
+    {
         audioSource.volume = fullVolume;
     }
 
-    private IEnumerator DimMusicCoroutine() {
+    private IEnumerator DimMusicCoroutine()
+    {
         float currentVolume = audioSource.volume;
         float elapsedTime = 0f;
 
-        while (elapsedTime < dimDuration) {
+        while (elapsedTime < dimDuration)
+        {
             audioSource.volume = Mathf.Lerp(currentVolume, startVolume, elapsedTime / dimDuration);
 
             elapsedTime += Time.deltaTime;
@@ -94,18 +101,21 @@ public class MusicManager : MonoBehaviour
 
         audioSource.volume = startVolume;
     }
-    
-    private IEnumerator UnDimMusicCoroutine() {
+
+    private IEnumerator UnDimMusicCoroutine()
+    {
         float currentVolume = audioSource.volume;
         float elapsedTime = 0f;
-        
-        while (elapsedTime < dimDuration) {
+
+        while (elapsedTime < dimDuration)
+        {
             audioSource.volume = Mathf.Lerp(currentVolume, fullVolume, elapsedTime / dimDuration);
 
             elapsedTime += Time.deltaTime;
             yield return null;
         }
 
-        audioSource.volume = fullVolume;;
+        audioSource.volume = fullVolume;
+        ;
     }
 }

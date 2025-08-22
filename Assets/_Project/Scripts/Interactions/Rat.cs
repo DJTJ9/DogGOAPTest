@@ -30,7 +30,7 @@ public class Rat : MonoBehaviour, IDiggable
 
     private IEnumerator Flee() {
         if (transform.position.y < 0f) {
-            goapAgent.SetActiveRat(gameObject);
+            // goapAgent.SetActiveRat(gameObject);
             yield return transform.DOMoveY(transform.position.y + 0.2f, 0.5f).WaitForCompletion();
         }
         

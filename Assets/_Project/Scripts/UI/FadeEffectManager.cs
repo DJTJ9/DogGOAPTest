@@ -25,48 +25,61 @@ public class FadeEffectManager : MonoBehaviour
     private const float zero = 0;
     private const float one = 1;
 
-    private void Awake() {
-        if (Instance == null) {
+    private void Awake()
+    {
+        if (Instance == null)
+        {
             Instance = this;
             DontDestroyOnLoad(this);
         }
-        else {
+        else
+        {
             Destroy(gameObject);
         }
 
         fadeStartColor.a = zero;
     }
 
-    private void Update() {
-        if (IsFadingOut) {
-            if (fadeImage.color.a < one) {
+    private void Update()
+    {
+        if (IsFadingOut)
+        {
+            if (fadeImage.color.a < one)
+            {
                 fadeStartColor.a += Time.deltaTime * fadeOutSpeed;
                 fadeImage.color = fadeStartColor;
             }
-            else {
+            else
+            {
                 IsFadingOut = false;
             }
         }
 
-        if (IsFadingIn) {
-            if (fadeImage.color.a > zero) {
+        if (IsFadingIn)
+        {
+            if (fadeImage.color.a > zero)
+            {
                 fadeStartColor.a -= Time.deltaTime * fadeInSpeed;
                 fadeImage.color = fadeStartColor;
             }
-            else {
+            else
+            {
                 IsFadingIn = false;
             }
         }
     }
 
 
-    public void StartFadeOut() {
+    public void StartFadeOut()
+    {
         fadeImage.color = fadeStartColor;
         IsFadingOut = true;
     }
 
-    public void StartFadeIn() {
-        if (fadeImage.color.a >= one) {
+    public void StartFadeIn()
+    {
+        if (fadeImage.color.a >= one)
+        {
             fadeImage.color = fadeStartColor;
             IsFadingIn = true;
         }
