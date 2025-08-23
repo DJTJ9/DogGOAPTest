@@ -5,6 +5,7 @@ using Sirenix.OdinInspector;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
@@ -23,14 +24,14 @@ public class AsyncLevelLoader : MonoBehaviour
     private Image loadingScreenImage;
 
     [SerializeField]
-    private float duration = 5f;
+    private float duration = 1f;
 
     [Header("Progress Bar"), SerializeField]
     private Slider progressBar;
 
     [SerializeField]
     private TMP_Text progressText;
-
+    
     [FoldoutGroup("Events"), SerializeField]
     private UnityEvent onLevelChange;
 
@@ -54,6 +55,7 @@ public class AsyncLevelLoader : MonoBehaviour
         try
         {
             onLevelChange?.Invoke();
+            EventSystem.current.SetSelectedGameObject(null);
             var color = loadingScreenImage.color;
             color.a = 1f;
             loadingScreenImage.color = color;
@@ -75,28 +77,23 @@ public class AsyncLevelLoader : MonoBehaviour
                 target = Mathf.Clamp01(scene.progress / 0.9f);
             } while (scene.progress < 0.9f);
 
-            await Task.Delay(1000);
+            await Task.Delay(2000);
 
             if (sceneIndex == 0)
             {
                 mainMenu.SetActive(true);
                 mainMenuImage.SetActive(true);
-                duration = 1f;
             }
             else
             {
                 mainMenu.SetActive(false);
                 mainMenuImage.SetActive(false);
-                duration = 2f;
             }
 
             progressBar.gameObject.SetActive(false);
             FadeOutLoadingScreen();
             scene.allowSceneActivation = true;
-            MusicManager.Instance.ChangeMusicClip();
-
-            // await Task.Delay(2000);
-            // loadingScreen.SetActive(false);
+            // MusicManager.Instance.ChangeMusicClip();
         }
         catch (Exception e)
         {

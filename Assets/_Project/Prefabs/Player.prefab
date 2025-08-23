@@ -2530,7 +2530,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -0, y: 0, z: 0}
-  m_LocalScale: {x: 100, y: 100, z: 100}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 6902858738967305143}
@@ -3485,7 +3485,7 @@ Transform:
   m_GameObject: {fileID: 7092775352889968647}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -2.4166732, y: 0, z: -5.8461614}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -3740,7 +3740,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3b67852d5f07f354abb12b47c5d37689, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gameTimer: {fileID: 12225253672726470}
+  gameTimer: {fileID: 0}
   interactionText: {fileID: 8875051500907011825}
   interactionRange: 5
   gameManager: {fileID: 0}
@@ -4928,21 +4928,11 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_RemovedGameObjects: []
+    m_RemovedGameObjects:
+    - {fileID: 4323605601869102764, guid: c3b97d2acf5cb414fa3a5c81bc9dd2f4, type: 3}
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c3b97d2acf5cb414fa3a5c81bc9dd2f4, type: 3}
---- !u!114 &12225253672726470 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 2022166804082391732, guid: c3b97d2acf5cb414fa3a5c81bc9dd2f4, type: 3}
-  m_PrefabInstance: {fileID: 2034293544077317490}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &572032222753606497 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 2002702661120892435, guid: c3b97d2acf5cb414fa3a5c81bc9dd2f4, type: 3}

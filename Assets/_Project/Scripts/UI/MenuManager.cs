@@ -60,12 +60,11 @@ public class MenuManager : MonoBehaviour
 
     public void RestartGame()
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         onRestart.Invoke();
+        AsyncLevelLoader.Instance.LoadScene(SceneManager.GetActiveScene().buildIndex);
 
         Time.timeScale = 1f;
         Cursor.lockState = CursorLockMode.Locked;
-        onRestart.Invoke();
     }
 
     public void QuitGame()

@@ -6,6 +6,9 @@ using UnityEngine;
 public class MusicManager : MonoBehaviour
 {
     public static MusicManager Instance;
+    
+    [HideInInspector]
+    public bool isLooping;
 
     [FoldoutGroup("Settings", expanded: true), SerializeField]
     private float startVolume = 0.69f;
@@ -44,6 +47,7 @@ public class MusicManager : MonoBehaviour
         {
             ChangeMusicClip();
         }
+        audioSource.loop = isLooping;
     }
 
     private AudioClip lastPlayedClip;
@@ -116,6 +120,11 @@ public class MusicManager : MonoBehaviour
         }
 
         audioSource.volume = fullVolume;
-        ;
+    }
+    
+    public void ToogleIsLooping()
+    {
+        isLooping = !isLooping;
+        audioSource.loop = isLooping;
     }
 }

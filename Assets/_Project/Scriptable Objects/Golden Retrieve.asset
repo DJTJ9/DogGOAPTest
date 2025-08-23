@@ -14,10 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Health: 100
   Aggression: 0
-  Stamina: 74
-  Satiety: 71
-  Hydration: 83
-  Fun: 0
+  Stamina: 98
+  Satiety: 8
+  Hydration: 48
+  Fun: 66
   Dominance: 40
   StatManager: {fileID: 11400000, guid: dc99d76271051df439d8051053ea5fab, type: 2}
   BallInHand: {fileID: 11400000, guid: e218d8f69f18b5f41ace3a5559f9df96, type: 2}
@@ -42,18 +42,18 @@ MonoBehaviour:
   defaultFun: 70
   defaultDominance: 40
   defaultDogCalled: 0
-  SleepCosts: 7.704069
-  RestCosts: 22.423023
-  SeekAttentionCosts: 10.049493
-  RageObstacle1Costs: 14.488031
-  RageObstacle2Costs: 15.969559
-  RageObstacle3Costs: 14.684616
-  RageObstacle4Costs: 15.4727545
-  DiggingCosts: 15.63877
-  EatAtBowl1Costs: 17.440247
-  EatAtBowl2Costs: 5.2174625
-  DrinkAtBowl1Costs: 14.53876
-  DrinkAtBowl2Costs: 13.256273
+  SleepCosts: 4.91963
+  RestCosts: 24.749144
+  SeekAttentionCosts: 2.707318
+  RageObstacle1Costs: 21.08842
+  RageObstacle2Costs: 21.995403
+  RageObstacle3Costs: 21.33037
+  RageObstacle4Costs: 20.945576
+  DiggingCosts: 21.983252
+  EatAtBowl1Costs: 4.257579
+  EatAtBowl2Costs: 7.004813
+  DrinkAtBowl1Costs: 1.5464091
+  DrinkAtBowl2Costs: 0.5795431
   defaultSleepCosts: 15
   defaultRestCosts: 15
   defaultSeekAttentionCosts: 10
@@ -68,11 +68,11 @@ MonoBehaviour:
   defaultDrinkAtBowl2Costs: 0
   IdlePrio: 1
   WanderPrio: 2
-  KeepStaminaUpPrio: 7.6
-  KeepHydrationLevelUpPrio: 7.9
-  KeepSatietyLevelUpPrio: 6.7
-  KeepFunUpPrio: 15
-  FetchBallAndReturnItPrio: 50
+  KeepStaminaUpPrio: 5.2
+  KeepHydrationLevelUpPrio: 14.2
+  KeepSatietyLevelUpPrio: 10.2
+  KeepFunUpPrio: 8.4
+  FetchBallAndReturnItPrio: 43.4
   StayAlive: 100
   defaultIdlePrio: 1
   defaultWanderPrio: 2
@@ -83,6 +83,6 @@ MonoBehaviour:
   defaultFetchBallAndReturnItPrio: 50
   defaultStayAlive: 100
   Settings: {fileID: 11400000, guid: 1b08550701af21b44aac0e77b049f306, type: 2}
-  StoppingDistance: 4
-  SeekingAttention: 0
+  StoppingDistance: 2.1
+  SeekingAttention: 1
   ballInMouth: 0
