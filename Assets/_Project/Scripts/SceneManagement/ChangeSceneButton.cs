@@ -19,14 +19,4 @@ public class ChangeSceneButton : MonoBehaviour
     {
         AsyncLevelLoader.Instance.SetTimeScale(zero);
     }
-
-    public void SetMasterVolumeToOne()
-    {
-        SoundMixerManager.Instance.SetMasterVolume(one);
-    }
-
-    public void SetMasterVolumeToZero()
-    {
-        SoundMixerManager.Instance.SetMasterVolume(zero);
-    }
 }

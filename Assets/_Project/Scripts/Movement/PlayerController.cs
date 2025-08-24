@@ -48,8 +48,9 @@ public class PlayerController : MonoBehaviour
     [FoldoutGroup("Events"), SerializeField]
     private UnityEvent unpauseEvent;
 
-    private AnimationControllerPlayer animations;
+    private const float interactionDistance = 5f;
 
+    private AnimationControllerPlayer animations;
     private InputAction moveInputAction;
     private InputAction jumpInputAction;
     private InputAction lookInputAction;
@@ -58,9 +59,7 @@ public class PlayerController : MonoBehaviour
     private InputAction throwInputAction;
     private InputAction callDogInputAction;
     private InputAction applicationQuitInputAction;
-
-    private const float interactionDistance = 5f;
-
+    
     private void Awake()
     {
         PlayerInput = GetComponent<PlayerInput>();
@@ -181,7 +180,6 @@ public class PlayerController : MonoBehaviour
                 if (raycastHit.transform.TryGetComponent(out IInteractable interactable))
                 {
                     interactable.Interact();
-                    Debug.Log($"Player interacted with {interactable.GetType().Name}");
                 }
             }
         }
@@ -263,7 +261,6 @@ public class PlayerController : MonoBehaviour
 
     private void HandleThrowAction()
     {
-        animations.SetAnimatorTrigger("isThrowing");
         grabbableObject.GetComponent<CapsuleCollider>().enabled = true;
         grabbableObject.Throw(mainCameraTransform.forward);
         grabbableObject.objectPossessed = false;

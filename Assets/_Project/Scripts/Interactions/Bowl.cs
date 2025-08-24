@@ -36,6 +36,5 @@ public class Bowl : MonoBehaviour, IInteractable
         newPosition.y = Mathf.Clamp(newPosition.y, minYPosition, maxYPosition);
         fillAmount.position = newPosition;
         refillSlider.value -= 25f;
-        Debug.Log("Food or Water refilled");
     }
 }

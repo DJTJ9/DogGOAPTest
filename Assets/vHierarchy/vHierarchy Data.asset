@@ -17,6 +17,7 @@ MonoBehaviour:
     - 99c9720ab356a0642a771bea13969a05
     - 4d2b1fcf8f2e55a449a6189fdb311a88
     - 658d64683fb4cfb4eb7ab8ae9c0184ce
+    - 3c6575c57c8cd7d4bb82cdacd7c9d233
     values:
     - goDatas_byGlobalId:
         keys:
@@ -235,6 +236,7 @@ MonoBehaviour:
         - globalObjectIdString: GlobalObjectId_V1-2-99c9720ab356a0642a771bea13969a05-427599939-0
         - globalObjectIdString: GlobalObjectId_V1-2-99c9720ab356a0642a771bea13969a05-786754426-0
         - globalObjectIdString: GlobalObjectId_V1-2-99c9720ab356a0642a771bea13969a05-436575338-0
+        - globalObjectIdString: GlobalObjectId_V1-2-99c9720ab356a0642a771bea13969a05-1381569559-0
         values:
         - colorIndex: 7
           iconNameOrGuid: b20590aafbdb7c74ab7de5dcd5d6bac6
@@ -666,6 +668,8 @@ MonoBehaviour:
           iconNameOrGuid: 
         - colorIndex: 9
           iconNameOrGuid: 
+        - colorIndex: 3
+          iconNameOrGuid: 
     - goDatas_byGlobalId:
         keys:
         - globalObjectIdString: GlobalObjectId_V1-2-4d2b1fcf8f2e55a449a6189fdb311a88-2165897127812276694-1173193305
@@ -1058,4 +1062,22 @@ MonoBehaviour:
         - colorIndex: 8
           iconNameOrGuid: 
         - colorIndex: 8
+          iconNameOrGuid: 
+    - goDatas_byGlobalId:
+        keys:
+        - globalObjectIdString: GlobalObjectId_V1-2-3c6575c57c8cd7d4bb82cdacd7c9d233-7092775352889968647-497772444
+        - globalObjectIdString: GlobalObjectId_V1-2-3c6575c57c8cd7d4bb82cdacd7c9d233-4971611557724096039-1626767736
+        - globalObjectIdString: GlobalObjectId_V1-2-3c6575c57c8cd7d4bb82cdacd7c9d233-8312464494323031323-64565937
+        - globalObjectIdString: GlobalObjectId_V1-2-3c6575c57c8cd7d4bb82cdacd7c9d233-1723643612-0
+        - globalObjectIdString: GlobalObjectId_V1-2-3c6575c57c8cd7d4bb82cdacd7c9d233-1385211725-0
+        values:
+        - colorIndex: 5
+          iconNameOrGuid: AvatarMask On Icon
+        - colorIndex: 7
+          iconNameOrGuid: b20590aafbdb7c74ab7de5dcd5d6bac6
+        - colorIndex: 7
+          iconNameOrGuid: b20590aafbdb7c74ab7de5dcd5d6bac6
+        - colorIndex: 3
+          iconNameOrGuid: 
+        - colorIndex: 9
           iconNameOrGuid: 

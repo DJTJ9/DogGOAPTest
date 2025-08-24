@@ -3457,18 +3457,18 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1796294282843637094}
-  - component: {fileID: 486719347862727492}
-  - component: {fileID: 4079451924742935734}
   - component: {fileID: 3468627216715805783}
   - component: {fileID: 2786267171562282237}
-  - component: {fileID: 6527584161893310076}
   - component: {fileID: 1999052026441105924}
   - component: {fileID: 7848795911190170516}
-  - component: {fileID: 192333522673131554}
   - component: {fileID: 7566888078305542594}
   - component: {fileID: 7100849519622414471}
-  - component: {fileID: 6485208329972664398}
+  - component: {fileID: 486719347862727492}
+  - component: {fileID: 192333522673131554}
+  - component: {fileID: 6527584161893310076}
   - component: {fileID: 5151251654921174477}
+  - component: {fileID: 4079451924742935734}
+  - component: {fileID: 6485208329972664398}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -3497,55 +3497,6 @@ Transform:
   - {fileID: 7361843637576114444}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!95 &486719347862727492
-Animator:
-  serializedVersion: 7
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7092775352889968647}
-  m_Enabled: 1
-  m_Avatar: {fileID: 9000000, guid: a4a3ba617ed9c5946bb76844ec1ef299, type: 3}
-  m_Controller: {fileID: 22100000, guid: c2698e8e5bd1f1b47a0e2c731b625efc, type: 2}
-  m_CullingMode: 1
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_AnimatePhysics: 0
-  m_WarningMessage: "\nBinding warning: Some generic clip(s) animate transforms that
-    are already bound by a Humanoid avatar. These transforms can only be changed
-    by Humanoid clips.\n\tTransform 'DeformationSystem'\n\tTransform 'Ankle_L'\n\tTransform
-    'Scapula_R'\n\tTransform 'Hip_L'\n\tTransform 'MiddleFinger1_R'\n\tTransform
-    'IndexFinger2_R'\n\tTransform 'Chest_M'\n\tTransform 'Toes_R'\n\tTransform 'Head_M'\n\tTransform
-    'PinkyFinger2_R'\n\tand more ...\n\tFrom animation clip 'Baseball Pitching'"
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0
---- !u!64 &4079451924742935734
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7092775352889968647}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 503
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 512
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 5
-  m_Convex: 1
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 7018970652796049518, guid: a4a3ba617ed9c5946bb76844ec1ef299, type: 3}
 --- !u!114 &3468627216715805783
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3614,33 +3565,6 @@ MonoBehaviour:
   AngleSettings:
     Min: -75
     Max: 90
---- !u!54 &6527584161893310076
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7092775352889968647}
-  serializedVersion: 4
-  m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: 0.05
-  m_CenterOfMass: {x: 0, y: 0, z: 0}
-  m_InertiaTensor: {x: 1, y: 1, z: 1}
-  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ImplicitCom: 1
-  m_ImplicitTensor: 1
-  m_UseGravity: 1
-  m_IsKinematic: 0
-  m_Interpolate: 0
-  m_Constraints: 112
-  m_CollisionDetection: 1
 --- !u!114 &1999052026441105924
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3677,36 +3601,6 @@ MonoBehaviour:
   jumpPower: 3
   jumpSpeedModifier: 1
   fallSpeedModifier: 1
---- !u!114 &192333522673131554
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7092775352889968647}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 62899f850307741f2a39c98a8b639597, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Actions: {fileID: -944628639613478452, guid: 378647803f645c742940e023727c25ad, type: 3}
-  m_NotificationBehavior: 0
-  m_UIInputModule: {fileID: 0}
-  m_DeviceLostEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  m_DeviceRegainedEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  m_ControlsChangedEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  m_ActionEvents: []
-  m_NeverAutoSwitchControlSchemes: 0
-  m_DefaultControlScheme: 
-  m_DefaultActionMap: Player
-  m_SplitScreenIndex: -1
-  m_Camera: {fileID: 0}
 --- !u!114 &7566888078305542594
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3746,7 +3640,34 @@ MonoBehaviour:
   gameManager: {fileID: 0}
   foodSlider: {fileID: 572032222753606497}
   waterSlider: {fileID: 6485847854755373512}
---- !u!114 &6485208329972664398
+--- !u!95 &486719347862727492
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7092775352889968647}
+  m_Enabled: 1
+  m_Avatar: {fileID: 9000000, guid: a4a3ba617ed9c5946bb76844ec1ef299, type: 3}
+  m_Controller: {fileID: 22100000, guid: c2698e8e5bd1f1b47a0e2c731b625efc, type: 2}
+  m_CullingMode: 1
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: "\nBinding warning: Some generic clip(s) animate transforms that
+    are already bound by a Humanoid avatar. These transforms can only be changed
+    by Humanoid clips.\n\tTransform 'DeformationSystem'\n\tTransform 'Ankle_L'\n\tTransform
+    'Scapula_R'\n\tTransform 'Hip_L'\n\tTransform 'MiddleFinger1_R'\n\tTransform
+    'IndexFinger2_R'\n\tTransform 'Chest_M'\n\tTransform 'Toes_R'\n\tTransform 'Head_M'\n\tTransform
+    'PinkyFinger2_R'\n\tand more ...\n\tFrom animation clip 'Baseball Pitching'"
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &192333522673131554
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -3755,13 +3676,54 @@ MonoBehaviour:
   m_GameObject: {fileID: 7092775352889968647}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fff0960ef4ea6e04eac66b4a7fd2189d, type: 3}
+  m_Script: {fileID: 11500000, guid: 62899f850307741f2a39c98a8b639597, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_RigLayers:
-  - m_Rig: {fileID: 7989103731735268813}
-    m_Active: 1
-  m_Effectors: []
+  m_Actions: {fileID: -944628639613478452, guid: 378647803f645c742940e023727c25ad, type: 3}
+  m_NotificationBehavior: 0
+  m_UIInputModule: {fileID: 0}
+  m_DeviceLostEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_DeviceRegainedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_ControlsChangedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_ActionEvents: []
+  m_NeverAutoSwitchControlSchemes: 0
+  m_DefaultControlScheme: 
+  m_DefaultActionMap: Player
+  m_SplitScreenIndex: -1
+  m_Camera: {fileID: 0}
+--- !u!54 &6527584161893310076
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7092775352889968647}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 112
+  m_CollisionDetection: 1
 --- !u!65 &5151251654921174477
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -3783,6 +3745,44 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.35485697, y: 1.6833743, z: 0.9814739}
   m_Center: {x: 0.014038086, y: 0.9127436, z: 0.15085936}
+--- !u!64 &4079451924742935734
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7092775352889968647}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 503
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 512
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 5
+  m_Convex: 1
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 7018970652796049518, guid: a4a3ba617ed9c5946bb76844ec1ef299, type: 3}
+--- !u!114 &6485208329972664398
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7092775352889968647}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fff0960ef4ea6e04eac66b4a7fd2189d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_RigLayers:
+  - m_Rig: {fileID: 7989103731735268813}
+    m_Active: 1
+  m_Effectors: []
 --- !u!1 &7127208121757602152
 GameObject:
   m_ObjectHideFlags: 0

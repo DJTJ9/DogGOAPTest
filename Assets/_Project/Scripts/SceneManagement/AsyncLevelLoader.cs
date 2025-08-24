@@ -36,6 +36,9 @@ public class AsyncLevelLoader : MonoBehaviour
     private UnityEvent onLevelChange;
 
     public static AsyncLevelLoader Instance;
+    
+    private const float zero = 0f;
+    private const float one = 1f;
 
     private float target;
 
@@ -57,12 +60,12 @@ public class AsyncLevelLoader : MonoBehaviour
             onLevelChange?.Invoke();
             EventSystem.current.SetSelectedGameObject(null);
             var color = loadingScreenImage.color;
-            color.a = 1f;
+            color.a = one;
             loadingScreenImage.color = color;
             loadingScreen.SetActive(true);
             progressBar.gameObject.SetActive(true);
-            progressBar.value = 0;
-            target = 0;
+            progressBar.value = zero;
+            target = zero;
 
             await Task.Delay(300);
 
@@ -93,7 +96,6 @@ public class AsyncLevelLoader : MonoBehaviour
             progressBar.gameObject.SetActive(false);
             FadeOutLoadingScreen();
             scene.allowSceneActivation = true;
-            // MusicManager.Instance.ChangeMusicClip();
         }
         catch (Exception e)
         {

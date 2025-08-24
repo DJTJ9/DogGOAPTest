@@ -246,20 +246,20 @@ public class DogSO : ScriptableObject
     {
         if (Stamina <= 0)
         {
-            Health -= 0.1f;
-            Aggression += 1f;
+            Health -= StatManager.HealthLost;
+            Aggression += StatManager.AggressionGain;
         }
 
         if (Satiety <= 0)
         {
-            Health -= 0.1f;
-            Aggression += 1f;
+            Health -= StatManager.HealthLost;
+            Aggression += StatManager.AggressionGain;
         }
 
         if (Hydration <= 0)
         {
-            Health -= 0.1f;
-            Aggression += 1f;
+            Health -= StatManager.HealthLost;
+            Aggression += StatManager.AggressionGain;
         }
 
         Health = Mathf.Clamp(Health, 0f, 100f);

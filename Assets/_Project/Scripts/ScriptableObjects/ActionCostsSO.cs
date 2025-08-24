@@ -41,25 +41,5 @@ namespace ScriptableValues
             Rage = rageDefaultCosts;
             Digging = diggingDefaultCosts;
         }
-
-        public void UpdateCosts() {
-            Sleep = CalculateGoodBehaviourActionCost(sleepDefaultCosts, dog.Stamina, dog.Aggression);
-            Rest = CalculateBadBehaviourActionCost(restDefaultCosts, dog.Stamina, dog.Aggression);
-            SeekAttention = CalculateGoodBehaviourActionCost(seekAttentionDefaultCosts, dog.Fun, dog.Aggression);
-            Rage = CalculateBadBehaviourActionCost(rageDefaultCosts, dog.Fun, dog.Aggression);
-            Digging = CalculateBadBehaviourActionCost(diggingDefaultCosts, dog.Fun, dog.Aggression);       
-        }
-        
-        private float CalculateGoodBehaviourActionCost(float defaultCost, float currentStatValue, float currentAggression){
-            float actionCost = defaultCost - (currentStatValue / 10f) + (currentAggression / 10) + Random.Range(-1, 1);
-            // actionCost = Random.Range(actionCost - 5, actionCost + 5); 
-            return actionCost;       
-        }
-
-        private float CalculateBadBehaviourActionCost(float defaultCost, float currentStatValue, float currentAggression) {
-            float actionCost = defaultCost + (currentStatValue / 10f) - (currentAggression / 10) + Random.Range(-1, 1);
-            // actionCost = Random.Range(actionCost - 5, actionCost + 5); 
-            return actionCost;  
-        }
     }
 }

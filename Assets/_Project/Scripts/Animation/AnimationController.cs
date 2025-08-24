@@ -31,11 +31,13 @@ public class AnimationController : MonoBehaviour
     public int speedHash = Animator.StringToHash("Movement_f");
 
     [HideInInspector]
-    public int locoMotionHash = Animator.StringToHash("Locomotion");
+    public int locomotionHash = Animator.StringToHash("Locomotion");
 
     [HideInInspector]
     public int deathBoolHash = Animator.StringToHash("Death_b");
 
+    private int actionTypeHash = Animator.StringToHash("ActionType_int");
+    private int attackReadyHash = Animator.StringToHash("AttackReady_b");
 
     void Awake()
     {
@@ -72,21 +74,19 @@ public class AnimationController : MonoBehaviour
 
     public IEnumerator DogActions(AnimationActionType actionType, float duration = 1f)
     {
-        // dogActionEnabled = true;                                 
-        animator.SetInteger("ActionType_int", (int)actionType);
+        animator.SetInteger(actionTypeHash, (int)actionType);
         yield return new WaitForSeconds(duration);
-        animator.SetInteger("ActionType_int", 0);
-        // dogActionEnabled = false;                                
+        animator.SetInteger(actionTypeHash, 0);
     }
 
     public IEnumerator AttackAction(int attackType, float readyDuration = 2f)
     {
-        animator.SetBool("AttackReady_b", true);
+        animator.SetBool(attackReadyHash, true);
         yield return new WaitForSeconds(readyDuration);
-        animator.SetInteger("AttackType_int", attackType);
+        animator.SetInteger(actionTypeHash, attackType);
         yield return new WaitForSeconds(1f);
-        animator.SetInteger("AttackType_int", 0);
-        animator.SetBool("AttackReady_b", false);
+        animator.SetInteger(actionTypeHash, 0);
+        animator.SetBool(attackReadyHash, false);
     }
 
     public void SetAnimatorBool(string name, bool value) => animator.SetBool(name, value);
@@ -103,7 +103,7 @@ public class AnimationController : MonoBehaviour
 
     public void LocoMotion()
     {
-        animator.CrossFade(locoMotionHash, k_crossfadeDuration);
+        animator.CrossFade(locomotionHash, k_crossfadeDuration);
     }
 
     public void SpawnDirtWhileDigging()

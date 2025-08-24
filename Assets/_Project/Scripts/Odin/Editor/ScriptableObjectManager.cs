@@ -16,7 +16,6 @@ public class ScriptableObjectManager : OdinMenuEditorWindow
 
     protected override void OnImGUI()
     {
-        //draw menu tree for SOs and other assets
         if (GUIUtils.SelectButtonList(ref selectedType, typesToDisplay))
             this.ForceMenuTreeRebuild();
 

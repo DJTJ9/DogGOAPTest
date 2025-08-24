@@ -129,7 +129,6 @@ public class ChaseRatStrategy : IActionStrategy
     {
         dog.StoppingDistance = stoppingDistance;
         agent.SetDestination(rat.transform.position);
-        Debug.LogWarning($"Start MoveStrategy to {rat.name}");
     }
 
     public void Update(float deltaTime)
@@ -218,7 +217,6 @@ public class DiggingStrategy : IActionStrategy
         {
             if (Physics.Raycast(rayCastTransform.position, Vector3.down, out RaycastHit hit, 3f, itemsLayer))
             {
-                // Prüfe, ob das getroffene Objekt ein IDiggable ist
                 if (hit.transform.TryGetComponent(out IDiggable item))
                 {
                     item.PopUp();
@@ -240,29 +238,6 @@ public class DiggingStrategy : IActionStrategy
         digAnimationTimer.Stop();
         itemPopUpTimer.Stop();
         Complete = true;
-    }
-
-    public void OnDrawGizmos()
-    {
-        if (rayCastTransform == null) return;
-
-        // SphereCast-Parameter visualisieren
-        Vector3 origin = rayCastTransform.position;
-        Vector3 direction = Vector3.forward;
-        float radius = 1f;
-        float distance = 1f;
-
-        // Startpunkt des SphereCasts
-        Gizmos.color = Color.yellow;
-        Gizmos.DrawWireSphere(origin, radius);
-
-        // Richtung des SphereCasts
-        Gizmos.color = Color.red;
-        Gizmos.DrawRay(origin, direction * distance);
-
-        // Endpunkt des SphereCasts
-        Gizmos.color = Color.yellow;
-        Gizmos.DrawWireSphere(origin + direction * distance, radius);
     }
 }
 
@@ -429,13 +404,15 @@ public class EatStrategy : IActionStrategy
         {
             Complete = false;
             lookAtTarget = food;
-            lookAtTrigger.radius = 1.2f;
+            
+            if (lookAtTrigger != null) lookAtTrigger.radius = 1.2f;
         };
         eatAnimationTimer.OnTimerStop += () =>
         {
+            if (lookAtTrigger != null) lookAtTrigger.radius = 3f;
+            
             dog.Satiety += saturation;
             dog.Aggression -= aggressionLost;
-            lookAtTrigger.radius = 3f;
             lookAtTarget = currentLookAtTarget;
             Complete = true;
         };
@@ -489,12 +466,14 @@ public class DrinkStrategy : IActionStrategy
         drinkAnimationTimer.OnTimerStart += () =>
         {
             Complete = false;
-            lookAtTrigger.radius = 1.2f;
+            
+            if (lookAtTrigger != null) lookAtTrigger.radius = 1.2f;
         };
         drinkAnimationTimer.OnTimerStop += () =>
         {
+            if (lookAtTrigger != null) lookAtTrigger.radius = 3f;
+            
             dog.Hydration += hydration;
-            lookAtTrigger.radius = 3f;
             Complete = true;
         };
 
@@ -525,171 +504,6 @@ public class DrinkStrategy : IActionStrategy
         Complete = true;
     }
 }
-
-// public class FetchBallStrategy : IActionStrategy
-// {
-//     public bool CanPerform => true;
-//     public bool Complete   { get; private set; }
-//
-//     private readonly NavMeshAgent agent;
-//     private readonly AnimationController animations;
-//     private readonly GameObject ball;
-//     private readonly Transform playerTransform;
-//     private readonly Transform objectGrabPoint;
-//     private readonly ScriptableBoolValue ballThrown;
-//     private readonly ScriptableBoolValue ballInHand;
-//     private readonly float pickupRange;
-//     private readonly float dropRange;
-//
-//     private enum FetchState
-//     {
-//         MovingToBall,
-//         PickingUpBall,
-//         ReturningToPlayer,
-//         DroppingBall,
-//         Completed
-//     }
-//
-//     private FetchState currentState;
-//     private CountdownTimer pickupAnimationTimer;
-//     private CountdownTimer dropAnimationTimer;
-//
-//     public FetchBallStrategy(NavMeshAgent agent, AnimationController animations, GameObject ball,
-//         Transform playerTransform,
-//         Transform objectGrabPoint, ScriptableBoolValue ballInHand, ScriptableBoolValue ballThrown,
-//         float pickupRange = 2f, float dropRange = 2f) {
-//         this.agent = agent;
-//         this.animations = animations;
-//         this.ball = ball;
-//         this.playerTransform = playerTransform;
-//         this.objectGrabPoint = objectGrabPoint;
-//         this.pickupRange = pickupRange;
-//         this.dropRange = dropRange;
-//         this.ballInHand = ballInHand;
-//         this.ballThrown = ballThrown;
-//
-//         // Timer für die Aufheb-Animation
-//         pickupAnimationTimer = new CountdownTimer(2.4f);
-//         pickupAnimationTimer.OnTimerStart += () => Complete = false;
-//         pickupAnimationTimer.OnTimerStop += () => {
-//             animations.Locomotion();
-//             if (ball.TryGetComponent(out GrabbableObject grabbableObject)) {
-//                 grabbableObject.Grab(objectGrabPoint);
-//                 currentState = FetchState.ReturningToPlayer;
-//             }
-//         };
-//
-//         // Timer für die Ableg-Animation
-//         dropAnimationTimer = new CountdownTimer(2.4f);
-//         dropAnimationTimer.OnTimerStart += () => Complete = false;
-//         dropAnimationTimer.OnTimerStop += () => {
-//             if (ball.TryGetComponent(out GrabbableObject grabbableObject)) {
-//                 grabbableObject.Drop();
-//                 currentState = FetchState.Completed;
-//                 Complete = true;
-//             }
-//         };
-//     }
-//
-//     public void Start() {
-//         Complete = false;
-//
-//         currentState = FetchState.MovingToBall;
-//         animations.SetSpeed(agent.velocity.magnitude);
-//         agent.stoppingDistance = pickupRange - 0.2f;
-//         agent.SetDestination(ball.transform.position);
-//     }
-//
-//     public void Update(float deltaTime) {
-//         switch (currentState) {
-//             case FetchState.MovingToBall:
-//                 MoveToBall();
-//                 break;
-//             case FetchState.PickingUpBall:
-//                 PickUpBall(deltaTime);
-//                 break;
-//             case FetchState.ReturningToPlayer:
-//                 ReturnToPlayer();
-//                 break;
-//             case FetchState.DroppingBall:
-//                 DropBall(deltaTime);
-//                 break;
-//             case FetchState.Completed:
-//                 // Bereits abgeschlossen
-//                 break;
-//         }
-//     }
-//
-//     private void MoveToBall() {
-//         // Setze Laufanimation
-//         animations.Locomotion();
-//
-//         // Überprüfe, ob Ziel erreicht wurde
-//         if (Vector3.Distance(agent.transform.position, ball.transform.position) <= pickupRange) {
-//             currentState = FetchState.PickingUpBall;
-//         }
-//     }
-//
-//     private void PickUpBall(float deltaTime) {
-//         if (!pickupAnimationTimer.IsRunning) {
-//             animations.Eat(); // Eat als aufheben
-//             pickupAnimationTimer.Start();
-//         }
-//
-//         pickupAnimationTimer.Tick(deltaTime);
-//     }
-//
-//     private void ReturnToPlayer() {
-//         agent.stoppingDistance = dropRange - 0.2f;
-//         agent.SetDestination(playerTransform.position);
-//
-//         // // Setze Laufanimation
-//         // animations.Locomotion();
-//         // animations.SetSpeed(agent.velocity.magnitude);
-//
-//         // Überprüfe, ob Ziel erreicht wurde
-//         if (Vector3.Distance(agent.transform.position, playerTransform.position) <= dropRange) {
-//             currentState = FetchState.DroppingBall;
-//         }
-//     }
-//
-//     private void DropBall(float deltaTime) {
-//         if (!dropAnimationTimer.IsRunning) {
-//             animations.Eat();
-//             dropAnimationTimer.Start();
-//             if (ball.TryGetComponent(out GrabbableObject grabbableObject)) {
-//                 grabbableObject.Drop();
-//                 // Explizit ballThrown auf false setzen, um zu verhindern, dass die FetchBall-Aktion sofort wieder ausgeführt wird
-//                 ballThrown.Value = false;
-//             }
-//         }
-//
-//         // Wichtig: Stelle sicher, dass der Ball wirklich abgelegt wird, wenn die Strategie gestoppt wird
-//         if (currentState == FetchState.ReturningToPlayer || currentState == FetchState.DroppingBall) {
-//             if (ball.TryGetComponent(out GrabbableObject grabbableObject)) {
-//                 grabbableObject.Drop();
-//                 ballThrown.Value = false;
-//                 ballInHand.Value = false;
-//             }
-//         }
-//
-//         dropAnimationTimer.Tick(deltaTime);
-//     }
-//
-//     public void Stop() {
-//         if (pickupAnimationTimer.IsRunning) {
-//             pickupAnimationTimer.Stop();
-//         }
-//
-//         if (dropAnimationTimer.IsRunning) {
-//             dropAnimationTimer.Stop();
-//         }
-//
-//         animations.Locomotion();
-//         agent.ResetPath();
-//         Complete = true;
-//     }
-// }
 
 public class SeekAttentionStrategy : IActionStrategy
 {
@@ -990,7 +804,6 @@ public class DropBallStrategy : IActionStrategy
                 DropBall(deltaTime);
                 break;
             case DropState.Completed:
-                // Bereits abgeschlossen
                 break;
         }
     }

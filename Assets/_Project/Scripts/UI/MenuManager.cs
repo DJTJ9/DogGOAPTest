@@ -34,6 +34,8 @@ public class MenuManager : MonoBehaviour
 
     private const int mainMenuSceneIndex = 0;
     private const int startLevelSceneIndex = 1;
+    private const float zero = 0f;
+    private const float one = 1f;
 
     private void Awake()
     {
@@ -53,7 +55,7 @@ public class MenuManager : MonoBehaviour
         AsyncLevelLoader.Instance.LoadScene(startLevelSceneIndex);
         mainMenuUI.SetActive(false);
         mainMenuBackgroundImage.SetActive(false);
-        Time.timeScale = 1f;
+        Time.timeScale = one;
         Cursor.lockState = CursorLockMode.Locked;
         // PlayerController.PlayerInput.SwitchCurrentActionMap("Player");
     }
@@ -63,7 +65,7 @@ public class MenuManager : MonoBehaviour
         onRestart.Invoke();
         AsyncLevelLoader.Instance.LoadScene(SceneManager.GetActiveScene().buildIndex);
 
-        Time.timeScale = 1f;
+        Time.timeScale = one;
         Cursor.lockState = CursorLockMode.Locked;
     }
 
@@ -74,19 +76,12 @@ public class MenuManager : MonoBehaviour
 
     public void Pause()
     {
-        // onPause.Invoke();
-        // pauseMenuUI.SetActive(true);
-        // Time.timeScale = 0f;
         Cursor.lockState = CursorLockMode.None;
         PlayerController.PlayerInput.SwitchCurrentActionMap("UI");
     }
 
     public void Unpause()
     {
-        // onUnpause.Invoke();
-        // pauseMenuUI.SetActive(false);
-        // optionsMenuUI.SetActive(false);
-        // Time.timeScale = 1f;
         Cursor.lockState = CursorLockMode.Locked;
         PlayerController.PlayerInput.SwitchCurrentActionMap("Player");
     }
@@ -94,11 +89,7 @@ public class MenuManager : MonoBehaviour
     public void LoadMainMenu()
     {
         AsyncLevelLoader.Instance.LoadScene(mainMenuSceneIndex);
-        // mainMenuUI.SetActive(true);
-        // mainMenuBackgroundImage.SetActive(true);
-        Time.timeScale = 1f;
-        // Cursor.lockState = CursorLockMode.None;
-        // PlayerController.PlayerInput.SwitchCurrentActionMap("UI");
+        Time.timeScale = one;
     }
 
     public void SetQuality(int _qualityIndex)

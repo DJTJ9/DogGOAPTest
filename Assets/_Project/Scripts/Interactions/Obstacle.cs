@@ -25,12 +25,13 @@
         private Transform targetPosition;
         
         private Camera cam;
-        
         private RayfireRigid rigidComponent;
-
+        
+        private float fullHealth = 100f;
         private void Awake() {
             cam = Camera.main;
             rigidComponent = GetComponent<RayfireRigid>();
+            Health = fullHealth;
             
             healthSlider.value = Health;
         }
@@ -41,11 +42,11 @@
         }
         
         private void LateUpdate() {
-            canvas.transform.LookAt(cam.transform.position); // transform.position + cam.transform.forward
+            canvas.transform.LookAt(cam.transform.position);
         }
 
         private void UpdateHealthSlider() {
-            healthSlider.value = Mathf.Clamp(healthSlider.value, 0f, 100f);
+            healthSlider.value = Mathf.Clamp(Health, 0f, 100f);
         }
 
         private void UpdateInteractionName() {
@@ -66,7 +67,7 @@
         }
 
         public void Interact() {
-            if (healthSlider.value < Health)
+            if (healthSlider.value < fullHealth)
             {
                 TakeDamage(repairAmount * -1);
             }

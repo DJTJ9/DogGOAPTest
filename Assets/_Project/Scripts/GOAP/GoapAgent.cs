@@ -169,7 +169,7 @@ public class GoapAgent : MonoBehaviour
             .Build());
 
         Actions.Add(new AgentAction.Builder(ActionType.MoveToRestArea)
-            .WithStrategy(new MoveStrategy(navMeshAgent, () => blackboard.RestingPosition.position, dog, 2.0f))
+            .WithStrategy(new MoveStrategy(navMeshAgent, () => blackboard.RestingPosition.position, dog, dog.Settings.pickUpDistance))
             .AddEffect(beliefs[Beliefs.DogAtRestingPosition])
             .Build());
 
@@ -247,11 +247,6 @@ public class GoapAgent : MonoBehaviour
             .AddEffect(beliefs[Beliefs.DogIsRested])
             .Build());
 
-        Actions.Add(new AgentAction.Builder(ActionType.MoveToPlayer)
-            .WithStrategy(new MoveStrategy(navMeshAgent, () => blackboard.PlayerTransform.position, dog, 5f))
-            .AddEffect(beliefs[Beliefs.DogAtPlayer])
-            .Build());
-
         Actions.Add(new AgentAction.Builder(ActionType.SeekAttention)
             .WithCost(dog.SeekAttentionCosts)
             .WithStrategy(new SeekAttentionStrategy(navMeshAgent, animations, blackboard.PlayerTransform, dog))
@@ -260,7 +255,7 @@ public class GoapAgent : MonoBehaviour
             .Build());
 
         Actions.Add(new AgentAction.Builder(ActionType.MoveToObstacle1)
-            .WithStrategy(new MoveStrategy(navMeshAgent, () => blackboard.Obstacle1.position, dog, 1.9f))
+            .WithStrategy(new MoveStrategy(navMeshAgent, () => blackboard.Obstacle1.position, dog, dog.Settings.pickUpDistance))
             .AddEffect(beliefs[Beliefs.DogAtObstacle1])
             .Build());
 
@@ -273,7 +268,7 @@ public class GoapAgent : MonoBehaviour
             .Build());
 
         Actions.Add(new AgentAction.Builder(ActionType.MoveToObstacle2)
-            .WithStrategy(new MoveStrategy(navMeshAgent, () => blackboard.Obstacle2.position, dog, 1.9f))
+            .WithStrategy(new MoveStrategy(navMeshAgent, () => blackboard.Obstacle2.position, dog, dog.Settings.pickUpDistance))
             .AddEffect(beliefs[Beliefs.DogAtObstacle2])
             .Build());
 
@@ -286,7 +281,7 @@ public class GoapAgent : MonoBehaviour
             .Build());
 
         Actions.Add(new AgentAction.Builder(ActionType.MoveToObstacle3)
-            .WithStrategy(new MoveStrategy(navMeshAgent, () => blackboard.Obstacle3.position, dog, 1.9f))
+            .WithStrategy(new MoveStrategy(navMeshAgent, () => blackboard.Obstacle3.position, dog, dog.Settings.pickUpDistance))
             .AddEffect(beliefs[Beliefs.DogAtObstacle3])
             .Build());
 
@@ -299,7 +294,7 @@ public class GoapAgent : MonoBehaviour
             .Build());
 
         Actions.Add(new AgentAction.Builder(ActionType.MoveToObstacle4)
-            .WithStrategy(new MoveStrategy(navMeshAgent, () => blackboard.Obstacle4.position, dog, 1.9f))
+            .WithStrategy(new MoveStrategy(navMeshAgent, () => blackboard.Obstacle4.position, dog, dog.Settings.pickUpDistance))
             .AddEffect(beliefs[Beliefs.DogAtObstacle4])
             .Build());
 
@@ -318,15 +313,8 @@ public class GoapAgent : MonoBehaviour
             .AddEffect(beliefs[Beliefs.DogIsHappy])
             .Build());
 
-        // actions.Add(new AgentAction.Builder(ActionType.ComeToPlayer)
-        //     .WithStrategy(new MoveStrategy(navMeshAgent, () => knownLocations.PlayerTransform.position, 6.0f))
-        //     .AddPrecondition(beliefs[Beliefs.DogCalled])
-        //     .AddEffect(beliefs[Beliefs.FollowPlayer])
-        //     .Build());
-
         Actions.Add(new AgentAction.Builder(ActionType.WaitForAction)
             .WithStrategy(new WaitForActionStrategy(navMeshAgent, animations, dog, blackboard.PlayerTransform))
-            // .AddPrecondition(beliefs[Beliefs.FollowPlayer])
             .AddPrecondition(beliefs[Beliefs.DogCalled])
             .AddEffect(beliefs[Beliefs.FollowCommand])
             .Build());
@@ -439,18 +427,16 @@ public class GoapAgent : MonoBehaviour
 
     void HandleTargetChanged()
     {
-        Debug.Log("Target changed, clearing current action and goal");
-        // Force the planner to re-evaluate the plan
+        // Forces the planner to re-evaluate the plan
         currentAction = null;
         currentGoal = null;
     }
 
     private void UpdateActionPlan()
     {
-        // Update the plan and current action if there is one
+        // Updates the plan and current action if there is one
         if (currentAction == null)
         {
-            Debug.Log("Calculating any potential new plan");
             CalculatePlan();
 
             if (actionPlan != null && actionPlan.Actions.Count > 0)
@@ -458,37 +444,33 @@ public class GoapAgent : MonoBehaviour
                 navMeshAgent.ResetPath();
 
                 currentGoal = actionPlan.AgentGoal;
-                Debug.Log($"Goal: {currentGoal.Type} with {actionPlan.Actions.Count} actions in plan");
                 currentAction = actionPlan.Actions.Pop();
-                Debug.Log($"Popped action: {currentAction.Type}");
-                // Verify all precondition effects are true
+                
+                // Verifies all precondition effects are true
                 if (currentAction.Preconditions.All(b => b.Evaluate()))
                 {
                     currentAction.Start();
                 }
                 else
                 {
-                    Debug.Log("Preconditions not met, clearing current action and goal");
                     currentAction = null;
                     currentGoal = null;
                 }
             }
         }
 
-        // If we have a current action, execute it
+        // Executes current action
         if (actionPlan != null && currentAction != null)
         {
             currentAction.Update(Time.deltaTime);
 
             if (currentAction.Complete)
             {
-                Debug.Log($"{currentAction.Type} complete");
                 currentAction.Stop();
                 currentAction = null;
 
                 if (actionPlan.Actions.Count == 0)
                 {
-                    Debug.Log("Plan complete");
                     lastGoal = currentGoal;
                     currentGoal = null;
                 }
@@ -502,10 +484,9 @@ public class GoapAgent : MonoBehaviour
 
         HashSet<AgentGoal> goalsToCheck = goals;
 
-        // If we have a current goal, we only want to check goals with higher priority
+        // Checks for a higher priority goal
         if (currentGoal != null)
         {
-            Debug.Log("Current goal exists, checking goals with higher priority");
             goalsToCheck = new HashSet<AgentGoal>(goals.Where(g => g.Priority > priorityLevel));
         }
 

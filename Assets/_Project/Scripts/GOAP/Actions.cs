@@ -18,7 +18,7 @@ public class AgentAction {
     public void Start() => strategy.Start();
 
     public void Update(float deltaTime) {
-        // Check if the action can be performed and update the strategy
+        // Checks if the action can be performed and updates the strategy
         if (strategy.CanPerform) {
             strategy.Update(deltaTime);
         }
@@ -26,7 +26,7 @@ public class AgentAction {
         // Bail out if the strategy is still executing
         if (!strategy.Complete) return;
         
-        // Apply effects
+        // Applies effects
         foreach (var effect in Effects) {
             effect.Evaluate();
         }
